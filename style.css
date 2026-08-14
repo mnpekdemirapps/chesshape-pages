@@ -118,3 +118,40 @@ footer.site .spacer { flex: 1; }
 @media (max-width: 560px) {
   nav.site .links { gap: 12px; }
 }
+
+/* Language switcher on the legal pages: eleven languages have to fit without
+   turning into a wall, so they wrap as quiet chips and the current one is
+   marked rather than linked. */
+.langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 0 0 28px;
+  font-size: 13px;
+}
+.langs a, .langs .here {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(139, 147, 181, .28);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.langs a { color: #8b93b5; }
+.langs a:hover { border-color: #5b8cff; color: #f2f4ff; }
+.langs .here {
+  color: #f2f4ff;
+  border-color: #5b8cff;
+  background: rgba(91, 140, 255, .12);
+  font-weight: 600;
+}
+.langfoot {
+  max-width: 900px;
+  margin: 8px auto 40px;
+  padding: 0 20px;
+  font-size: 12.5px;
+  line-height: 2;
+  color: #6a7296;
+  text-align: center;
+}
+.langfoot a { color: #8b93b5; text-decoration: none; }
+.langfoot a:hover { color: #f2f4ff; }
