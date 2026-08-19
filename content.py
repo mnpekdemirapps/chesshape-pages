@@ -16,7 +16,7 @@ keeping them in one table instead of eleven hand-edited files.
 """
 
 CONTACT = "mnpekdemir.apps@gmail.com"
-PLATFORM = "Android"
+PLATFORM = "Android & iOS"
 EFFECTIVE = "2026-08-14"
 
 # ---------------------------------------------------------------- English
@@ -33,7 +33,7 @@ _EN_PRIVACY = [
   <ul>
     <li>level progress, stars and best scores;</li>
     <li>settings (sound, music, haptics, language, accessibility options);</li>
-    <li>hint balance, daily-puzzle streak and achievement progress.</li>
+    <li>hint balance and daily-puzzle streak.</li>
   </ul>
   <p>This data never leaves your device, is not visible to us, and is deleted
   when you uninstall the App. The App does not read your contacts, photos,
@@ -49,11 +49,9 @@ _EN_PRIVACY = [
   and <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">How
   Google uses information from apps</a>.</p>
   <ul>
-    <li><strong>Consent (EEA/UK/Switzerland):</strong> where required, a consent
-    dialog (Google User Messaging Platform) is shown before any ad
-    personalization, and you can choose non-personalized ads.</li>
+    <li><strong>Consent (EEA/UK/Switzerland):</strong> where required, a consent dialog (Google User Messaging Platform) is shown before any ad personalization, and you can choose non-personalized ads or manage your choices anytime in the App's <em>Settings → Privacy Options</em>.</li>
     <li><strong>Your controls:</strong> you can reset or delete your Advertising ID at
-    any time in Android <em>Settings → Privacy → Ads</em>.</li>
+    any time in Android <em>Settings → Privacy → Ads</em> or iOS <em>Settings → Privacy & Security → Tracking</em>.</li>
     <li><strong>Ad-free option:</strong> the one-time <em>Premium</em> purchase removes
     all advertising from the App.</li>
   </ul>"""),
@@ -164,7 +162,7 @@ _TR_PRIVACY = [
   <ul>
     <li>bölüm ilerlemesi, yıldızlar ve en iyi skorlar;</li>
     <li>ayarlar (ses, müzik, titreşim, dil, erişilebilirlik seçenekleri);</li>
-    <li>ipucu bakiyesi, günlük bulmaca serisi ve başarım ilerlemesi.</li>
+    <li>ipucu bakiyesi ve günlük bulmaca serisi.</li>
   </ul>
   <p>Bu veriler cihazınızdan hiç çıkmaz, bizim tarafımızdan görülemez ve
   Uygulamayı kaldırdığınızda silinir. Uygulama kişilerinizi, fotoğraflarınızı,
@@ -180,9 +178,7 @@ _TR_PRIVACY = [
   ve <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">Google'ın
   uygulamalardan gelen bilgileri nasıl kullandığı</a> sayfalarına bakın.</p>
   <ul>
-    <li><strong>Rıza (AEA/BK/İsviçre):</strong> gerekli olduğu yerlerde, reklam
-    kişiselleştirmesinden önce bir rıza penceresi (Google User Messaging
-    Platform) gösterilir ve kişiselleştirilmemiş reklamları seçebilirsiniz.</li>
+    <li><strong>Rıza (AEA/BK/İsviçre):</strong> gerekli olduğu yerlerde, reklam kişiselleştirmesinden önce bir rıza penceresi (Google User Messaging Platform) gösterilir; tercihlerinizi Uygulama içindeki <em>Ayarlar → Gizlilik seçenekleri</em> menüsünden dilediğiniz zaman değiştirebilirsiniz.</li>
     <li><strong>Denetim sizde:</strong> Reklam Kimliğinizi istediğiniz zaman Android
     <em>Ayarlar → Gizlilik → Reklamlar</em> bölümünden sıfırlayabilir veya
     silebilirsiniz.</li>
