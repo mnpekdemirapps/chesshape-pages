@@ -20,7 +20,7 @@
 
   <header>
     <h1>Privacy Policy</h1>
-    <p class="meta">Effective date: 2026-08-19 · App: <strong>Chesshape</strong> (Android & iOS)</p>
+    <p class="meta">Effective date: 2026-08-19 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><strong class="here">🇬🇧 English</strong><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
@@ -28,21 +28,29 @@
   <p>This Privacy Policy explains what information is handled when you play
   <strong>Chesshape</strong> ("the App"), a chess-move painting puzzle game
   published by its independent developer ("we", "us"). The short version:
-  <strong>we do not ask for your name, e-mail or any account, and we do not run
-  any servers that store your data.</strong> The only data processing happens
-  on your device and — for advertising — through Google's
-  services described below.</p>
+  <strong>we do not ask for your name, e-mail or an account, and we do not run
+  a server that stores your game or purchase records.</strong> Game and purchase-
+  delivery records are handled locally; Google processes advertising data; and
+  Apple App Store or Google Play processes payments, as described below.</p>
 
-  <h2>1. Data stored only on your device</h2>
-  <p>The App saves your game state locally on your device, and nowhere else:</p>
-  <ul>
-    <li>level progress, stars and best scores;</li>
-    <li>settings (sound, music, haptics, language, accessibility options);</li>
-    <li>hint balance and daily-puzzle streak.</li>
-  </ul>
-  <p>This data never leaves your device, is not visible to us, and is deleted
-  when you uninstall the App. The App does not read your contacts, photos,
-  files, location or any other personal content.</p>
+  <h2>1. Local game and purchase records</h2>
+  <p>The App keeps the following records in its private local storage:</p>
+  <ul><li>level progress, stars, best scores, settings, language and accessibility choices;</li>
+  <li>hint balance and daily-puzzle streak;</li>
+  <li>Premium entitlement and a compact transaction-delivery marker used to prevent duplicate grants.</li></ul>
+  <p>The App does not store a full store receipt, payment-card details or store
+  credentials. These local records are not visible to us. Depending on your OS,
+  account and device settings, Apple or Google backup/device-transfer features
+  may copy or restore them. Uninstalling normally removes the device copy, but
+  does not guarantee deletion of a platform backup that may later restore it.
+  The App does not read contacts, photos, files, precise location or other
+  personal content.</p>
+  <p>If a Premium purchase remains unresolved or is
+  interrupted, the App also keeps a local purchase-intent marker containing the
+  product identifier, an app-generated attempt identifier and the purchase start
+  time. It is used only to resume or reconcile that attempt with the store and is
+  removed after a terminal result or when the 30-day reconciliation window
+  expires.</p>
 
   <h2>2. Advertising (Google AdMob)</h2>
   <p>The free version of the App shows ads served by <strong>Google
@@ -62,22 +70,45 @@
     <em>Settings → Privacy &amp; Security → Tracking</em>.</li>
   </ul>
 
-  <h2>3. What we do NOT do</h2>
-  <ul>
-    <li>No accounts, sign-ups, or collection of names/e-mail addresses.</li>
-    <li>No developer-operated servers or databases holding your data.</li>
-    <li>No sale of personal information — we have none to sell.</li>
-    <li>No third-party analytics SDKs beyond the advertising described above.</li>
-  </ul>
+  <h2>3. In-app purchases and payment data</h2>
+  <p>In-app purchases are processed by <strong>Apple App Store</strong> on iOS
+  and <strong>Google Play</strong> on Android under their own terms and privacy
+  policies. We do not receive your payment-card details or billing credentials.
+  To deliver a product and restore Premium, the native billing SDK temporarily
+  provides the App with a store receipt or purchase token, product identifier,
+  purchase status, transaction date and reference. These values are not sent to
+  a developer-operated server; the App retains only the compact one-way delivery
+  fingerprint described in Section 1. Refund and revocation requests are handled
+  by the store.
+  This client-only release has no authoritative server-side reconciliation: the
+  App may learn of a change only if the store later reports it and may not detect
+  or revoke local Premium/content promptly or at all. Consumed hints cannot be
+  reliably clawed back. The App stores only the local entitlement/balance and
+  compact delivery marker described in Section 1.</p>
+  <p>Apple and Google process their store and payment
+  data under their own privacy policies: <a href="https://www.apple.com/legal/privacy/"
+  rel="noopener">Apple Privacy Policy</a> and <a href="https://policies.google.com/privacy"
+  rel="noopener">Google Privacy Policy</a>.</p>
 
-  <h2>4. Children</h2>
+  <h2>4. Analytics and crash diagnostics</h2>
+  <p>The App package includes the
+  <strong>Firebase Analytics</strong> and <strong>Firebase Crashlytics</strong>
+  software libraries. In this release, collection for both is explicitly
+  disabled in the native platform configuration and again at App startup.
+  Gameplay events use a no-operation logger. Accordingly, the App does not send
+  analytics events or crash reports to Firebase or to us through those libraries
+  in this release. There are no accounts, name/e-mail collection, or developer-
+  operated database holding your data. If telemetry is enabled in a future
+  release, this policy and its effective date will be updated before release.</p>
+
+  <h2>5. Children</h2>
   <p>The App is a general-audience puzzle game. We do not knowingly collect
   personal information from children. Where consent frameworks apply, ads are
   requested through Google's certified tools. If you believe a child has
   provided personal information through the App, contact us and we will help
   address it.</p>
 
-  <h2>5. Your rights</h2>
+  <h2>6. Your rights</h2>
   <p>Depending on where you live (including the EU/EEA under GDPR, the UK,
   California under CCPA/CPRA, and Türkiye under KVKK), you may have rights to
   access, correct or delete personal data. Because we do not hold personal
@@ -86,13 +117,14 @@
   the links in Section 2. You can always contact us with any privacy question
   and we will do our best to help.</p>
 
-  <h2>6. Security &amp; data retention</h2>
-  <p>Game data lives only in the App's private storage on your device,
-  protected by the operating system's application sandbox, and exists only as long as the
-  App is installed. We retain nothing after uninstall because we store nothing
-  elsewhere.</p>
+  <h2>7. Security, retention and backup</h2>
+  <p>Local game and purchase-delivery records are protected by the operating
+  system's application sandbox. They normally remain while the App is installed
+  and may also be included in an OS backup or device transfer controlled by you
+  and the platform. Removing the App usually removes its local copy; a platform
+  backup may restore it later. We retain no copy on a developer-operated server.</p>
 
-  <h2>7. Changes to this policy</h2>
+  <h2>8. Changes to this policy</h2>
   <p>If the App's data practices change (for example, if analytics or online
   features are added), this page will be updated and the effective date
   revised before the change ships. Significant changes will also be noted in

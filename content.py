@@ -4,19 +4,22 @@
 The facts here are load-bearing, so they were read off the code rather than
 assumed. As of this writing Chesshape:
 
-  * stores everything locally through shared_preferences — progress, stars,
-    hints, settings, language, the daily-puzzle streak — and runs no servers;
+  * stores game state and a compact purchase-delivery ledger locally through
+    shared_preferences, may participate in OS backup/device transfer, and runs
+    no developer-operated account or data server;
   * ships Google AdMob (google_mobile_ads) for advertising in the free version;
-  * has NO analytics SDK: lib/services/analytics_service.dart resolves to
-    NoopAnalyticsService, which does nothing;
-  * keeps paid storefront features disabled and hidden in the current release.
+  * includes Firebase Analytics and Crashlytics libraries, but explicitly
+    disables collection for both in native configuration and at startup; game
+    events resolve to NoopAnalyticsService, which does nothing;
+  * offers one non-consumable Premium product and consumable hint packs through
+    Apple App Store / Google Play, which process the payments.
 
 If any of that changes, these pages change with it — that is the whole point of
 keeping them in one table instead of eleven hand-edited files.
 """
 
 CONTACT = "mnpekdemir.apps@gmail.com"
-PLATFORM = "Android & iOS"
+PLATFORM = "Android &amp; iOS"
 EFFECTIVE = "2026-08-19"
 
 # ---------------------------------------------------------------- English
@@ -1280,3 +1283,992 @@ LANGS["ko"] = _lang(
   말아 주세요.</p>""",
     terms_sections=_KO_TERMS,
 )
+
+
+# ------------------------------------------------ purchase-aware normalization
+#
+# The language tables above deliberately keep the original editorial blocks
+# readable.  This final normalization is the single parity boundary for facts
+# that must never drift between locales: platform backup behavior and the
+# client-only in-app-purchase flow.  build.py renders LANGS only after this
+# block has replaced the former device-only wording and inserted the same new
+# sections in every language.
+
+_PURCHASE_COPY = {
+    "en": {
+        "privacy_intro": """<p>This Privacy Policy explains what information is handled when you play
+  <strong>Chesshape</strong> ("the App"), a chess-move painting puzzle game
+  published by its independent developer ("we", "us"). The short version:
+  <strong>we do not ask for your name, e-mail or an account, and we do not run
+  a server that stores your game or purchase records.</strong> Game and purchase-
+  delivery records are handled locally; Google processes advertising data; and
+  Apple App Store or Google Play processes payments, as described below.</p>""",
+        "local_heading": "1. Local game and purchase records",
+        "local_body": """<p>The App keeps the following records in its private local storage:</p>
+  <ul><li>level progress, stars, best scores, settings, language and accessibility choices;</li>
+  <li>hint balance and daily-puzzle streak;</li>
+  <li>Premium entitlement and a compact transaction-delivery marker used to prevent duplicate grants.</li></ul>
+  <p>The App does not store a full store receipt, payment-card details or store
+  credentials. These local records are not visible to us. Depending on your OS,
+  account and device settings, Apple or Google backup/device-transfer features
+  may copy or restore them. Uninstalling normally removes the device copy, but
+  does not guarantee deletion of a platform backup that may later restore it.
+  The App does not read contacts, photos, files, precise location or other
+  personal content.</p>""",
+        "payment_heading": "3. In-app purchases and payment data",
+        "payment_body": """<p>In-app purchases are processed by <strong>Apple App Store</strong> on iOS
+  and <strong>Google Play</strong> on Android under their own terms and privacy
+  policies. We do not receive your payment-card details or billing credentials.
+  To deliver a product and restore Premium, the native billing SDK temporarily
+  provides the App with a store receipt or purchase token, product identifier,
+  purchase status, transaction date and reference. These values are not sent to
+  a developer-operated server; the App retains only the compact one-way delivery
+  fingerprint described in Section 1. Refund and revocation requests are handled
+  by the store.
+  This client-only release has no authoritative server-side reconciliation: the
+  App may learn of a change only if the store later reports it and may not detect
+  or revoke local Premium/content promptly or at all. Consumed hints cannot be
+  reliably clawed back. The App stores only the local entitlement/balance and
+  compact delivery marker described in Section 1.</p>""",
+        "security_heading": "7. Security, retention and backup",
+        "security_body": """<p>Local game and purchase-delivery records are protected by the operating
+  system's application sandbox. They normally remain while the App is installed
+  and may also be included in an OS backup or device transfer controlled by you
+  and the platform. Removing the App usually removes its local copy; a platform
+  backup may restore it later. We retain no copy on a developer-operated server.</p>""",
+        "terms_heading": "3. In-app purchases",
+        "terms_body": """<p>The App offers the following optional products through Apple App Store
+  or Google Play:</p>
+  <ul><li><code>premium_no_ads</code> is a non-consumable purchase that enables
+  Premium and removes ads. Its first eligible original purchase includes a
+  one-time bonus of 25 hints. Restoring Premium is supported, but a fresh
+  restore does not issue that one-time bonus again.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code> and
+  <code>hints_100</code> are consumable hint packs.</li></ul>
+  <p>There are <strong>no subscriptions</strong>. The store controls and displays
+  the final localized price, currency and applicable taxes before confirmation;
+  the price shown by the store governs. Purchases are also subject to that
+  store's terms.</p>
+  <p>Premium can be restored through the same store account. Stores do not
+  restore consumed hint packs across devices or reinstalls, and Chesshape has
+  no account/server that can recreate them. A remaining local hint balance may
+  reappear only if the operating system happens to restore the App's local data,
+  which is not guaranteed. Refund and revocation requests are decided and
+  processed by Apple or Google. This client-only release has no authoritative
+  server reconciliation, so the App may not receive, detect or reflect that
+  change promptly or at all; consumed hints cannot be reliably clawed back.
+  Nothing here limits non-waivable consumer rights.</p>""",
+    },
+    "tr": {
+        "privacy_intro": """<p>Bu Gizlilik Politikası, bağımsız geliştiricisi ("biz") tarafından yayımlanan
+  satranç hamleleriyle boyama bulmacası <strong>Chesshape</strong> ("Uygulama")
+  oynanırken hangi bilgilerin işlendiğini açıklar. Kısaca: <strong>adınızı,
+  e-postanızı veya hesap bilgisi istemiyoruz; oyun ya da satın alma kayıtlarınızı
+  tutan bir sunucu işletmiyoruz.</strong> Oyun ve satın alma teslim kayıtları
+  cihazda işlenir; reklam verilerini Google, ödemeleri ise aşağıda açıklandığı
+  üzere Apple App Store veya Google Play işler.</p>""",
+        "local_heading": "1. Yerel oyun ve satın alma kayıtları",
+        "local_body": """<p>Uygulama aşağıdaki kayıtları kendisine ait özel yerel alanda tutar:</p>
+  <ul><li>bölüm ilerlemesi, yıldızlar, en iyi skorlar, ayarlar, dil ve erişilebilirlik tercihleri;</li>
+  <li>ipucu bakiyesi ve günlük bulmaca serisi;</li>
+  <li>Premium hakkı ve aynı ürünün iki kez verilmesini önleyen küçük bir işlem-teslim işareti.</li></ul>
+  <p>Uygulama tam mağaza makbuzunu, ödeme kartı bilgilerini veya mağaza giriş
+  bilgilerini saklamaz. Bu yerel kayıtlar bizim tarafımızdan görülemez. İşletim
+  sistemi, hesap ve cihaz ayarlarınıza bağlı olarak Apple veya Google yedekleme/
+  cihaz aktarımı bunları kopyalayabilir ya da geri yükleyebilir. Uygulamayı
+  kaldırmak cihazdaki kopyayı normalde siler; daha sonra geri gelebilecek bir
+  platform yedeğinin silinmesini garanti etmez. Uygulama kişilerinizi,
+  fotoğraflarınızı, dosyalarınızı, kesin konumunuzu veya başka kişisel içeriği okumaz.</p>""",
+        "payment_heading": "3. Uygulama içi satın almalar ve ödeme verileri",
+        "payment_body": """<p>Uygulama içi satın almalar iOS'ta <strong>Apple App Store</strong>,
+  Android'de <strong>Google Play</strong> tarafından kendi şartları ve gizlilik
+  politikaları kapsamında işlenir. Kart bilgilerinizi veya ödeme giriş
+  bilgilerinizi almayız. Ürünü teslim etmek ve Premium'u geri yüklemek için yerel
+  faturalandırma SDK'sı mağaza makbuzu ya da satın alma token'ını, ürün kimliğini,
+  satın alma durumunu, tarihini ve işlem referansını geçici olarak Uygulamaya
+  iletir. Bunlar geliştirici sunucusuna gönderilmez; Uygulama yalnızca 1. bölümde
+  açıklanan tek yönlü küçük teslim parmak izini saklar. İade ve iptalleri mağaza
+  işler. Yalnızca istemcide
+  çalışan bu sürümde yetkili bir sunucu mutabakatı yoktur: Uygulama değişikliği
+  ancak mağaza daha sonra bildirirse öğrenebilir; yerel Premium/içeriği zamanında
+  veya hiç iptal edemeyebilir. Tüketilmiş ipuçları güvenilir biçimde geri
+  alınamaz. Uygulama yalnızca 1. bölümdeki yerel hak/bakiye ve küçük teslim
+  işaretini saklar.</p>""",
+        "security_heading": "7. Güvenlik, saklama ve yedekleme",
+        "security_body": """<p>Yerel oyun ve satın alma teslim kayıtları işletim sisteminin uygulama
+  korumalı alanıyla korunur. Normalde Uygulama kurulu olduğu sürece kalırlar;
+  ayrıca sizin ve platformun denetimindeki işletim sistemi yedeğine veya cihaz
+  aktarımına dâhil edilebilirler. Kaldırma işlemi yerel kopyayı genellikle siler,
+  ancak platform yedeği daha sonra geri yükleyebilir. Geliştirici sunucusunda
+  hiçbir kopya tutmayız.</p>""",
+        "terms_heading": "3. Uygulama içi satın almalar",
+        "terms_body": """<p>Uygulama, Apple App Store veya Google Play üzerinden şu isteğe bağlı
+  ürünleri sunar:</p>
+  <ul><li><code>premium_no_ads</code>, Premium'u etkinleştirip reklamları kaldıran
+  tüketilmeyen bir üründür. Uygun ilk özgün satın alma bir defaya mahsus 25 ipucu
+  bonusu içerir. Premium geri yüklenebilir; ancak yeni kurulumdaki geri yükleme
+  bu tek seferlik bonusu yeniden vermez.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code> ve
+  <code>hints_100</code> tüketilebilir ipucu paketleridir.</li></ul>
+  <p><strong>Abonelik yoktur.</strong> Onaydan önce gösterilen nihai yerel fiyatı,
+  para birimini ve geçerli vergileri mağaza belirler; mağazanın gösterdiği fiyat
+  geçerlidir. Satın almalar ilgili mağazanın şartlarına da tabidir.</p>
+  <p>Premium aynı mağaza hesabıyla geri yüklenebilir. Mağazalar tüketilmiş ipucu
+  paketlerini cihazlar veya yeniden kurulumlar arasında geri yüklemez; Chesshape'in
+  bunları yeniden oluşturacak hesabı ya da sunucusu yoktur. Kalan yerel ipucu
+  bakiyesi yalnızca işletim sistemi Uygulamanın yerel verisini geri yüklerse
+  yeniden görünebilir; bu garanti edilmez. İade ve iptal taleplerini Apple veya
+  Google karara bağlayıp işler. Bu istemci tabanlı sürümde yetkili sunucu
+  mutabakatı olmadığından Uygulama değişikliği zamanında veya hiç alamayabilir,
+  algılamayabilir ya da yansıtamayabilir; tüketilmiş ipuçları güvenilir biçimde
+  geri alınamaz. Buradaki hiçbir hüküm vazgeçilemez tüketici haklarını sınırlamaz.</p>""",
+    },
+    "de": {
+        "privacy_intro": """<p>Diese Datenschutzerklärung erläutert, welche Informationen beim Spielen
+  von <strong>Chesshape</strong> („App") verarbeitet werden. <strong>Wir fragen
+  weder Namen noch E-Mail-Adresse oder Konto ab und betreiben keinen Server,
+  der Spiel- oder Kaufdaten speichert.</strong> Spiel- und Auslieferungsdaten
+  werden lokal verarbeitet; Google verarbeitet Werbedaten; Zahlungen werden
+  wie unten beschrieben vom Apple App Store oder von Google Play verarbeitet.</p>""",
+        "local_heading": "1. Lokale Spiel- und Kaufdaten",
+        "local_body": """<p>Die App speichert in ihrem privaten lokalen Bereich:</p>
+  <ul><li>Levelfortschritt, Sterne, Bestwerte, Einstellungen, Sprache und Barrierefreiheit;</li>
+  <li>Tipp-Guthaben und Tagesrätsel-Serie;</li>
+  <li>Premium-Berechtigung und eine kompakte Transaktions-/Auslieferungsmarke gegen doppelte Gutschriften.</li></ul>
+  <p>Vollständige Store-Belege, Zahlungskartendaten oder Store-Zugangsdaten
+  werden nicht gespeichert. Diese lokalen Daten sind für uns nicht einsehbar.
+  Je nach Betriebssystem-, Konto- und Geräteeinstellungen können Apple- oder
+  Google-Sicherung und Geräteübertragung sie kopieren oder wiederherstellen.
+  Eine Deinstallation entfernt gewöhnlich die Gerätekopie, garantiert aber
+  nicht die Löschung einer später wiederherstellbaren Plattform-Sicherung. Die
+  App liest keine Kontakte, Fotos, Dateien, genauen Standortdaten oder sonstigen persönlichen Inhalte.</p>""",
+        "payment_heading": "3. In-App-Käufe und Zahlungsdaten",
+        "payment_body": """<p>In-App-Käufe werden unter iOS vom <strong>Apple App Store</strong> und
+  unter Android von <strong>Google Play</strong> nach deren Bedingungen und
+  Datenschutzregeln verarbeitet. Wir erhalten keine Kartendaten oder Zahlungs-
+  zugangsdaten. Für Auslieferung und Premium-Wiederherstellung stellt das native
+  Abrechnungs-SDK der App vorübergehend einen Store-Beleg oder Kauf-Token sowie
+  Produktkennung, Kaufstatus, Datum und Transaktionsreferenz bereit. Diese Werte
+  werden nicht an einen Entwickler-Server gesendet; gespeichert bleibt nur der
+  kompakte Einweg-Auslieferungsfingerabdruck aus Abschnitt 1. Erstattungen und
+  Widerrufe bearbeitet der Store. Diese rein clientseitige Version hat keinen maßgeblichen Server-
+  abgleich: Die App erfährt eine Änderung nur, wenn der Store sie später meldet,
+  und erkennt bzw. entzieht lokales Premium/Inhalte unter Umständen verspätet
+  oder gar nicht. Verbrauchte Tipps können nicht zuverlässig zurückgebucht
+  werden. Gespeichert werden nur Berechtigung/Guthaben und die kompakte Marke aus Abschnitt 1.</p>""",
+        "security_heading": "7. Sicherheit, Speicherdauer und Sicherung",
+        "security_body": """<p>Lokale Spiel- und Auslieferungsdaten schützt die App-Sandbox des
+  Betriebssystems. Sie bleiben normalerweise während der Installation bestehen
+  und können in eine von Ihnen und der Plattform gesteuerte OS-Sicherung oder
+  Geräteübertragung einfließen. Die Deinstallation entfernt meist die lokale
+  Kopie; eine Plattform-Sicherung kann sie später wiederherstellen. Auf einem
+  vom Entwickler betriebenen Server behalten wir keine Kopie.</p>""",
+        "terms_heading": "3. In-App-Käufe",
+        "terms_body": """<p>Die App bietet über Apple App Store oder Google Play optional:</p>
+  <ul><li><code>premium_no_ads</code> ist ein nicht verbrauchbarer Kauf, der Premium
+  aktiviert und Werbung entfernt. Der erste berechtigte Originalkauf enthält
+  einmalig 25 Tipps. Premium kann wiederhergestellt werden; eine frische
+  Wiederherstellung gewährt diesen Einmalbonus nicht erneut.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code> und
+  <code>hints_100</code> sind verbrauchbare Tipp-Pakete.</li></ul>
+  <p>Es gibt <strong>keine Abonnements</strong>. Der Store bestimmt und zeigt vor
+  Bestätigung den endgültigen lokalisierten Preis, die Währung und anfallende
+  Steuern; maßgeblich ist der Store-Preis. Es gelten zusätzlich die Store-Bedingungen.</p>
+  <p>Premium lässt sich mit demselben Store-Konto wiederherstellen. Verbrauchte
+  Tipp-Pakete stellen Stores nicht geräte- oder installationsübergreifend wieder
+  her; Chesshape hat kein Konto/Server, der sie neu erzeugt. Ein lokales
+  Restguthaben erscheint nur wieder, falls das Betriebssystem die lokalen
+  App-Daten wiederherstellt, was nicht garantiert ist. Erstattungen und
+  Widerrufe entscheidet und verarbeitet Apple bzw. Google. Ohne maßgeblichen
+  Serverabgleich empfängt, erkennt oder berücksichtigt die App diese Änderung
+  unter Umständen verspätet oder gar nicht; verbrauchte Tipps können nicht
+  zuverlässig zurückgebucht werden. Unabdingbare Verbraucherrechte bleiben unberührt.</p>""",
+    },
+    "es": {
+        "privacy_intro": """<p>Esta Política de Privacidad explica qué información se trata al jugar a
+  <strong>Chesshape</strong> («la App»). <strong>No pedimos nombre, correo ni
+  cuenta, ni operamos un servidor que guarde datos de juego o compras.</strong>
+  Los registros de juego y entrega se tratan localmente; Google trata datos
+  publicitarios; y Apple App Store o Google Play procesa los pagos como se
+  explica a continuación.</p>""",
+        "local_heading": "1. Registros locales de juego y compras",
+        "local_body": """<p>La App conserva en su almacenamiento local privado:</p>
+  <ul><li>progreso, estrellas, mejores puntuaciones, ajustes, idioma y accesibilidad;</li>
+  <li>saldo de pistas y racha del puzle diario;</li>
+  <li>derecho Premium y una marca compacta de transacción/entrega que evita concesiones duplicadas.</li></ul>
+  <p>No guarda el recibo completo de la tienda, datos de tarjeta ni credenciales
+  de la tienda. No podemos ver estos registros locales. Según los ajustes del
+  sistema, cuenta y dispositivo, las funciones de copia o transferencia de
+  Apple o Google pueden copiarlos o restaurarlos. Desinstalar suele borrar la
+  copia del dispositivo, pero no garantiza eliminar una copia de plataforma
+  que pueda restaurarse después. La App no lee contactos, fotos, archivos,
+  ubicación precisa ni otro contenido personal.</p>""",
+        "payment_heading": "3. Compras dentro de la App y datos de pago",
+        "payment_body": """<p>Las compras son procesadas por <strong>Apple App Store</strong> en iOS y
+  <strong>Google Play</strong> en Android conforme a sus términos y políticas.
+  No recibimos datos de tarjeta ni credenciales de facturación. Para entregar
+  un producto y restaurar Premium, el SDK de facturación nativo facilita
+  temporalmente a la App un recibo o token de compra, el identificador del
+  producto, estado, fecha y referencia de la transacción. Estos valores no se
+  envían a un servidor del desarrollador; solo se conserva la huella compacta
+  unidireccional de entrega indicada en la sección 1. La tienda gestiona
+  reembolsos y revocaciones. Esta versión solo cliente no tiene
+  conciliación autorizada en servidor: la App conocerá un cambio únicamente si
+  la tienda lo comunica después, y puede no detectar o retirar Premium/contenido
+  local a tiempo o nunca. Las pistas consumidas no pueden recuperarse de forma
+  fiable. La App solo conserva el derecho/saldo y la marca compacta de la sección 1.</p>""",
+        "security_heading": "7. Seguridad, conservación y copias",
+        "security_body": """<p>El sandbox del sistema protege los registros locales de juego y entrega.
+  Normalmente permanecen mientras la App está instalada y pueden incluirse en
+  una copia del sistema o transferencia controlada por ti y la plataforma.
+  Desinstalar suele eliminar la copia local; una copia de plataforma puede
+  restaurarla más tarde. No guardamos copia en un servidor del desarrollador.</p>""",
+        "terms_heading": "3. Compras dentro de la App",
+        "terms_body": """<p>La App ofrece opcionalmente mediante Apple App Store o Google Play:</p>
+  <ul><li><code>premium_no_ads</code> es una compra no consumible que activa
+  Premium y elimina anuncios. La primera compra original apta incluye una sola
+  bonificación de 25 pistas. Premium puede restaurarse, pero una restauración
+  nueva no vuelve a conceder esa bonificación.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code> y
+  <code>hints_100</code> son paquetes consumibles de pistas.</li></ul>
+  <p><strong>No hay suscripciones.</strong> La tienda controla y muestra antes de
+  confirmar el precio localizado final, moneda e impuestos; prevalece ese
+  precio. También se aplican los términos de la tienda.</p>
+  <p>Premium se restaura con la misma cuenta de tienda. Las tiendas no restauran
+  paquetes consumidos entre dispositivos o reinstalaciones, y Chesshape no tiene
+  cuenta/servidor que los recree. Un saldo local restante solo podría reaparecer
+  si el sistema restaura los datos locales, sin garantía. Apple o Google decide
+  y procesa reembolsos y revocaciones. Sin conciliación autorizada en servidor,
+  la App puede no recibir, detectar o reflejar el cambio a tiempo o nunca; las
+  pistas consumidas no pueden recuperarse de forma fiable. No se limitan
+  derechos irrenunciables del consumidor.</p>""",
+    },
+    "fr": {
+        "privacy_intro": """<p>Cette Politique explique les informations traitées lorsque vous jouez à
+  <strong>Chesshape</strong> (« l'App »). <strong>Nous ne demandons ni nom, ni
+  e-mail, ni compte et n'exploitons aucun serveur stockant les données de jeu
+  ou d'achat.</strong> Les registres de jeu et de livraison sont traités
+  localement ; Google traite les données publicitaires ; Apple App Store ou
+  Google Play traite les paiements comme décrit ci-dessous.</p>""",
+        "local_heading": "1. Registres locaux de jeu et d'achat",
+        "local_body": """<p>L'App conserve dans son stockage local privé :</p>
+  <ul><li>progression, étoiles, scores, réglages, langue et accessibilité ;</li>
+  <li>solde d'indices et série du puzzle quotidien ;</li>
+  <li>droit Premium et marque compacte de transaction/livraison empêchant une double attribution.</li></ul>
+  <p>Elle ne stocke ni reçu complet du store, ni carte de paiement, ni identifiants
+  du store. Nous ne voyons pas ces registres locaux. Selon les réglages du
+  système, du compte et de l'appareil, la sauvegarde ou le transfert Apple/Google
+  peut les copier ou les restaurer. Désinstaller supprime normalement la copie
+  de l'appareil, sans garantir la suppression d'une sauvegarde de plateforme
+  restaurable ultérieurement. L'App ne lit ni contacts, photos, fichiers,
+  position précise ou autre contenu personnel.</p>""",
+        "payment_heading": "3. Achats intégrés et données de paiement",
+        "payment_body": """<p>Les achats sont traités par <strong>Apple App Store</strong> sous iOS et
+  <strong>Google Play</strong> sous Android selon leurs propres conditions et
+  politiques. Nous ne recevons ni carte ni identifiants de facturation. Pour la
+  livraison et la restauration de Premium, le SDK de paiement natif fournit
+  temporairement à l'App un reçu ou jeton d'achat, l'identifiant produit, l'état,
+  la date et la référence de transaction. Ces valeurs ne sont pas envoyées à un
+  serveur du développeur ; seule l'empreinte de livraison compacte à sens unique
+  décrite à la section 1 est conservée. Le store traite restitutions et
+  révocations. Cette version uniquement
+  côté client ne dispose d'aucun rapprochement serveur faisant autorité : l'App
+  ne connaît un changement que si le store le signale plus tard et peut ne pas
+  détecter ni retirer Premium/contenu local rapidement, voire jamais. Les indices
+  consommés ne peuvent pas être repris de façon fiable. L'App ne garde que le
+  droit/solde et la marque compacte de la section 1.</p>""",
+        "security_heading": "7. Sécurité, conservation et sauvegarde",
+        "security_body": """<p>Le bac à sable du système protège les registres locaux de jeu et de
+  livraison. Ils demeurent normalement pendant l'installation et peuvent être
+  inclus dans une sauvegarde ou un transfert contrôlé par vous et la plateforme.
+  Désinstaller supprime généralement la copie locale ; une sauvegarde de
+  plateforme peut la restaurer. Aucun exemplaire n'est conservé sur un serveur du développeur.</p>""",
+        "terms_heading": "3. Achats intégrés",
+        "terms_body": """<p>L'App propose en option via Apple App Store ou Google Play :</p>
+  <ul><li><code>premium_no_ads</code> est un achat non consommable activant
+  Premium et supprimant les publicités. Le premier achat original admissible
+  comprend un bonus unique de 25 indices. Premium peut être restauré, mais une
+  nouvelle restauration ne redonne pas ce bonus.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code> et
+  <code>hints_100</code> sont des lots d'indices consommables.</li></ul>
+  <p>Il n'existe <strong>aucun abonnement</strong>. Le store contrôle et affiche
+  avant confirmation le prix localisé final, la devise et les taxes ; ce prix
+  prévaut. Ses conditions s'appliquent également.</p>
+  <p>Premium se restaure avec le même compte de store. Les stores ne restaurent
+  pas les lots consommés entre appareils ou réinstallations et Chesshape n'a
+  aucun compte/serveur pour les recréer. Un solde local restant ne peut réapparaître
+  que si le système restaure les données locales, sans garantie. Apple ou Google
+  décide et traite restitutions et révocations. Sans rapprochement serveur
+  faisant autorité, l'App peut ne pas recevoir, détecter ou refléter ce changement
+  rapidement, voire jamais ; les indices consommés ne peuvent pas être repris de
+  façon fiable. Les droits impératifs du consommateur restent inchangés.</p>""",
+    },
+    "it": {
+        "privacy_intro": """<p>Questa Informativa spiega quali informazioni vengono trattate giocando a
+  <strong>Chesshape</strong> (l'“App”). <strong>Non chiediamo nome, e-mail o
+  account e non gestiamo server che conservano dati di gioco o acquisto.</strong>
+  I registri di gioco e consegna sono trattati localmente; Google tratta dati
+  pubblicitari; Apple App Store o Google Play tratta i pagamenti come descritto sotto.</p>""",
+        "local_heading": "1. Registri locali di gioco e acquisto",
+        "local_body": """<p>L'App conserva nell'archivio locale privato:</p>
+  <ul><li>progressi, stelle, record, impostazioni, lingua e accessibilità;</li>
+  <li>saldo degli aiuti e serie del puzzle giornaliero;</li>
+  <li>diritto Premium e un indicatore compatto di transazione/consegna contro accrediti duplicati.</li></ul>
+  <p>Non salva la ricevuta completa dello store, dati della carta o credenziali
+  dello store. Non possiamo vedere questi registri locali. Secondo le impostazioni
+  di sistema, account e dispositivo, backup o trasferimento Apple/Google può
+  copiarli o ripristinarli. Disinstallare elimina normalmente la copia sul
+  dispositivo, ma non garantisce l'eliminazione di un backup di piattaforma
+  ripristinabile. L'App non legge contatti, foto, file, posizione precisa o altri contenuti personali.</p>""",
+        "payment_heading": "3. Acquisti in-app e dati di pagamento",
+        "payment_body": """<p>Gli acquisti sono elaborati da <strong>Apple App Store</strong> su iOS e
+  <strong>Google Play</strong> su Android secondo i rispettivi termini e
+  informative. Non riceviamo dati della carta né credenziali di pagamento. Per
+  consegna e ripristino Premium, l'SDK di fatturazione nativo fornisce
+  temporaneamente all'App una ricevuta o un token d'acquisto, ID prodotto, stato,
+  data e riferimento della transazione. Questi valori non vengono inviati a un
+  server dello sviluppatore; resta solo l'impronta compatta unidirezionale di
+  consegna descritta nella sezione 1. Rimborsi e revoche sono gestiti dallo
+  store. Questa versione solo client non ha una riconciliazione
+  server autorevole: l'App può conoscere una modifica solo se lo store la segnala
+  in seguito e potrebbe non rilevare o revocare Premium/contenuti locali
+  tempestivamente o mai. Gli aiuti consumati non possono essere recuperati in
+  modo affidabile. L'App conserva solo diritto/saldo e indicatore compatto della sezione 1.</p>""",
+        "security_heading": "7. Sicurezza, conservazione e backup",
+        "security_body": """<p>La sandbox del sistema protegge i registri locali di gioco e consegna.
+  Restano normalmente durante l'installazione e possono entrare in backup o
+  trasferimenti controllati dall'utente e dalla piattaforma. Disinstallare
+  elimina di solito la copia locale; un backup della piattaforma può ripristinarla.
+  Non conserviamo copie su server gestiti dallo sviluppatore.</p>""",
+        "terms_heading": "3. Acquisti in-app",
+        "terms_body": """<p>L'App offre facoltativamente tramite Apple App Store o Google Play:</p>
+  <ul><li><code>premium_no_ads</code> è un acquisto non consumabile che attiva
+  Premium e rimuove la pubblicità. Il primo acquisto originale idoneo include un
+  bonus una tantum di 25 aiuti. Premium è ripristinabile, ma un ripristino su una
+  nuova installazione non concede nuovamente il bonus.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code> e
+  <code>hints_100</code> sono pacchetti consumabili di aiuti.</li></ul>
+  <p>Non ci sono <strong>abbonamenti</strong>. Lo store controlla e mostra prima
+  della conferma prezzo localizzato finale, valuta e imposte; prevale il prezzo
+  dello store. Si applicano anche i suoi termini.</p>
+  <p>Premium è ripristinabile con lo stesso account dello store. Gli store non
+  ripristinano pacchetti consumati tra dispositivi o reinstallazioni e Chesshape
+  non ha account/server per ricrearli. Un saldo locale residuo può ricomparire
+  solo se il sistema ripristina i dati locali, senza garanzia. Apple o Google
+  decide ed elabora rimborsi e revoche. Senza riconciliazione server autorevole,
+  l'App potrebbe non ricevere, rilevare o riflettere la modifica tempestivamente
+  o mai; gli aiuti consumati non possono essere recuperati in modo affidabile.
+  Restano fermi i diritti inderogabili del consumatore.</p>""",
+    },
+    "pt": {
+        "privacy_intro": """<p>Esta Política explica as informações tratadas ao jogar
+  <strong>Chesshape</strong> (o “App”). <strong>Não pedimos nome, e-mail ou conta
+  e não operamos servidor que guarde dados de jogo ou compra.</strong> Registros
+  de jogo e entrega são tratados localmente; o Google trata dados publicitários;
+  Apple App Store ou Google Play processa pagamentos conforme abaixo.</p>""",
+        "local_heading": "1. Registros locais de jogo e compra",
+        "local_body": """<p>O App mantém no armazenamento local privado:</p>
+  <ul><li>progresso, estrelas, recordes, configurações, idioma e acessibilidade;</li>
+  <li>saldo de dicas e sequência do puzzle diário;</li>
+  <li>direito Premium e marcador compacto de transação/entrega contra concessões duplicadas.</li></ul>
+  <p>Não guarda recibo completo da loja, dados de cartão ou credenciais da loja.
+  Não vemos esses registros locais. Conforme configurações do sistema, conta e
+  dispositivo, backup ou transferência Apple/Google pode copiá-los ou restaurá-los.
+  Desinstalar normalmente remove a cópia do dispositivo, mas não garante apagar
+  backup da plataforma restaurável depois. O App não lê contatos, fotos,
+  arquivos, localização precisa nem outro conteúdo pessoal.</p>""",
+        "payment_heading": "3. Compras no App e dados de pagamento",
+        "payment_body": """<p>Compras são processadas pela <strong>Apple App Store</strong> no iOS e
+  <strong>Google Play</strong> no Android conforme seus termos e políticas. Não
+  recebemos cartão nem credenciais de cobrança. Para entrega e restauração
+  Premium, o SDK de faturamento nativo fornece temporariamente ao App um recibo
+  ou token de compra, ID do produto, estado, data e referência da transação.
+  Esses valores não são enviados a servidor do desenvolvedor; permanece apenas
+  a impressão digital compacta e unidirecional de entrega descrita na seção 1.
+  A loja trata reembolsos e revogações. Esta
+  versão somente cliente não tem conciliação oficial no servidor: o App só pode
+  saber da mudança se a loja a informar depois e talvez não detecte ou revogue
+  Premium/conteúdo local prontamente ou nunca. Dicas consumidas não podem ser
+  recuperadas com confiança. O App guarda apenas direito/saldo e marcador compacto da seção 1.</p>""",
+        "security_heading": "7. Segurança, retenção e backup",
+        "security_body": """<p>O sandbox do sistema protege registros locais de jogo e entrega. Eles
+  normalmente permanecem durante a instalação e podem integrar backup ou
+  transferência controlada por você e pela plataforma. Desinstalar costuma
+  remover a cópia local; backup da plataforma pode restaurá-la. Não guardamos
+  cópia em servidor operado pelo desenvolvedor.</p>""",
+        "terms_heading": "3. Compras no App",
+        "terms_body": """<p>O App oferece opcionalmente pela Apple App Store ou Google Play:</p>
+  <ul><li><code>premium_no_ads</code> é compra não consumível que ativa Premium e
+  remove anúncios. A primeira compra original elegível inclui bônus único de 25
+  dicas. Premium pode ser restaurado, mas uma restauração nova não concede o
+  bônus outra vez.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code> e
+  <code>hints_100</code> são pacotes consumíveis de dicas.</li></ul>
+  <p><strong>Não há assinaturas.</strong> A loja controla e mostra antes da
+  confirmação preço localizado final, moeda e impostos; vale o preço da loja.
+  Também se aplicam os termos dela.</p>
+  <p>Premium é restaurável com a mesma conta da loja. Lojas não restauram pacotes
+  consumidos entre dispositivos ou reinstalações e Chesshape não possui conta/
+  servidor para recriá-los. Saldo local restante só pode reaparecer se o sistema
+  restaurar dados locais, sem garantia. Apple ou Google decide e processa
+  reembolsos e revogações. Sem conciliação oficial no servidor, o App pode não
+  receber, detectar ou refletir a mudança prontamente ou nunca; dicas consumidas
+  não podem ser recuperadas com confiança. Direitos irrenunciáveis do consumidor permanecem.</p>""",
+    },
+    "ru": {
+        "privacy_intro": """<p>Настоящая Политика объясняет обработку информации при игре в
+  <strong>Chesshape</strong> («Приложение»). <strong>Мы не запрашиваем имя,
+  e-mail или учётную запись и не используем сервер для хранения игровых данных
+  или покупок.</strong> Записи игры и выдачи хранятся локально; Google
+  обрабатывает рекламные данные; платежи обрабатывает Apple App Store или Google Play.</p>""",
+        "local_heading": "1. Локальные записи игры и покупок",
+        "local_body": """<p>В закрытом локальном хранилище Приложение сохраняет:</p>
+  <ul><li>прогресс, звёзды, рекорды, настройки, язык и доступность;</li>
+  <li>остаток подсказок и серию ежедневных головоломок;</li>
+  <li>право Premium и компактную отметку транзакции/выдачи против повторного начисления.</li></ul>
+  <p>Полный чек магазина, данные карты и учётные данные магазина не сохраняются.
+  Мы не видим эти локальные записи. В зависимости от настроек системы, учётной
+  записи и устройства резервное копирование или перенос Apple/Google может их
+  скопировать или восстановить. Удаление обычно стирает копию на устройстве, но
+  не гарантирует удаление резервной копии платформы. Приложение не читает
+  контакты, фото, файлы, точное местоположение или иной личный контент.</p>""",
+        "payment_heading": "3. Покупки в Приложении и платёжные данные",
+        "payment_body": """<p>Покупки обрабатывает <strong>Apple App Store</strong> на iOS и
+  <strong>Google Play</strong> на Android по собственным условиям и политикам.
+  Мы не получаем данные карты или платёжные реквизиты. Для выдачи и восстановления
+  Premium нативный платёжный SDK временно передаёт Приложению чек либо токен
+  покупки, идентификатор товара, статус, дату и ссылку транзакции. Эти значения
+  не отправляются на сервер разработчика; сохраняется только компактный
+  односторонний отпечаток выдачи из раздела 1. Возвраты и отзывы обрабатывает
+  магазин. В этой
+  клиентской версии нет авторитетной серверной сверки: Приложение узнает об
+  изменении, только если магазин сообщит позже, и может не обнаружить или не
+  отменить локальный Premium/контент вовремя либо вообще. Потраченные подсказки
+  нельзя надёжно отозвать. Хранятся лишь право/остаток и компактная отметка из раздела 1.</p>""",
+        "security_heading": "7. Безопасность, хранение и резервные копии",
+        "security_body": """<p>Локальные записи игры и выдачи защищены песочницей ОС. Обычно они
+  существуют, пока Приложение установлено, и могут попасть в резервную копию
+  или перенос, контролируемые вами и платформой. Удаление обычно стирает локальную
+  копию; резервная копия платформы может её восстановить. На сервере разработчика копий нет.</p>""",
+        "terms_heading": "3. Покупки в Приложении",
+        "terms_body": """<p>Через Apple App Store или Google Play по желанию предлагаются:</p>
+  <ul><li><code>premium_no_ads</code> — нерасходуемая покупка, включающая Premium
+  и убирающая рекламу. Первая подходящая исходная покупка даёт разовый бонус 25
+  подсказок. Premium восстанавливается, но новое восстановление повторно бонус не выдаёт.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code> и
+  <code>hints_100</code> — расходуемые наборы подсказок.</li></ul>
+  <p><strong>Подписок нет.</strong> Магазин определяет и показывает до подтверждения
+  итоговую локальную цену, валюту и налоги; действует цена магазина. Действуют и его условия.</p>
+  <p>Premium восстанавливается с той же учётной записью магазина. Расходуемые
+  наборы не восстанавливаются магазином между устройствами или переустановками;
+  у Chesshape нет учётной записи/сервера для их воссоздания. Локальный остаток
+  может вернуться лишь при восстановлении локальных данных ОС, что не гарантировано.
+  Возвраты и отзывы решает и обрабатывает Apple или Google. Без авторитетной
+  серверной сверки Приложение может не получить, не обнаружить или не отразить
+  изменение вовремя либо вообще; потраченные подсказки нельзя надёжно отозвать.
+  Неотчуждаемые права потребителя сохраняются.</p>""",
+    },
+    "id": {
+        "privacy_intro": """<p>Kebijakan ini menjelaskan informasi yang ditangani saat memainkan
+  <strong>Chesshape</strong> (“Aplikasi”). <strong>Kami tidak meminta nama,
+  e-mail, atau akun dan tidak mengoperasikan server yang menyimpan data gim atau
+  pembelian.</strong> Catatan gim dan pengiriman diproses lokal; Google memproses
+  data iklan; Apple App Store atau Google Play memproses pembayaran seperti di bawah.</p>""",
+        "local_heading": "1. Catatan gim dan pembelian lokal",
+        "local_body": """<p>Aplikasi menyimpan di penyimpanan lokal privat:</p>
+  <ul><li>progres, bintang, skor, pengaturan, bahasa, dan aksesibilitas;</li>
+  <li>saldo petunjuk dan rangkaian teka-teki harian;</li>
+  <li>hak Premium dan penanda transaksi/pengiriman ringkas untuk mencegah pemberian ganda.</li></ul>
+  <p>Aplikasi tidak menyimpan tanda terima toko lengkap, data kartu, atau
+  kredensial toko. Kami tidak dapat melihat catatan lokal ini. Bergantung pada
+  pengaturan sistem, akun, dan perangkat, pencadangan atau transfer Apple/Google
+  dapat menyalin atau memulihkannya. Menghapus instalasi biasanya menghapus
+  salinan perangkat, tetapi tidak menjamin cadangan platform yang dapat dipulihkan
+  ikut terhapus. Aplikasi tidak membaca kontak, foto, berkas, lokasi presisi, atau konten pribadi lain.</p>""",
+        "payment_heading": "3. Pembelian dalam aplikasi dan data pembayaran",
+        "payment_body": """<p>Pembelian diproses oleh <strong>Apple App Store</strong> di iOS dan
+  <strong>Google Play</strong> di Android menurut ketentuan dan kebijakan mereka.
+  Kami tidak menerima data kartu atau kredensial penagihan. Untuk pengiriman dan
+  pemulihan Premium, SDK penagihan native memberikan sementara tanda terima atau
+  token pembelian, ID produk, status, tanggal, dan referensi transaksi kepada
+  Aplikasi. Nilai tersebut tidak dikirim ke server pengembang; hanya sidik jari
+  pengiriman satu arah yang ringkas pada Bagian 1 yang disimpan. Toko menangani
+  pengembalian dana/pencabutan.
+  Versi khusus klien ini tidak memiliki rekonsiliasi server yang berwenang:
+  Aplikasi hanya mengetahui perubahan jika toko melaporkannya kemudian dan
+  mungkin tidak mendeteksi atau mencabut Premium/konten lokal dengan segera atau
+  sama sekali. Petunjuk yang telah dipakai tidak dapat ditarik kembali secara
+  andal. Aplikasi hanya menyimpan hak/saldo dan penanda ringkas pada Bagian 1.</p>""",
+        "security_heading": "7. Keamanan, retensi, dan pencadangan",
+        "security_body": """<p>Sandbox sistem melindungi catatan gim dan pengiriman lokal. Catatan
+  biasanya ada selama Aplikasi terpasang dan dapat masuk ke cadangan atau
+  transfer yang dikontrol Anda dan platform. Menghapus instalasi biasanya
+  menghapus salinan lokal; cadangan platform dapat memulihkannya. Kami tidak
+  menyimpan salinan di server pengembang.</p>""",
+        "terms_heading": "3. Pembelian dalam aplikasi",
+        "terms_body": """<p>Aplikasi menawarkan secara opsional melalui Apple App Store atau Google Play:</p>
+  <ul><li><code>premium_no_ads</code> adalah pembelian non-konsumsi yang mengaktifkan
+  Premium dan menghapus iklan. Pembelian asli pertama yang memenuhi syarat
+  mencakup bonus satu kali 25 petunjuk. Premium dapat dipulihkan, tetapi pemulihan
+  baru tidak memberikan bonus lagi.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code>, dan
+  <code>hints_100</code> adalah paket petunjuk konsumsi.</li></ul>
+  <p><strong>Tidak ada langganan.</strong> Toko mengontrol dan menampilkan sebelum
+  konfirmasi harga lokal akhir, mata uang, dan pajak; harga toko berlaku. Ketentuan toko juga berlaku.</p>
+  <p>Premium dapat dipulihkan dengan akun toko yang sama. Toko tidak memulihkan
+  paket yang telah dikonsumsi antarperangkat atau instalasi ulang, dan Chesshape
+  tidak memiliki akun/server untuk membuatnya kembali. Sisa saldo lokal mungkin
+  kembali hanya jika sistem memulihkan data lokal, tanpa jaminan. Apple atau
+  Google memutuskan dan memproses pengembalian dana/pencabutan. Tanpa rekonsiliasi
+  server yang berwenang, Aplikasi mungkin tidak menerima, mendeteksi, atau
+  mencerminkan perubahan dengan segera atau sama sekali; petunjuk terpakai tidak
+  dapat ditarik kembali secara andal. Hak konsumen yang tidak dapat dikesampingkan tetap berlaku.</p>""",
+    },
+    "ja": {
+        "privacy_intro": """<p>本ポリシーは <strong>Chesshape</strong>（以下「本アプリ」）で扱う情報を
+  説明します。<strong>氏名、メール、アカウントを求めず、ゲームまたは購入記録を保存する
+  サーバーも運用しません。</strong> ゲームと付与記録は端末内で処理され、広告データは
+  Google、支払いは下記のとおり Apple App Store または Google Play が処理します。</p>""",
+        "local_heading": "1. ゲームと購入に関するローカル記録",
+        "local_body": """<p>本アプリのプライベートなローカル領域には次を保存します。</p>
+  <ul><li>進行状況、スター、スコア、設定、言語、アクセシビリティ</li>
+  <li>ヒント残数、デイリーパズルの連続記録</li>
+  <li>Premium 権利と二重付与を防ぐコンパクトな取引・付与マーカー</li></ul>
+  <p>ストアの完全なレシート、カード情報、ストア認証情報は保存しません。これらの
+  ローカル記録を当方は参照できません。OS、アカウント、端末の設定により、Apple / Google
+  のバックアップまたは端末移行でコピー・復元される場合があります。アンインストールは
+  通常端末上のコピーを削除しますが、後で復元できるプラットフォームのバックアップまで
+  削除される保証はありません。連絡先、写真、ファイル、正確な位置情報などは読み取りません。</p>""",
+        "payment_heading": "3. アプリ内購入と支払いデータ",
+        "payment_body": """<p>購入は iOS では <strong>Apple App Store</strong>、Android では
+  <strong>Google Play</strong> が各規約・ポリシーに基づいて処理します。当方はカード情報や
+  支払い認証情報を受け取りません。商品付与と Premium 復元のため、ネイティブ課金 SDK はレシート
+  または購入トークン、商品 ID、状態、日付、取引参照を一時的に本アプリへ渡します。これらは
+  開発者サーバーへ送信されず、第1項のコンパクトな一方向の付与フィンガープリントだけを保存します。
+  返金・取消はストアが処理します。このクライアントのみの
+  バージョンには権威あるサーバー照合がないため、ストアが後で通知した場合だけ変更を知り、ローカルの
+  Premium／コンテンツを速やかに、または一切検出・取消できない場合があります。消費済みヒントを
+  確実に回収することはできません。本アプリが保存するのは第1項の権利・残数とコンパクトなマーカーのみです。</p>""",
+        "security_heading": "7. セキュリティ、保持、バックアップ",
+        "security_body": """<p>ローカルのゲーム・付与記録は OS のアプリサンドボックスで保護されます。通常は
+  インストール中保持され、お客様とプラットフォームが管理する OS バックアップや端末移行に
+  含まれる場合があります。アンインストールで通常ローカルコピーは消えますが、プラットフォームの
+  バックアップから復元されることがあります。開発者運用サーバーにコピーは保持しません。</p>""",
+        "terms_heading": "3. アプリ内購入",
+        "terms_body": """<p>Apple App Store または Google Play を通じて任意で次を提供します。</p>
+  <ul><li><code>premium_no_ads</code> は Premium を有効にして広告をなくす非消耗型商品です。
+  対象となる最初の新規購入には1回限り25ヒントが付きます。Premium は復元できますが、
+  新しい環境での復元時にこのボーナスは再付与されません。</li>
+  <li><code>hints_3</code>、<code>hints_10</code>、<code>hints_50</code>、
+  <code>hints_100</code> は消耗型ヒントパックです。</li></ul>
+  <p><strong>サブスクリプションはありません。</strong> 最終的な現地価格、通貨、税は確認前に
+  ストアが表示・決定し、その価格が適用されます。ストアの規約も適用されます。</p>
+  <p>Premium は同じストアアカウントで復元できます。消費済みヒントパックは端末間・再インストール時に
+  ストアから復元されず、Chesshape に再作成するアカウント／サーバーはありません。残ったローカル残数は
+  OS がローカルデータを復元した場合に限り戻ることがあり、保証されません。返金・取消は Apple または
+  Google が判断・処理します。権威あるサーバー照合がないため、本アプリは変更を速やかに、または一切
+  受信・検出・反映できない場合があり、消費済みヒントを確実に回収することはできません。放棄できない消費者の権利は制限されません。</p>""",
+    },
+    "ko": {
+        "privacy_intro": """<p>본 방침은 <strong>Chesshape</strong>(이하 “앱”)에서 처리하는 정보를
+  설명합니다. <strong>이름, 이메일, 계정을 요구하지 않으며 게임 또는 구매 기록을 저장하는
+  서버도 운영하지 않습니다.</strong> 게임 및 지급 기록은 기기에서 처리되고, 광고 데이터는
+  Google, 결제는 아래와 같이 Apple App Store 또는 Google Play가 처리합니다.</p>""",
+        "local_heading": "1. 로컬 게임 및 구매 기록",
+        "local_body": """<p>앱의 비공개 로컬 저장소에는 다음이 저장됩니다.</p>
+  <ul><li>진행도, 별, 점수, 설정, 언어, 접근성</li>
+  <li>힌트 잔액 및 일일 퍼즐 연속 기록</li>
+  <li>Premium 권리와 중복 지급 방지용 간단한 거래·지급 표시</li></ul>
+  <p>전체 스토어 영수증, 결제 카드 정보 또는 스토어 인증 정보는 저장하지 않습니다.
+  저희는 이 로컬 기록을 볼 수 없습니다. OS, 계정 및 기기 설정에 따라 Apple/Google
+  백업이나 기기 이전으로 복사 또는 복원될 수 있습니다. 앱 삭제 시 일반적으로 기기
+  사본은 지워지지만 나중에 복원 가능한 플랫폼 백업의 삭제까지 보장되지는 않습니다.
+  연락처, 사진, 파일, 정확한 위치 또는 기타 개인 콘텐츠를 읽지 않습니다.</p>""",
+        "payment_heading": "3. 인앱 구매 및 결제 데이터",
+        "payment_body": """<p>구매는 iOS에서 <strong>Apple App Store</strong>, Android에서
+  <strong>Google Play</strong>가 자체 약관과 정책에 따라 처리합니다. 저희는 카드 정보나
+  결제 인증 정보를 받지 않습니다. 상품 지급과 Premium 복원을 위해 네이티브 결제 SDK는
+  영수증 또는 구매 토큰, 상품 ID, 구매 상태, 날짜 및 거래 참조를 앱에 일시적으로 제공합니다.
+  이 값은 개발자 서버로 전송되지 않으며 제1항의 간단한 단방향 지급 지문만 저장됩니다. 환불·취소는 스토어가
+  처리합니다. 이 클라이언트 전용 버전에는 권한 있는 서버 대사가 없어 스토어가 나중에 알린
+  경우에만 변경을 알 수 있고 로컬 Premium/콘텐츠를 제때 또는 전혀 감지·취소하지 못할 수
+  있습니다. 사용한 힌트는 안정적으로 회수할 수 없습니다. 앱은 제1항의 권리/잔액과 간단한 표시만 저장합니다.</p>""",
+        "security_heading": "7. 보안, 보관 및 백업",
+        "security_body": """<p>로컬 게임 및 지급 기록은 OS 앱 샌드박스로 보호됩니다. 일반적으로 앱 설치 중
+  유지되며 사용자와 플랫폼이 관리하는 OS 백업이나 기기 이전에 포함될 수 있습니다.
+  앱 삭제 시 보통 로컬 사본은 지워지지만 플랫폼 백업에서 나중에 복원될 수 있습니다.
+  개발자 운영 서버에는 사본을 보관하지 않습니다.</p>""",
+        "terms_heading": "3. 인앱 구매",
+        "terms_body": """<p>Apple App Store 또는 Google Play를 통해 다음 선택 상품을 제공합니다.</p>
+  <ul><li><code>premium_no_ads</code>는 Premium을 활성화하고 광고를 제거하는 비소모성
+  상품입니다. 자격을 갖춘 최초 신규 구매에는 1회 25개 힌트 보너스가 포함됩니다.
+  Premium은 복원되지만 새 환경에서 복원할 때 이 보너스가 다시 지급되지는 않습니다.</li>
+  <li><code>hints_3</code>, <code>hints_10</code>, <code>hints_50</code>,
+  <code>hints_100</code>은 소모성 힌트 팩입니다.</li></ul>
+  <p><strong>구독은 없습니다.</strong> 최종 현지 가격, 통화 및 세금은 확인 전에 스토어가
+  표시하고 결정하며 스토어 가격이 적용됩니다. 해당 스토어 약관도 적용됩니다.</p>
+  <p>Premium은 같은 스토어 계정으로 복원할 수 있습니다. 소비된 힌트 팩은 기기 간 또는
+  재설치 시 스토어가 복원하지 않으며 Chesshape에는 이를 재생성할 계정/서버가 없습니다.
+  남은 로컬 잔액은 OS가 로컬 데이터를 복원한 경우에만 돌아올 수 있고 보장되지 않습니다.
+  환불 및 취소는 Apple 또는 Google이 결정·처리합니다. 권한 있는 서버 대사가 없어 앱은
+  변경을 제때 또는 전혀 수신·감지·반영하지 못할 수 있고, 사용한 힌트는 안정적으로 회수할
+  수 없습니다. 포기할 수 없는 소비자 권리는 제한되지 않습니다.</p>""",
+    },
+}
+
+
+# These short disclosures are kept separately from the longer editorial blocks
+# above so the release-critical purchase lifecycle facts can be asserted with
+# exact locale parity. They are appended at the normalization boundary below.
+_IAP_FINAL_DISCLOSURES = {
+    "en": {
+        "local_intent": """<p>If a Premium purchase remains unresolved or is
+  interrupted, the App also keeps a local purchase-intent marker containing the
+  product identifier, an app-generated attempt identifier and the purchase start
+  time. It is used only to resume or reconcile that attempt with the store and is
+  removed after a terminal result or when the 30-day reconciliation window
+  expires.</p>""",
+        "store_privacy": """<p>Apple and Google process their store and payment
+  data under their own privacy policies: <a href="https://www.apple.com/legal/privacy/"
+  rel="noopener">Apple Privacy Policy</a> and <a href="https://policies.google.com/privacy"
+  rel="noopener">Google Privacy Policy</a>.</p>""",
+        "pending": """<p>A pending or interrupted purchase is not delivered until
+  the applicable store reports it as completed.</p>""",
+        "cross_platform": """<p>Premium may be restored only with the same store
+  account on the platform where it was purchased. Apple App Store and Google Play
+  entitlements are separate; a purchase made through one cannot be restored
+  through the other.</p>""",
+    },
+    "tr": {
+        "local_intent": """<p>Premium satın alma işlemi sonuçlanmamış veya kesintiye
+  uğramışsa Uygulama ayrıca ürün kimliğini, Uygulamanın oluşturduğu deneme kimliğini
+  ve satın almanın başlangıç zamanını içeren yerel bir satın alma niyet işareti
+  tutar. Bu işaret yalnızca ilgili denemeyi sürdürmek veya mağaza kaydıyla
+  uzlaştırmak için kullanılır; kesin sonuç alındığında veya 30 günlük uzlaştırma
+  süresi dolduğunda silinir.</p>""",
+        "store_privacy": """<p>Apple ve Google, mağaza ve ödeme verilerini kendi
+  gizlilik politikalarına göre işler: <a href="https://www.apple.com/legal/privacy/"
+  rel="noopener">Apple Gizlilik Politikası</a> ve
+  <a href="https://policies.google.com/privacy" rel="noopener">Google Gizlilik
+  Politikası</a>.</p>""",
+        "pending": """<p>Bekleyen veya kesintiye uğrayan satın alma, ilgili mağaza
+  işlemin tamamlandığını bildirene kadar teslim edilmez.</p>""",
+        "cross_platform": """<p>Premium yalnızca satın alındığı platformdaki aynı
+  mağaza hesabıyla geri yüklenebilir. Apple App Store ve Google Play hakları
+  ayrıdır; birinden alınan ürün diğerinde geri yüklenemez.</p>""",
+    },
+    "de": {
+        "local_intent": """<p>Bleibt ein Premium-Kauf ungeklärt oder wird er
+  unterbrochen, speichert die App außerdem lokal eine Kaufabsichtsmarke mit
+  Produktkennung, einer von der App erzeugten Versuchskennung und Startzeit des
+  Kaufs. Sie dient nur dazu, diesen Versuch fortzusetzen oder mit dem Store
+  abzugleichen, und wird nach einem endgültigen Ergebnis oder nach Ablauf des
+  30-tägigen Abgleichszeitraums gelöscht.</p>""",
+        "store_privacy": """<p>Apple und Google verarbeiten ihre Store- und
+  Zahlungsdaten nach ihren eigenen Datenschutzrichtlinien:
+  <a href="https://www.apple.com/legal/privacy/" rel="noopener">Apple-
+  Datenschutzrichtlinie</a> und <a href="https://policies.google.com/privacy"
+  rel="noopener">Google-Datenschutzrichtlinie</a>.</p>""",
+        "pending": """<p>Ein ausstehender oder unterbrochener Kauf wird erst
+  ausgeliefert, wenn der jeweilige Store ihn als abgeschlossen meldet.</p>""",
+        "cross_platform": """<p>Premium kann nur mit demselben Store-Konto auf
+  der Plattform des Kaufs wiederhergestellt werden. Berechtigungen des Apple App
+  Store und von Google Play sind getrennt; ein Kauf aus dem einen Store kann im
+  anderen nicht wiederhergestellt werden.</p>""",
+    },
+    "es": {
+        "local_intent": """<p>Si una compra de Premium queda sin resolver o se
+  interrumpe, la App también conserva localmente una marca de intención de compra
+  con el identificador del producto, un identificador de intento generado por la
+  App y la hora de inicio de la compra. Solo se usa para reanudar o conciliar ese
+  intento con la tienda y se elimina tras un resultado definitivo o al vencer
+  el periodo de conciliación de 30 días.</p>""",
+        "store_privacy": """<p>Apple y Google tratan sus datos de tienda y pago
+  conforme a sus propias políticas de privacidad: la
+  <a href="https://www.apple.com/legal/privacy/" rel="noopener">Política de
+  Privacidad de Apple</a> y la <a href="https://policies.google.com/privacy"
+  rel="noopener">Política de Privacidad de Google</a>.</p>""",
+        "pending": """<p>Una compra pendiente o interrumpida no se entrega hasta
+  que la tienda correspondiente informa de que se ha completado.</p>""",
+        "cross_platform": """<p>Premium solo puede restaurarse con la misma cuenta
+  de tienda en la plataforma donde se compró. Los derechos de Apple App Store y
+  Google Play son independientes; una compra realizada en uno no puede
+  restaurarse en el otro.</p>""",
+    },
+    "fr": {
+        "local_intent": """<p>Si un achat Premium reste non résolu ou est
+  interrompu, l'App conserve aussi localement un marqueur d'intention d'achat
+  contenant l'identifiant du produit, un identifiant de tentative généré par
+  l'App et l'heure de début de l'achat. Il sert uniquement à reprendre ou à
+  rapprocher cette tentative avec le store et est supprimé après un résultat
+  définitif ou à l'expiration du délai de rapprochement de 30 jours.</p>""",
+        "store_privacy": """<p>Apple et Google traitent leurs données de store et
+  de paiement selon leurs propres politiques de confidentialité : la
+  <a href="https://www.apple.com/legal/privacy/" rel="noopener">Politique de
+  confidentialité d'Apple</a> et la <a href="https://policies.google.com/privacy"
+  rel="noopener">Politique de confidentialité de Google</a>.</p>""",
+        "pending": """<p>Un achat en attente ou interrompu n'est pas livré tant
+  que le store concerné ne l'a pas déclaré terminé.</p>""",
+        "cross_platform": """<p>Premium ne peut être restauré qu'avec le même
+  compte de store sur la plateforme où il a été acheté. Les droits Apple App
+  Store et Google Play sont distincts : un achat effectué sur l'un ne peut pas
+  être restauré sur l'autre.</p>""",
+    },
+    "it": {
+        "local_intent": """<p>Se un acquisto Premium resta irrisolto o viene
+  interrotto, l'App conserva inoltre in locale un indicatore di intenzione di
+  acquisto contenente l'identificativo del prodotto, un identificativo del
+  tentativo generato dall'App e l'ora di inizio dell'acquisto. Serve solo a
+  riprendere o riconciliare quel tentativo con lo store e viene eliminato dopo
+  un esito definitivo o alla scadenza del periodo di riconciliazione di 30
+  giorni.</p>""",
+        "store_privacy": """<p>Apple e Google trattano i dati dello store e di
+  pagamento secondo le rispettive informative sulla privacy:
+  <a href="https://www.apple.com/legal/privacy/" rel="noopener">Informativa sulla
+  privacy di Apple</a> e <a href="https://policies.google.com/privacy"
+  rel="noopener">Norme sulla privacy di Google</a>.</p>""",
+        "pending": """<p>Un acquisto in sospeso o interrotto non viene consegnato
+  finché lo store interessato non lo segnala come completato.</p>""",
+        "cross_platform": """<p>Premium può essere ripristinato solo con lo stesso
+  account dello store sulla piattaforma in cui è stato acquistato. I diritti di
+  Apple App Store e Google Play sono separati: un acquisto effettuato su uno non
+  può essere ripristinato sull'altro.</p>""",
+    },
+    "pt": {
+        "local_intent": """<p>Se uma compra Premium permanecer sem solução ou for
+  interrompida, o App também mantém localmente um marcador de intenção de compra
+  com o identificador do produto, um identificador de tentativa gerado pelo App
+  e o horário de início da compra. Ele é usado apenas para retomar ou conciliar
+  essa tentativa com a loja e é removido após um resultado definitivo ou ao
+  fim do período de conciliação de 30 dias.</p>""",
+        "store_privacy": """<p>Apple e Google tratam seus dados de loja e pagamento
+  conforme suas próprias políticas de privacidade: a
+  <a href="https://www.apple.com/legal/privacy/" rel="noopener">Política de
+  Privacidade da Apple</a> e a <a href="https://policies.google.com/privacy"
+  rel="noopener">Política de Privacidade do Google</a>.</p>""",
+        "pending": """<p>Uma compra pendente ou interrompida não é entregue até
+  que a loja correspondente informe que ela foi concluída.</p>""",
+        "cross_platform": """<p>Premium só pode ser restaurado com a mesma conta
+  da loja na plataforma em que foi comprado. Os direitos da Apple App Store e do
+  Google Play são separados; uma compra feita em uma loja não pode ser restaurada
+  na outra.</p>""",
+    },
+    "ru": {
+        "local_intent": """<p>Если покупка Premium остаётся незавершённой или
+  прерывается, Приложение также локально хранит отметку о намерении покупки:
+  идентификатор товара, созданный Приложением идентификатор попытки и время
+  начала покупки. Она используется только для продолжения или сверки этой
+  попытки с магазином и удаляется после окончательного результата либо по
+  истечении 30-дневного срока сверки.</p>""",
+        "store_privacy": """<p>Apple и Google обрабатывают данные магазина и
+  платежей согласно собственным политикам конфиденциальности:
+  <a href="https://www.apple.com/legal/privacy/" rel="noopener">Политике
+  конфиденциальности Apple</a> и <a href="https://policies.google.com/privacy"
+  rel="noopener">Политике конфиденциальности Google</a>.</p>""",
+        "pending": """<p>Ожидающая или прерванная покупка не выдаётся, пока
+  соответствующий магазин не сообщит о её завершении.</p>""",
+        "cross_platform": """<p>Premium можно восстановить только с той же учётной
+  записью магазина на платформе покупки. Права Apple App Store и Google Play
+  раздельны: покупку из одного магазина нельзя восстановить в другом.</p>""",
+    },
+    "id": {
+        "local_intent": """<p>Jika pembelian Premium belum terselesaikan atau
+  terputus, Aplikasi juga menyimpan secara lokal penanda niat pembelian yang
+  berisi pengenal produk, pengenal upaya yang dibuat Aplikasi, dan waktu mulai
+  pembelian. Penanda ini hanya digunakan untuk melanjutkan atau merekonsiliasi
+  upaya tersebut dengan toko dan dihapus setelah hasil akhir diperoleh atau
+  setelah masa rekonsiliasi 30 hari berakhir.</p>""",
+        "store_privacy": """<p>Apple dan Google memproses data toko dan pembayaran
+  mereka menurut kebijakan privasi masing-masing:
+  <a href="https://www.apple.com/legal/privacy/" rel="noopener">Kebijakan Privasi
+  Apple</a> dan <a href="https://policies.google.com/privacy" rel="noopener">Kebijakan
+  Privasi Google</a>.</p>""",
+        "pending": """<p>Pembelian yang tertunda atau terputus tidak diberikan
+  sampai toko terkait melaporkannya sebagai selesai.</p>""",
+        "cross_platform": """<p>Premium hanya dapat dipulihkan dengan akun toko
+  yang sama pada platform tempat pembelian dilakukan. Hak Apple App Store dan
+  Google Play terpisah; pembelian melalui salah satunya tidak dapat dipulihkan
+  melalui yang lain.</p>""",
+    },
+    "ja": {
+        "local_intent": """<p>Premium の購入が未解決または中断された場合、本アプリは商品 ID、
+  本アプリが生成した試行 ID、購入開始時刻を含む購入意図マーカーも端末内に保存します。
+  このマーカーは、その試行を再開またはストアと照合するためだけに使用し、最終結果が
+  確定した時点、または30日間の照合期間が満了した時点で削除します。</p>""",
+        "store_privacy": """<p>Apple と Google は、各社のプライバシーポリシーに基づき
+  ストアおよび支払いデータを処理します：<a href="https://www.apple.com/legal/privacy/"
+  rel="noopener">Apple プライバシーポリシー</a>、<a href="https://policies.google.com/privacy"
+  rel="noopener">Google プライバシーポリシー</a>。</p>""",
+        "pending": """<p>保留中または中断された購入は、該当ストアが完了と報告するまで
+  商品を付与しません。</p>""",
+        "cross_platform": """<p>Premium を復元できるのは、購入したプラットフォームの
+  同じストアアカウントに限られます。Apple App Store と Google Play の権利は別々であり、
+  一方で行った購入を他方で復元することはできません。</p>""",
+    },
+    "ko": {
+        "local_intent": """<p>Premium 구매가 해결되지 않았거나 중단된 경우 앱은 상품 ID,
+  앱이 생성한 시도 ID 및 구매 시작 시간이 포함된 구매 의도 표시도 로컬에 저장합니다.
+  이 표시는 해당 시도를 재개하거나 스토어와 대조하는 데만 사용되며 최종 결과가 확정되거나
+  30일의 대조 기간이 만료되면 삭제됩니다.</p>""",
+        "store_privacy": """<p>Apple과 Google은 각자의 개인정보처리방침에 따라 스토어 및
+  결제 데이터를 처리합니다: <a href="https://www.apple.com/legal/privacy/"
+  rel="noopener">Apple 개인정보 처리방침</a> 및
+  <a href="https://policies.google.com/privacy" rel="noopener">Google 개인정보 처리방침</a>.</p>""",
+        "pending": """<p>보류 중이거나 중단된 구매는 해당 스토어가 완료되었다고 보고할
+  때까지 지급되지 않습니다.</p>""",
+        "cross_platform": """<p>Premium은 구매한 플랫폼의 동일한 스토어 계정으로만 복원할
+  수 있습니다. Apple App Store와 Google Play의 권리는 서로 분리되어 있으므로 한쪽에서 한
+  구매를 다른 쪽에서 복원할 수 없습니다.</p>""",
+    },
+}
+
+
+_TELEMETRY_COPY = {
+    "en": ("4. Analytics and crash diagnostics", """<p>The App package includes the
+  <strong>Firebase Analytics</strong> and <strong>Firebase Crashlytics</strong>
+  software libraries. In this release, collection for both is explicitly
+  disabled in the native platform configuration and again at App startup.
+  Gameplay events use a no-operation logger. Accordingly, the App does not send
+  analytics events or crash reports to Firebase or to us through those libraries
+  in this release. There are no accounts, name/e-mail collection, or developer-
+  operated database holding your data. If telemetry is enabled in a future
+  release, this policy and its effective date will be updated before release.</p>"""),
+    "tr": ("4. Analitik ve çökme tanılama", """<p>Uygulama paketinde
+  <strong>Firebase Analytics</strong> ve <strong>Firebase Crashlytics</strong>
+  yazılım kütüphaneleri bulunur. Bu sürümde her ikisinin veri toplaması hem yerel
+  platform ayarlarında hem Uygulama başlangıcında açıkça kapatılmıştır. Oyun
+  olayları hiçbir işlem yapmayan bir kaydediciye bağlıdır. Dolayısıyla bu sürümde
+  bu kütüphaneler üzerinden Firebase'e veya bize analitik olayı ya da çökme raporu
+  gönderilmez. Hesap, ad/e-posta toplama veya verilerinizi tutan geliştirici
+  veritabanı yoktur. Telemetri ileride açılırsa bu politika ve yürürlük tarihi
+  sürüm yayımlanmadan önce güncellenecektir.</p>"""),
+    "de": ("4. Analyse und Absturzdiagnose", """<p>Das App-Paket enthält die
+  Bibliotheken <strong>Firebase Analytics</strong> und <strong>Firebase
+  Crashlytics</strong>. In dieser Version ist die Erfassung für beide sowohl in
+  der nativen Plattformkonfiguration als auch beim App-Start ausdrücklich
+  deaktiviert. Spielereignisse nutzen einen inaktiven Logger. Daher sendet die
+  App in dieser Version über diese Bibliotheken keine Analyseereignisse oder
+  Absturzberichte an Firebase oder uns. Es gibt keine Konten, Namens-/E-Mail-
+  Erfassung oder Entwicklerdatenbank mit Ihren Daten. Wird Telemetrie künftig
+  aktiviert, aktualisieren wir Richtlinie und Datum vor der Veröffentlichung.</p>"""),
+    "es": ("4. Analítica y diagnóstico de fallos", """<p>El paquete incluye las
+  bibliotecas <strong>Firebase Analytics</strong> y <strong>Firebase
+  Crashlytics</strong>. En esta versión, la recogida de ambas está desactivada
+  expresamente en la configuración nativa y de nuevo al iniciar la App. Los
+  eventos de juego usan un registrador inactivo. Por tanto, estas bibliotecas no
+  envían eventos analíticos ni informes de fallos a Firebase o a nosotros en
+  esta versión. No hay cuentas, recogida de nombre/correo ni base de datos del
+  desarrollador con tus datos. Si se activa telemetría en el futuro, se
+  actualizarán esta política y la fecha antes de publicar.</p>"""),
+    "fr": ("4. Analyse et diagnostic des plantages", """<p>Le paquet contient
+  les bibliothèques <strong>Firebase Analytics</strong> et <strong>Firebase
+  Crashlytics</strong>. Dans cette version, leur collecte est expressément
+  désactivée dans la configuration native puis au démarrage de l'App. Les
+  événements de jeu utilisent un enregistreur inactif. Ces bibliothèques
+  n'envoient donc aucun événement analytique ni rapport de plantage à Firebase
+  ou à nous dans cette version. Il n'existe ni compte, ni collecte de nom/e-mail,
+  ni base du développeur contenant vos données. Toute activation future de la
+  télémétrie entraînera la mise à jour de cette politique et de sa date avant publication.</p>"""),
+    "it": ("4. Analisi e diagnostica degli arresti", """<p>Il pacchetto include
+  le librerie <strong>Firebase Analytics</strong> e <strong>Firebase
+  Crashlytics</strong>. In questa versione la raccolta di entrambe è
+  esplicitamente disattivata nella configurazione nativa e di nuovo all'avvio
+  dell'App. Gli eventi di gioco usano un logger inattivo. Pertanto in questa
+  versione tali librerie non inviano eventi analitici o rapporti di arresto a
+  Firebase o a noi. Non esistono account, raccolta di nome/e-mail o database
+  dello sviluppatore con i tuoi dati. Se in futuro la telemetria sarà attivata,
+  informativa e data saranno aggiornate prima della pubblicazione.</p>"""),
+    "pt": ("4. Análise e diagnóstico de falhas", """<p>O pacote inclui as
+  bibliotecas <strong>Firebase Analytics</strong> e <strong>Firebase
+  Crashlytics</strong>. Nesta versão, a coleta de ambas está expressamente
+  desativada na configuração nativa e novamente ao iniciar o App. Eventos do
+  jogo usam um registrador inativo. Assim, nesta versão essas bibliotecas não
+  enviam eventos analíticos ou relatórios de falha ao Firebase ou a nós. Não há
+  contas, coleta de nome/e-mail nem banco do desenvolvedor com seus dados. Se a
+  telemetria for ativada futuramente, esta política e a data serão atualizadas antes da publicação.</p>"""),
+    "ru": ("4. Аналитика и диагностика сбоев", """<p>Пакет содержит библиотеки
+  <strong>Firebase Analytics</strong> и <strong>Firebase Crashlytics</strong>.
+  В этой версии сбор обеими библиотеками явно отключён в нативных настройках и
+  повторно при запуске Приложения. Игровые события направлены в неактивный
+  регистратор. Поэтому в этой версии аналитические события и отчёты о сбоях
+  через эти библиотеки не отправляются в Firebase или нам. Нет учётных записей,
+  сбора имени/e-mail или базы разработчика с вашими данными. При будущем
+  включении телеметрии политика и дата будут обновлены до публикации.</p>"""),
+    "id": ("4. Analitik dan diagnostik kerusakan", """<p>Paket Aplikasi memuat
+  pustaka <strong>Firebase Analytics</strong> dan <strong>Firebase
+  Crashlytics</strong>. Dalam rilis ini, pengumpulan keduanya dinonaktifkan
+  secara tegas di konfigurasi platform native dan kembali saat Aplikasi mulai.
+  Peristiwa gim memakai pencatat tanpa operasi. Karena itu, pustaka tersebut
+  tidak mengirim peristiwa analitik atau laporan kerusakan ke Firebase atau kami
+  dalam rilis ini. Tidak ada akun, pengumpulan nama/e-mail, atau basis data
+  pengembang yang menyimpan data Anda. Jika telemetri diaktifkan kelak, kebijakan
+  dan tanggal ini akan diperbarui sebelum rilis.</p>"""),
+    "ja": ("4. 解析とクラッシュ診断", """<p>本アプリのパッケージには
+  <strong>Firebase Analytics</strong> と <strong>Firebase Crashlytics</strong> の
+  ライブラリが含まれます。ただし本バージョンでは、両方の収集をネイティブ設定および
+  アプリ起動時に明示的に無効化しています。ゲームイベントは何も送らないロガーを使用します。
+  したがって本バージョンでは、これらを通じて解析イベントやクラッシュレポートを Firebase
+  または当方へ送信しません。アカウント、氏名・メールの収集、データを保持する開発者データ
+  ベースもありません。将来テレメトリを有効化する場合は、公開前に本ポリシーと発効日を更新します。</p>"""),
+    "ko": ("4. 분석 및 충돌 진단", """<p>앱 패키지에는 <strong>Firebase
+  Analytics</strong>와 <strong>Firebase Crashlytics</strong> 라이브러리가 포함됩니다.
+  하지만 이 버전에서는 두 라이브러리의 수집을 네이티브 플랫폼 설정과 앱 시작 시점에
+  명시적으로 비활성화합니다. 게임 이벤트는 아무 작업도 하지 않는 로거를 사용합니다.
+  따라서 이 버전에서는 이 라이브러리를 통해 Firebase 또는 저희에게 분석 이벤트나 충돌
+  보고서를 보내지 않습니다. 계정, 이름/이메일 수집 또는 사용자 데이터를 보관하는 개발자
+  데이터베이스도 없습니다. 향후 원격 측정을 활성화하면 출시 전에 본 방침과 발효일을 갱신합니다.</p>"""),
+}
+
+
+_IAP_SUPPORT = {
+    "en": "For purchase delivery or restore help, contact",
+    "tr": "Satın alma teslimi veya geri yükleme desteği için yazın:",
+    "de": "Hilfe bei Kauf-Auslieferung oder Wiederherstellung erhalten Sie unter",
+    "es": "Para ayuda con la entrega o restauración de una compra, escribe a",
+    "fr": "Pour toute aide de livraison ou restauration d'un achat, contactez",
+    "it": "Per assistenza su consegna o ripristino di un acquisto, scrivi a",
+    "pt": "Para ajuda com entrega ou restauração de uma compra, contate",
+    "ru": "По вопросам выдачи или восстановления покупки пишите на",
+    "id": "Untuk bantuan pengiriman atau pemulihan pembelian, hubungi",
+    "ja": "購入の付与または復元に関するサポート:",
+    "ko": "구매 지급 또는 복원 지원 문의:",
+}
+
+
+def _renumber(heading, number):
+    """Keep the localized title while assigning the shared section number."""
+    _, separator, title = heading.partition(". ")
+    return f"{number}. {title if separator else heading}"
+
+
+for _code, _lang_data in LANGS.items():
+    _copy = _PURCHASE_COPY[_code]
+    _final_iap = _IAP_FINAL_DISCLOSURES[_code]
+    _lang_data["privacy"]["intro"] = _copy["privacy_intro"]
+
+    _old_privacy = _lang_data["privacy"]["sections"]
+    _lang_data["privacy"]["sections"] = [
+        (_copy["local_heading"],
+         f'{_copy["local_body"]}\n  {_final_iap["local_intent"]}'),
+        (_renumber(_old_privacy[1][0], 2), _old_privacy[1][1]),
+        (_copy["payment_heading"],
+         f'{_copy["payment_body"]}\n  {_final_iap["store_privacy"]}'),
+        _TELEMETRY_COPY[_code],
+        (_renumber(_old_privacy[3][0], 5), _old_privacy[3][1]),
+        (_renumber(_old_privacy[4][0], 6), _old_privacy[4][1]),
+        (_copy["security_heading"], _copy["security_body"]),
+        (_renumber(_old_privacy[6][0], 8), _old_privacy[6][1]),
+    ]
+
+    _old_terms = _lang_data["terms"]["sections"]
+    _lang_data["terms"]["sections"] = [
+        (_renumber(_old_terms[0][0], 1), _old_terms[0][1]),
+        (_renumber(_old_terms[1][0], 2), _old_terms[1][1]),
+        (_copy["terms_heading"],
+         f'{_copy["terms_body"]}\n  {_final_iap["pending"]}\n'
+         f'  {_final_iap["cross_platform"]}\n'
+         f'  <p>{_IAP_SUPPORT[_code]} '
+         f'<a href="mailto:{CONTACT}">{CONTACT}</a>.</p>'),
+        *[(_renumber(heading, index + 1), body)
+          for index, (heading, body) in enumerate(_old_terms[2:], start=3)],
+    ]
