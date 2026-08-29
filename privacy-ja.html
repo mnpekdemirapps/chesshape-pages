@@ -20,7 +20,7 @@
 
   <header>
     <h1>プライバシーポリシー</h1>
-    <p class="meta">発効日: 2026-08-19 · アプリ: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">発効日: 2026-08-29 · アプリ: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><strong class="here">🇯🇵 日本語</strong><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
@@ -62,6 +62,12 @@
   <li><strong>お客様による管理:</strong> 端末側の広告設定は Android の
   <em>設定 → プライバシー → 広告</em>および iOS の
   <em>設定 → プライバシーとセキュリティ → トラッキング</em>でも利用できます。</li></ul>
+  <p>iOS では、すべての広告リクエストを非パーソナライズとして行い、広告 SDK
+  の起動前に Google のパブリッシャー ファーストパーティ識別子を無効化します。また、本アプリは
+  Apple の App Tracking Transparency 許可を要求しません。Android では、UMP の選択に基づいて
+  許可された広告を配信します。両プラットフォームで、Firebase Analytics による iOS の
+  ベンダー識別子または Android の広告 ID へのアクセス、および広告パーソナライズ信号を
+  無効化しています。</p>
 
   <h2>3. アプリ内購入と支払いデータ</h2>
   <p>購入は iOS では <strong>Apple App Store</strong>、Android では
@@ -79,13 +85,16 @@
   rel="noopener">Google プライバシーポリシー</a>。</p>
 
   <h2>4. 解析とクラッシュ診断</h2>
-  <p>本アプリのパッケージには
-  <strong>Firebase Analytics</strong> と <strong>Firebase Crashlytics</strong> の
-  ライブラリが含まれます。ただし本バージョンでは、両方の収集をネイティブ設定および
-  アプリ起動時に明示的に無効化しています。ゲームイベントは何も送らないロガーを使用します。
-  したがって本バージョンでは、これらを通じて解析イベントやクラッシュレポートを Firebase
-  または当方へ送信しません。アカウント、氏名・メールの収集、データを保持する開発者データ
-  ベースもありません。将来テレメトリを有効化する場合は、公開前に本ポリシーと発効日を更新します。</p>
+  <p>製品版では、起動後に
+  <strong>Firebase Analytics</strong> と <strong>Firebase Crashlytics</strong> を
+  有効にします。Analytics は、レベル、パズル、ピース、商品 ID、手数、ヒント、取り消し／再開、
+  広告や購入／復元の結果、回数、所要時間などのゲーム・機能操作を処理します。Firebase は
+  アプリのインストールまたはセッション識別子、およびアプリ／端末の技術情報を付加する場合が
+  あります。Crashlytics はクラッシュ報告、スタックトレース、アプリ／OS／端末診断を処理し、
+  トラブルシューティング用に直近の Analytics イベントを含む場合があります。データは解析と
+  アプリの機能・信頼性に使用し、トラッキングや広告パーソナライズには使用しません。デバッグ版
+  では収集しません。イベントにアカウント、氏名、メール、入力内容は含まれず、開発者運営の
+  ユーザーデータベースもありません。</p>
 
   <h2>5. 子ども</h2>
   <p>本アプリは一般向けのパズルゲームです。子どもから個人情報を意図的に収集する
@@ -108,9 +117,9 @@
   バックアップから復元されることがあります。開発者運用サーバーにコピーは保持しません。</p>
 
   <h2>8. 本ポリシーの変更</h2>
-  <p>本アプリのデータの取り扱いが変わる場合（解析やオンライン機能の追加など）、
-  変更の提供前に本ページを更新し、発効日を改めます。重要な変更はストアの掲載情報
-  にも記載します。</p>
+  <p>新しいデータ区分、アカウント、オンライン機能の追加などにより本アプリの
+  データ取扱いが変わる場合、変更の公開前に本ページと発効日を更新します。重要な変更は
+  ストア掲載情報にも記載します。</p>
 
   <div class="contact-box">
     <strong>お問い合わせ</strong><br>

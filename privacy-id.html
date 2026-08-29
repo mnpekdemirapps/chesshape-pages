@@ -20,7 +20,7 @@
 
   <header>
     <h1>Kebijakan Privasi</h1>
-    <p class="meta">Tanggal berlaku: 2026-08-19 · Aplikasi: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">Tanggal berlaku: 2026-08-29 · Aplikasi: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><strong class="here">🇮🇩 Bahasa Indonesia</strong><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
@@ -66,6 +66,12 @@
   <li><strong>Kendali Anda:</strong> kontrol iklan tingkat perangkat juga tersedia di
   Android <em>Setelan → Privasi → Iklan</em> dan iOS
   <em>Pengaturan → Privasi &amp; Keamanan → Pelacakan</em>.</li></ul>
+  <p>Di iOS, setiap permintaan iklan bersifat nonpersonalisasi,
+  pengenal pihak pertama penerbit Google dinonaktifkan sebelum SDK iklan dimulai,
+  dan Aplikasi tidak meminta izin App Tracking Transparency Apple. Di Android,
+  pilihan UMP menentukan penayangan iklan yang diizinkan. Di kedua platform,
+  akses Firebase Analytics ke pengenal vendor iOS atau ID iklan Android serta
+  sinyal personalisasi iklan Analytics dinonaktifkan.</p>
 
   <h2>3. Pembelian dalam aplikasi dan data pembayaran</h2>
   <p>Pembelian diproses oleh <strong>Apple App Store</strong> di iOS dan
@@ -88,15 +94,18 @@
   Privasi Google</a>.</p>
 
   <h2>4. Analitik dan diagnostik kerusakan</h2>
-  <p>Paket Aplikasi memuat
-  pustaka <strong>Firebase Analytics</strong> dan <strong>Firebase
-  Crashlytics</strong>. Dalam rilis ini, pengumpulan keduanya dinonaktifkan
-  secara tegas di konfigurasi platform native dan kembali saat Aplikasi mulai.
-  Peristiwa gim memakai pencatat tanpa operasi. Karena itu, pustaka tersebut
-  tidak mengirim peristiwa analitik atau laporan kerusakan ke Firebase atau kami
-  dalam rilis ini. Tidak ada akun, pengumpulan nama/e-mail, atau basis data
-  pengembang yang menyimpan data Anda. Jika telemetri diaktifkan kelak, kebijakan
-  dan tanggal ini akan diperbarui sebelum rilis.</p>
+  <p>Dalam versi produksi,
+  Aplikasi mengaktifkan <strong>Firebase Analytics</strong> dan <strong>Firebase
+  Crashlytics</strong> setelah mulai. Analytics memproses interaksi gim dan fitur:
+  pengenal level, teka-teki, keping, dan produk; langkah, petunjuk,
+  urungkan/mulai ulang, hasil iklan dan pembelian/pemulihan, hitungan, dan durasi.
+  Firebase dapat menyertakan pengenal pemasangan atau sesi dan konteks teknis
+  Aplikasi/perangkat. Crashlytics memproses laporan kerusakan, stack trace, serta
+  diagnostik Aplikasi/OS/perangkat dan dapat memuat peristiwa Analytics terbaru
+  untuk pemecahan masalah. Data dipakai untuk analitik serta fungsi/keandalan
+  Aplikasi, bukan pelacakan atau personalisasi iklan. Pengumpulan tetap mati pada
+  build debug. Peristiwa tidak memuat akun, nama, e-mail, atau konten masukan
+  pemain, dan tidak ada basis data pengguna milik pengembang.</p>
 
   <h2>5. Anak-anak</h2>
   <p>Aplikasi adalah gim teka-teki untuk umum. Kami tidak dengan sengaja
@@ -120,9 +129,10 @@
   menyimpan salinan di server pengembang.</p>
 
   <h2>8. Perubahan kebijakan ini</h2>
-  <p>Jika praktik data Aplikasi berubah (misalnya analitik atau fitur daring
-  ditambahkan), halaman ini akan diperbarui dan tanggal berlaku direvisi sebelum
-  perubahan dirilis. Perubahan penting juga dicatat di halaman toko.</p>
+  <p>Jika praktik data Aplikasi berubah (misalnya kategori data,
+  akun, atau fitur online baru ditambahkan), halaman dan tanggal berlakunya akan
+  diperbarui sebelum perubahan dirilis. Perubahan penting juga akan disebutkan
+  di halaman toko Aplikasi.</p>
 
   <div class="contact-box">
     <strong>Kontak</strong><br>

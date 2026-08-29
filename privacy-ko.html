@@ -20,7 +20,7 @@
 
   <header>
     <h1>개인정보처리방침</h1>
-    <p class="meta">발효일: 2026-08-19 · 앱: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">발효일: 2026-08-29 · 앱: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><strong class="here">🇰🇷 한국어</strong></nav>
@@ -60,6 +60,11 @@
   <li><strong>사용자 제어:</strong> 기기 수준 광고 설정은 Android
   <em>설정 → 개인정보 보호 → 광고</em> 및 iOS
   <em>설정 → 개인정보 보호 및 보안 → 추적</em>에서도 사용할 수 있습니다.</li></ul>
+  <p>iOS에서는 모든 광고 요청을 비개인 맞춤형으로 전송하고 광고 SDK 시작 전에
+  Google의 게시자 자사 식별자를 비활성화하며, 앱은 Apple의 App Tracking Transparency 권한을
+  요청하지 않습니다. Android에서는 UMP 선택에 따라 허용된 광고가 제공됩니다. 두 플랫폼 모두
+  Firebase Analytics의 iOS 공급업체 식별자 또는 Android 광고 ID 접근과 광고 개인 최적화 신호를
+  비활성화합니다.</p>
 
   <h2>3. 인앱 구매 및 결제 데이터</h2>
   <p>구매는 iOS에서 <strong>Apple App Store</strong>, Android에서
@@ -76,13 +81,15 @@
   <a href="https://policies.google.com/privacy" rel="noopener">Google 개인정보 처리방침</a>.</p>
 
   <h2>4. 분석 및 충돌 진단</h2>
-  <p>앱 패키지에는 <strong>Firebase
-  Analytics</strong>와 <strong>Firebase Crashlytics</strong> 라이브러리가 포함됩니다.
-  하지만 이 버전에서는 두 라이브러리의 수집을 네이티브 플랫폼 설정과 앱 시작 시점에
-  명시적으로 비활성화합니다. 게임 이벤트는 아무 작업도 하지 않는 로거를 사용합니다.
-  따라서 이 버전에서는 이 라이브러리를 통해 Firebase 또는 저희에게 분석 이벤트나 충돌
-  보고서를 보내지 않습니다. 계정, 이름/이메일 수집 또는 사용자 데이터를 보관하는 개발자
-  데이터베이스도 없습니다. 향후 원격 측정을 활성화하면 출시 전에 본 방침과 발효일을 갱신합니다.</p>
+  <p>프로덕션 릴리스에서는 앱 시작 후
+  <strong>Firebase Analytics</strong>와 <strong>Firebase Crashlytics</strong>를
+  활성화합니다. Analytics는 레벨, 퍼즐, 피스, 상품 ID, 이동, 힌트, 실행 취소/재시작,
+  광고 및 구매/복원 결과, 횟수와 시간 등의 게임·기능 상호작용을 처리합니다. Firebase는
+  앱 설치 또는 세션 식별자와 기술적 앱/기기 정보를 첨부할 수 있습니다. Crashlytics는 충돌
+  보고서, 스택 트레이스, 앱/OS/기기 진단을 처리하며 문제 해결을 위해 최근 Analytics 이벤트를
+  포함할 수 있습니다. 데이터는 분석과 앱 기능/안정성에 사용되며 추적이나 광고 개인 최적화에는
+  사용되지 않습니다. 디버그 빌드에서는 수집하지 않습니다. 이벤트에는 계정, 이름, 이메일 또는
+  사용자가 입력한 콘텐츠가 없으며 개발자가 운영하는 사용자 데이터베이스도 없습니다.</p>
 
   <h2>5. 아동</h2>
   <p>본 앱은 전체 이용가 퍼즐 게임입니다. 저희는 아동의 개인정보를 고의로
@@ -103,9 +110,9 @@
   개발자 운영 서버에는 사본을 보관하지 않습니다.</p>
 
   <h2>8. 본 방침의 변경</h2>
-  <p>앱의 데이터 처리 방식이 바뀌면(예: 분석 또는 온라인 기능 추가) 변경 배포 전에
-  이 페이지를 갱신하고 발효일을 수정합니다. 중요한 변경은 스토어 등록정보에도
-  표시합니다.</p>
+  <p>새로운 데이터 범주, 계정 또는 온라인 기능 추가 등으로 앱의 데이터 처리
+  방식이 변경되는 경우, 변경 사항 출시 전에 이 페이지와 발효일을 갱신합니다. 중요한 변경은
+  앱 스토어 등록 정보에도 안내합니다.</p>
 
   <div class="contact-box">
     <strong>문의</strong><br>

@@ -20,7 +20,7 @@
 
   <header>
     <h1>Informativa sulla privacy</h1>
-    <p class="meta">Data di entrata in vigore: 2026-08-19 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">Data di entrata in vigore: 2026-08-29 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><strong class="here">🇮🇹 Italiano</strong><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
@@ -68,6 +68,13 @@
   <li><strong>I tuoi controlli:</strong> i controlli pubblicitari del dispositivo sono
   disponibili anche in Android <em>Impostazioni → Privacy → Annunci</em> e in iOS
   <em>Impostazioni → Privacy e sicurezza → Tracciamento</em>.</li></ul>
+  <p>Su iOS ogni richiesta di annunci è non personalizzata,
+  l'identificativo proprietario dell'editore Google viene disattivato prima
+  dell'avvio dell'SDK pubblicitario e l'App non richiede l'autorizzazione App
+  Tracking Transparency di Apple. Su Android, le scelte UMP determinano la
+  pubblicità consentita. Su entrambe le piattaforme sono disattivati l'accesso di
+  Firebase Analytics all'identificativo fornitore iOS o all'ID pubblicitario
+  Android e i segnali di personalizzazione pubblicitaria di Analytics.</p>
 
   <h2>3. Acquisti in-app e dati di pagamento</h2>
   <p>Gli acquisti sono elaborati da <strong>Apple App Store</strong> su iOS e
@@ -90,15 +97,19 @@
   rel="noopener">Norme sulla privacy di Google</a>.</p>
 
   <h2>4. Analisi e diagnostica degli arresti</h2>
-  <p>Il pacchetto include
-  le librerie <strong>Firebase Analytics</strong> e <strong>Firebase
-  Crashlytics</strong>. In questa versione la raccolta di entrambe è
-  esplicitamente disattivata nella configurazione nativa e di nuovo all'avvio
-  dell'App. Gli eventi di gioco usano un logger inattivo. Pertanto in questa
-  versione tali librerie non inviano eventi analitici o rapporti di arresto a
-  Firebase o a noi. Non esistono account, raccolta di nome/e-mail o database
-  dello sviluppatore con i tuoi dati. Se in futuro la telemetria sarà attivata,
-  informativa e data saranno aggiornate prima della pubblicazione.</p>
+  <p>Nelle versioni di
+  produzione, l'App attiva <strong>Firebase Analytics</strong> e <strong>Firebase
+  Crashlytics</strong> dopo l'avvio. Analytics tratta interazioni di gioco e
+  funzioni: identificativi di livello, puzzle, pezzo e prodotto; mosse, suggerimenti,
+  annulla/riavvia, risultati di annunci e acquisti/ripristini, contatori e durate.
+  Firebase può associare identificativi di installazione o sessione e contesto
+  tecnico dell'App/dispositivo. Crashlytics tratta rapporti di arresto, stack
+  trace e diagnostica App/OS/dispositivo e può includere eventi Analytics recenti
+  per la risoluzione dei problemi. I dati servono per analisi e
+  funzionalità/affidabilità dell'App, non per tracciamento o personalizzazione
+  pubblicitaria. Nelle build di debug la raccolta resta disattivata. Gli eventi
+  non contengono account, nome, e-mail o contenuti inseriti e non esiste un
+  database utenti del gestore.</p>
 
   <h2>5. Minori</h2>
   <p>L'App è un gioco di puzzle per il pubblico generale. Non raccogliamo
@@ -122,9 +133,10 @@
   Non conserviamo copie su server gestiti dallo sviluppatore.</p>
 
   <h2>8. Modifiche a questa informativa</h2>
-  <p>Se le pratiche sui dati cambiano (ad esempio con analisi o funzioni
-  online), questa pagina sarà aggiornata e la data rivista prima del rilascio.
-  Le modifiche rilevanti saranno indicate anche nella scheda dello store.</p>
+  <p>Se le pratiche sui dati dell'App cambiano (ad esempio con nuove
+  categorie di dati, account o funzioni online), questa pagina e la data di
+  entrata in vigore saranno aggiornate prima della pubblicazione. Le modifiche
+  importanti saranno indicate anche nella pagina store dell'App.</p>
 
   <div class="contact-box">
     <strong>Contatti</strong><br>

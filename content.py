@@ -8,9 +8,9 @@ assumed. As of this writing Chesshape:
     shared_preferences, may participate in OS backup/device transfer, and runs
     no developer-operated account or data server;
   * ships Google AdMob (google_mobile_ads) for advertising in the free version;
-  * includes Firebase Analytics and Crashlytics libraries, but explicitly
-    disables collection for both in native configuration and at startup; game
-    events resolve to NoopAnalyticsService, which does nothing;
+  * enables Firebase Analytics and Crashlytics only in production releases for
+    gameplay analytics and reliability, while disabling Analytics advertising
+    identifiers and ad-personalization signals;
   * offers one non-consumable Premium product and consumable hint packs through
     Apple App Store / Google Play, which process the payments.
 
@@ -20,7 +20,10 @@ keeping them in one table instead of eleven hand-edited files.
 
 CONTACT = "mnpekdemir.apps@gmail.com"
 PLATFORM = "Android &amp; iOS"
-EFFECTIVE = "2026-08-19"
+EFFECTIVE = {
+    "privacy": "2026-08-29",
+    "terms": "2026-08-19",
+}
 
 # ---------------------------------------------------------------- English
 _EN_PRIVACY_INTRO = """<p>This Privacy Policy explains what information is handled when you play
@@ -2123,100 +2126,261 @@ _IAP_FINAL_DISCLOSURES = {
 }
 
 
+_AD_RUNTIME_DISCLOSURE = {
+    "en": """<p>On iOS, every ad request is non-personalized, Google's publisher
+  first-party identifier is disabled before the ads SDK starts, and the App does
+  not request Apple's App Tracking Transparency permission. On Android, UMP
+  choices govern the ad serving that is permitted. On both platforms, Firebase
+  Analytics access to the iOS vendor identifier or Android advertising ID, and
+  Analytics ad-personalization signals, are disabled.</p>""",
+    "tr": """<p>iOS'ta her reklam isteği kişiselleştirilmemiş olarak yapılır;
+  reklam SDK'sı başlamadan önce Google'ın yayıncı birinci taraf kimliği kapatılır
+  ve Uygulama Apple'ın Uygulama Takibi Şeffaflığı iznini istemez. Android'de izin
+  verilen reklam sunumunu UMP tercihleri belirler. Her iki platformda da Firebase
+  Analytics'in iOS sağlayıcı kimliğine veya Android reklam kimliğine erişimi ve
+  analitik reklam kişiselleştirme sinyalleri kapalıdır.</p>""",
+    "de": """<p>Unter iOS wird jede Werbeanfrage nicht personalisiert gestellt,
+  Googles Publisher-Erstanbieterkennung wird vor dem Start des Werbe-SDKs
+  deaktiviert und die App fordert keine App-Tracking-Transparency-Berechtigung
+  von Apple an. Unter Android bestimmen die UMP-Einstellungen die zulässige
+  Werbeauslieferung. Auf beiden Plattformen sind der Zugriff von Firebase
+  Analytics auf die iOS-Anbieterkennung bzw. Android-Werbe-ID sowie Signale zur
+  Anzeigenpersonalisierung deaktiviert.</p>""",
+    "es": """<p>En iOS, todas las solicitudes de anuncios son no personalizadas,
+  el identificador propio del editor de Google se desactiva antes de iniciar el
+  SDK de anuncios y la App no solicita el permiso App Tracking Transparency de
+  Apple. En Android, las opciones de UMP determinan la publicidad permitida. En
+  ambas plataformas están desactivados el acceso de Firebase Analytics al
+  identificador de proveedor de iOS o al identificador publicitario de Android
+  y las señales de personalización publicitaria de Analytics.</p>""",
+    "fr": """<p>Sous iOS, chaque demande publicitaire est non personnalisée,
+  l'identifiant propriétaire de l'éditeur Google est désactivé avant le démarrage
+  du SDK publicitaire et l'App ne demande pas l'autorisation App Tracking
+  Transparency d'Apple. Sous Android, les choix UMP déterminent la diffusion
+  autorisée. Sur les deux plateformes, l'accès de Firebase Analytics à
+  l'identifiant fournisseur iOS ou à l'identifiant publicitaire Android, ainsi
+  que les signaux de personnalisation publicitaire, sont désactivés.</p>""",
+    "it": """<p>Su iOS ogni richiesta di annunci è non personalizzata,
+  l'identificativo proprietario dell'editore Google viene disattivato prima
+  dell'avvio dell'SDK pubblicitario e l'App non richiede l'autorizzazione App
+  Tracking Transparency di Apple. Su Android, le scelte UMP determinano la
+  pubblicità consentita. Su entrambe le piattaforme sono disattivati l'accesso di
+  Firebase Analytics all'identificativo fornitore iOS o all'ID pubblicitario
+  Android e i segnali di personalizzazione pubblicitaria di Analytics.</p>""",
+    "pt": """<p>No iOS, toda solicitação de anúncio é não personalizada, o
+  identificador próprio do editor Google é desativado antes do SDK de anúncios e
+  o App não solicita a permissão App Tracking Transparency da Apple. No Android,
+  as escolhas do UMP determinam a veiculação permitida. Nas duas plataformas,
+  ficam desativados o acesso do Firebase Analytics ao identificador do fornecedor
+  do iOS ou ao ID de publicidade do Android e os sinais de personalização de
+  anúncios do Analytics.</p>""",
+    "ru": """<p>В iOS все рекламные запросы неперсонализированные,
+  собственный идентификатор издателя Google отключается до запуска рекламного
+  SDK, а Приложение не запрашивает разрешение Apple App Tracking Transparency.
+  В Android допустимый показ рекламы определяется выбором в UMP. На обеих
+  платформах отключены доступ Firebase Analytics к идентификатору поставщика iOS
+  или рекламному идентификатору Android и сигналы персонализации рекламы.</p>""",
+    "id": """<p>Di iOS, setiap permintaan iklan bersifat nonpersonalisasi,
+  pengenal pihak pertama penerbit Google dinonaktifkan sebelum SDK iklan dimulai,
+  dan Aplikasi tidak meminta izin App Tracking Transparency Apple. Di Android,
+  pilihan UMP menentukan penayangan iklan yang diizinkan. Di kedua platform,
+  akses Firebase Analytics ke pengenal vendor iOS atau ID iklan Android serta
+  sinyal personalisasi iklan Analytics dinonaktifkan.</p>""",
+    "ja": """<p>iOS では、すべての広告リクエストを非パーソナライズとして行い、広告 SDK
+  の起動前に Google のパブリッシャー ファーストパーティ識別子を無効化します。また、本アプリは
+  Apple の App Tracking Transparency 許可を要求しません。Android では、UMP の選択に基づいて
+  許可された広告を配信します。両プラットフォームで、Firebase Analytics による iOS の
+  ベンダー識別子または Android の広告 ID へのアクセス、および広告パーソナライズ信号を
+  無効化しています。</p>""",
+    "ko": """<p>iOS에서는 모든 광고 요청을 비개인 맞춤형으로 전송하고 광고 SDK 시작 전에
+  Google의 게시자 자사 식별자를 비활성화하며, 앱은 Apple의 App Tracking Transparency 권한을
+  요청하지 않습니다. Android에서는 UMP 선택에 따라 허용된 광고가 제공됩니다. 두 플랫폼 모두
+  Firebase Analytics의 iOS 공급업체 식별자 또는 Android 광고 ID 접근과 광고 개인 최적화 신호를
+  비활성화합니다.</p>""",
+}
+
+
 _TELEMETRY_COPY = {
-    "en": ("4. Analytics and crash diagnostics", """<p>The App package includes the
-  <strong>Firebase Analytics</strong> and <strong>Firebase Crashlytics</strong>
-  software libraries. In this release, collection for both is explicitly
-  disabled in the native platform configuration and again at App startup.
-  Gameplay events use a no-operation logger. Accordingly, the App does not send
-  analytics events or crash reports to Firebase or to us through those libraries
-  in this release. There are no accounts, name/e-mail collection, or developer-
-  operated database holding your data. If telemetry is enabled in a future
-  release, this policy and its effective date will be updated before release.</p>"""),
-    "tr": ("4. Analitik ve çökme tanılama", """<p>Uygulama paketinde
-  <strong>Firebase Analytics</strong> ve <strong>Firebase Crashlytics</strong>
-  yazılım kütüphaneleri bulunur. Bu sürümde her ikisinin veri toplaması hem yerel
-  platform ayarlarında hem Uygulama başlangıcında açıkça kapatılmıştır. Oyun
-  olayları hiçbir işlem yapmayan bir kaydediciye bağlıdır. Dolayısıyla bu sürümde
-  bu kütüphaneler üzerinden Firebase'e veya bize analitik olayı ya da çökme raporu
-  gönderilmez. Hesap, ad/e-posta toplama veya verilerinizi tutan geliştirici
-  veritabanı yoktur. Telemetri ileride açılırsa bu politika ve yürürlük tarihi
-  sürüm yayımlanmadan önce güncellenecektir.</p>"""),
-    "de": ("4. Analyse und Absturzdiagnose", """<p>Das App-Paket enthält die
-  Bibliotheken <strong>Firebase Analytics</strong> und <strong>Firebase
-  Crashlytics</strong>. In dieser Version ist die Erfassung für beide sowohl in
-  der nativen Plattformkonfiguration als auch beim App-Start ausdrücklich
-  deaktiviert. Spielereignisse nutzen einen inaktiven Logger. Daher sendet die
-  App in dieser Version über diese Bibliotheken keine Analyseereignisse oder
-  Absturzberichte an Firebase oder uns. Es gibt keine Konten, Namens-/E-Mail-
-  Erfassung oder Entwicklerdatenbank mit Ihren Daten. Wird Telemetrie künftig
-  aktiviert, aktualisieren wir Richtlinie und Datum vor der Veröffentlichung.</p>"""),
-    "es": ("4. Analítica y diagnóstico de fallos", """<p>El paquete incluye las
-  bibliotecas <strong>Firebase Analytics</strong> y <strong>Firebase
-  Crashlytics</strong>. En esta versión, la recogida de ambas está desactivada
-  expresamente en la configuración nativa y de nuevo al iniciar la App. Los
-  eventos de juego usan un registrador inactivo. Por tanto, estas bibliotecas no
-  envían eventos analíticos ni informes de fallos a Firebase o a nosotros en
-  esta versión. No hay cuentas, recogida de nombre/correo ni base de datos del
-  desarrollador con tus datos. Si se activa telemetría en el futuro, se
-  actualizarán esta política y la fecha antes de publicar.</p>"""),
-    "fr": ("4. Analyse et diagnostic des plantages", """<p>Le paquet contient
-  les bibliothèques <strong>Firebase Analytics</strong> et <strong>Firebase
-  Crashlytics</strong>. Dans cette version, leur collecte est expressément
-  désactivée dans la configuration native puis au démarrage de l'App. Les
-  événements de jeu utilisent un enregistreur inactif. Ces bibliothèques
-  n'envoient donc aucun événement analytique ni rapport de plantage à Firebase
-  ou à nous dans cette version. Il n'existe ni compte, ni collecte de nom/e-mail,
-  ni base du développeur contenant vos données. Toute activation future de la
-  télémétrie entraînera la mise à jour de cette politique et de sa date avant publication.</p>"""),
-    "it": ("4. Analisi e diagnostica degli arresti", """<p>Il pacchetto include
-  le librerie <strong>Firebase Analytics</strong> e <strong>Firebase
-  Crashlytics</strong>. In questa versione la raccolta di entrambe è
-  esplicitamente disattivata nella configurazione nativa e di nuovo all'avvio
-  dell'App. Gli eventi di gioco usano un logger inattivo. Pertanto in questa
-  versione tali librerie non inviano eventi analitici o rapporti di arresto a
-  Firebase o a noi. Non esistono account, raccolta di nome/e-mail o database
-  dello sviluppatore con i tuoi dati. Se in futuro la telemetria sarà attivata,
-  informativa e data saranno aggiornate prima della pubblicazione.</p>"""),
-    "pt": ("4. Análise e diagnóstico de falhas", """<p>O pacote inclui as
-  bibliotecas <strong>Firebase Analytics</strong> e <strong>Firebase
-  Crashlytics</strong>. Nesta versão, a coleta de ambas está expressamente
-  desativada na configuração nativa e novamente ao iniciar o App. Eventos do
-  jogo usam um registrador inativo. Assim, nesta versão essas bibliotecas não
-  enviam eventos analíticos ou relatórios de falha ao Firebase ou a nós. Não há
-  contas, coleta de nome/e-mail nem banco do desenvolvedor com seus dados. Se a
-  telemetria for ativada futuramente, esta política e a data serão atualizadas antes da publicação.</p>"""),
-    "ru": ("4. Аналитика и диагностика сбоев", """<p>Пакет содержит библиотеки
-  <strong>Firebase Analytics</strong> и <strong>Firebase Crashlytics</strong>.
-  В этой версии сбор обеими библиотеками явно отключён в нативных настройках и
-  повторно при запуске Приложения. Игровые события направлены в неактивный
-  регистратор. Поэтому в этой версии аналитические события и отчёты о сбоях
-  через эти библиотеки не отправляются в Firebase или нам. Нет учётных записей,
-  сбора имени/e-mail или базы разработчика с вашими данными. При будущем
-  включении телеметрии политика и дата будут обновлены до публикации.</p>"""),
-    "id": ("4. Analitik dan diagnostik kerusakan", """<p>Paket Aplikasi memuat
-  pustaka <strong>Firebase Analytics</strong> dan <strong>Firebase
-  Crashlytics</strong>. Dalam rilis ini, pengumpulan keduanya dinonaktifkan
-  secara tegas di konfigurasi platform native dan kembali saat Aplikasi mulai.
-  Peristiwa gim memakai pencatat tanpa operasi. Karena itu, pustaka tersebut
-  tidak mengirim peristiwa analitik atau laporan kerusakan ke Firebase atau kami
-  dalam rilis ini. Tidak ada akun, pengumpulan nama/e-mail, atau basis data
-  pengembang yang menyimpan data Anda. Jika telemetri diaktifkan kelak, kebijakan
-  dan tanggal ini akan diperbarui sebelum rilis.</p>"""),
-    "ja": ("4. 解析とクラッシュ診断", """<p>本アプリのパッケージには
-  <strong>Firebase Analytics</strong> と <strong>Firebase Crashlytics</strong> の
-  ライブラリが含まれます。ただし本バージョンでは、両方の収集をネイティブ設定および
-  アプリ起動時に明示的に無効化しています。ゲームイベントは何も送らないロガーを使用します。
-  したがって本バージョンでは、これらを通じて解析イベントやクラッシュレポートを Firebase
-  または当方へ送信しません。アカウント、氏名・メールの収集、データを保持する開発者データ
-  ベースもありません。将来テレメトリを有効化する場合は、公開前に本ポリシーと発効日を更新します。</p>"""),
-    "ko": ("4. 분석 및 충돌 진단", """<p>앱 패키지에는 <strong>Firebase
-  Analytics</strong>와 <strong>Firebase Crashlytics</strong> 라이브러리가 포함됩니다.
-  하지만 이 버전에서는 두 라이브러리의 수집을 네이티브 플랫폼 설정과 앱 시작 시점에
-  명시적으로 비활성화합니다. 게임 이벤트는 아무 작업도 하지 않는 로거를 사용합니다.
-  따라서 이 버전에서는 이 라이브러리를 통해 Firebase 또는 저희에게 분석 이벤트나 충돌
-  보고서를 보내지 않습니다. 계정, 이름/이메일 수집 또는 사용자 데이터를 보관하는 개발자
-  데이터베이스도 없습니다. 향후 원격 측정을 활성화하면 출시 전에 본 방침과 발효일을 갱신합니다.</p>"""),
+    "en": ("4. Analytics and crash diagnostics", """<p>In production releases,
+  the App enables <strong>Firebase Analytics</strong> and <strong>Firebase
+  Crashlytics</strong> after startup. Analytics processes gameplay and feature
+  interactions such as level, puzzle, piece and product identifiers; moves,
+  hints, undo/restart, ad and purchase/restore outcomes; counters and durations.
+  Firebase may attach app-install or session identifiers and technical app/device
+  context. Crashlytics processes crash reports, stack traces, app/OS/device
+  diagnostics and may include recent Analytics events as troubleshooting
+  breadcrumbs. This data is used for analytics and App functionality/reliability,
+  not tracking or ad personalization. Collection remains off in debug builds.
+  Events contain no account, name, e-mail or player-entered content, and there is
+  no developer-operated user database.</p>"""),
+    "tr": ("4. Analitik ve çökme tanılama", """<p>Üretim sürümlerinde Uygulama,
+  başlangıçtan sonra <strong>Firebase Analytics</strong> ve <strong>Firebase
+  Crashlytics</strong>'i etkinleştirir. Analytics; bölüm, bulmaca, taş ve ürün
+  kimlikleri; hamle, ipucu, geri alma/yeniden başlatma, reklam ile satın
+  alma/geri yükleme sonuçları; sayaçlar ve süreler gibi oyun ve özellik
+  etkileşimlerini işler. Firebase uygulama kurulumu veya oturum kimlikleri ile
+  teknik uygulama/cihaz bağlamı ekleyebilir. Crashlytics çökme raporlarını, yığın
+  izlerini, uygulama/işletim sistemi/cihaz tanılarını işler ve sorun giderme için
+  yakın tarihli Analytics olaylarını içerebilir. Veriler analitik ile Uygulama
+  işlevselliği/güvenilirliği için kullanılır; takip veya reklam kişiselleştirme
+  için kullanılmaz. Hata ayıklama sürümlerinde toplama kapalıdır. Olaylarda hesap,
+  ad, e-posta veya oyuncunun girdiği içerik yoktur ve geliştirici kullanıcı
+  veritabanı işletmez.</p>"""),
+    "de": ("4. Analyse und Absturzdiagnose", """<p>In Produktionsversionen
+  aktiviert die App nach dem Start <strong>Firebase Analytics</strong> und
+  <strong>Firebase Crashlytics</strong>. Analytics verarbeitet Spiel- und
+  Funktionsinteraktionen wie Level-, Puzzle-, Figuren- und Produktkennungen,
+  Züge, Hinweise, Rückgängig/Neustart, Werbe- und Kauf-/Wiederherstellungsergebnisse,
+  Zähler und Zeiten. Firebase kann App-Installations- oder Sitzungskennungen und
+  technischen App-/Gerätekontext hinzufügen. Crashlytics verarbeitet
+  Absturzberichte, Stacktraces und App-/Betriebssystem-/Gerätediagnosen und kann
+  jüngste Analytics-Ereignisse als Fehlersuchhinweise enthalten. Die Daten dienen
+  Analyse und App-Funktion/Zuverlässigkeit, nicht Tracking oder
+  Anzeigenpersonalisierung. In Debug-Versionen bleibt die Erfassung aus. Die
+  Ereignisse enthalten kein Konto, Namen, E-Mail oder eingegebene Inhalte; es
+  gibt keine Entwickler-Benutzerdatenbank.</p>"""),
+    "es": ("4. Analítica y diagnóstico de fallos", """<p>En las versiones de
+  producción, la App activa <strong>Firebase Analytics</strong> y <strong>Firebase
+  Crashlytics</strong> después del inicio. Analytics procesa interacciones de
+  juego y funciones: identificadores de nivel, puzle, pieza y producto; movimientos,
+  pistas, deshacer/reiniciar, resultados de anuncios y compras/restauraciones,
+  contadores y duraciones. Firebase puede añadir identificadores de instalación
+  o sesión y contexto técnico de la App/dispositivo. Crashlytics procesa informes
+  de fallo, trazas y diagnósticos de App/SO/dispositivo, y puede incluir eventos
+  recientes de Analytics para resolver problemas. Los datos se usan para análisis
+  y funcionalidad/fiabilidad de la App, no para seguimiento ni personalización
+  publicitaria. En depuración la recogida permanece desactivada. Los eventos no
+  contienen cuenta, nombre, correo ni contenido introducido, y no existe una base
+  de usuarios del desarrollador.</p>"""),
+    "fr": ("4. Analyse et diagnostic des plantages", """<p>Dans les versions de
+  production, l'App active <strong>Firebase Analytics</strong> et <strong>Firebase
+  Crashlytics</strong> après le démarrage. Analytics traite les interactions de
+  jeu et de fonctions : identifiants de niveau, puzzle, pièce et produit,
+  mouvements, indices, annulation/redémarrage, résultats de publicité et
+  d'achat/restauration, compteurs et durées. Firebase peut joindre des identifiants
+  d'installation ou de session et un contexte technique App/appareil. Crashlytics
+  traite les rapports de plantage, traces et diagnostics App/OS/appareil et peut
+  inclure des événements Analytics récents pour le dépannage. Ces données servent
+  à l'analyse et au fonctionnement/à la fiabilité de l'App, pas au suivi ni à la
+  personnalisation publicitaire. La collecte reste désactivée en débogage. Les
+  événements ne contiennent ni compte, nom, e-mail ou contenu saisi, et le
+  développeur n'exploite aucune base d'utilisateurs.</p>"""),
+    "it": ("4. Analisi e diagnostica degli arresti", """<p>Nelle versioni di
+  produzione, l'App attiva <strong>Firebase Analytics</strong> e <strong>Firebase
+  Crashlytics</strong> dopo l'avvio. Analytics tratta interazioni di gioco e
+  funzioni: identificativi di livello, puzzle, pezzo e prodotto; mosse, suggerimenti,
+  annulla/riavvia, risultati di annunci e acquisti/ripristini, contatori e durate.
+  Firebase può associare identificativi di installazione o sessione e contesto
+  tecnico dell'App/dispositivo. Crashlytics tratta rapporti di arresto, stack
+  trace e diagnostica App/OS/dispositivo e può includere eventi Analytics recenti
+  per la risoluzione dei problemi. I dati servono per analisi e
+  funzionalità/affidabilità dell'App, non per tracciamento o personalizzazione
+  pubblicitaria. Nelle build di debug la raccolta resta disattivata. Gli eventi
+  non contengono account, nome, e-mail o contenuti inseriti e non esiste un
+  database utenti del gestore.</p>"""),
+    "pt": ("4. Análise e diagnóstico de falhas", """<p>Nas versões de produção,
+  o App ativa <strong>Firebase Analytics</strong> e <strong>Firebase
+  Crashlytics</strong> após iniciar. O Analytics processa interações de jogo e
+  recursos: identificadores de nível, quebra-cabeça, peça e produto; movimentos,
+  dicas, desfazer/reiniciar, resultados de anúncios e compras/restaurações,
+  contadores e durações. O Firebase pode anexar identificadores de instalação ou
+  sessão e contexto técnico do App/dispositivo. O Crashlytics processa relatórios
+  de falha, rastros e diagnósticos do App/SO/dispositivo e pode incluir eventos
+  recentes do Analytics para solução de problemas. Os dados servem para análise
+  e funcionalidade/confiabilidade do App, não para rastreamento ou personalização
+  de anúncios. A coleta fica desligada em builds de depuração. Os eventos não
+  contêm conta, nome, e-mail ou conteúdo inserido e não há banco de usuários do
+  desenvolvedor.</p>"""),
+    "ru": ("4. Аналитика и диагностика сбоев", """<p>В производственных версиях
+  после запуска Приложение включает <strong>Firebase Analytics</strong> и
+  <strong>Firebase Crashlytics</strong>. Analytics обрабатывает игровые и
+  функциональные взаимодействия: идентификаторы уровня, головоломки, фигуры и
+  товара; ходы, подсказки, отмену/перезапуск, результаты рекламы и
+  покупки/восстановления, счётчики и длительности. Firebase может добавлять
+  идентификаторы установки или сеанса и технический контекст Приложения/устройства.
+  Crashlytics обрабатывает отчёты о сбоях, трассировки и диагностику
+  Приложения/ОС/устройства и может включать недавние события Analytics для поиска
+  ошибок. Данные нужны для аналитики и работы/надёжности Приложения, а не для
+  отслеживания или персонализации рекламы. В отладочных сборках сбор выключен.
+  События не содержат аккаунта, имени, e-mail или введённого содержимого;
+  разработчик не ведёт базу пользователей.</p>"""),
+    "id": ("4. Analitik dan diagnostik kerusakan", """<p>Dalam versi produksi,
+  Aplikasi mengaktifkan <strong>Firebase Analytics</strong> dan <strong>Firebase
+  Crashlytics</strong> setelah mulai. Analytics memproses interaksi gim dan fitur:
+  pengenal level, teka-teki, keping, dan produk; langkah, petunjuk,
+  urungkan/mulai ulang, hasil iklan dan pembelian/pemulihan, hitungan, dan durasi.
+  Firebase dapat menyertakan pengenal pemasangan atau sesi dan konteks teknis
+  Aplikasi/perangkat. Crashlytics memproses laporan kerusakan, stack trace, serta
+  diagnostik Aplikasi/OS/perangkat dan dapat memuat peristiwa Analytics terbaru
+  untuk pemecahan masalah. Data dipakai untuk analitik serta fungsi/keandalan
+  Aplikasi, bukan pelacakan atau personalisasi iklan. Pengumpulan tetap mati pada
+  build debug. Peristiwa tidak memuat akun, nama, e-mail, atau konten masukan
+  pemain, dan tidak ada basis data pengguna milik pengembang.</p>"""),
+    "ja": ("4. 解析とクラッシュ診断", """<p>製品版では、起動後に
+  <strong>Firebase Analytics</strong> と <strong>Firebase Crashlytics</strong> を
+  有効にします。Analytics は、レベル、パズル、ピース、商品 ID、手数、ヒント、取り消し／再開、
+  広告や購入／復元の結果、回数、所要時間などのゲーム・機能操作を処理します。Firebase は
+  アプリのインストールまたはセッション識別子、およびアプリ／端末の技術情報を付加する場合が
+  あります。Crashlytics はクラッシュ報告、スタックトレース、アプリ／OS／端末診断を処理し、
+  トラブルシューティング用に直近の Analytics イベントを含む場合があります。データは解析と
+  アプリの機能・信頼性に使用し、トラッキングや広告パーソナライズには使用しません。デバッグ版
+  では収集しません。イベントにアカウント、氏名、メール、入力内容は含まれず、開発者運営の
+  ユーザーデータベースもありません。</p>"""),
+    "ko": ("4. 분석 및 충돌 진단", """<p>프로덕션 릴리스에서는 앱 시작 후
+  <strong>Firebase Analytics</strong>와 <strong>Firebase Crashlytics</strong>를
+  활성화합니다. Analytics는 레벨, 퍼즐, 피스, 상품 ID, 이동, 힌트, 실행 취소/재시작,
+  광고 및 구매/복원 결과, 횟수와 시간 등의 게임·기능 상호작용을 처리합니다. Firebase는
+  앱 설치 또는 세션 식별자와 기술적 앱/기기 정보를 첨부할 수 있습니다. Crashlytics는 충돌
+  보고서, 스택 트레이스, 앱/OS/기기 진단을 처리하며 문제 해결을 위해 최근 Analytics 이벤트를
+  포함할 수 있습니다. 데이터는 분석과 앱 기능/안정성에 사용되며 추적이나 광고 개인 최적화에는
+  사용되지 않습니다. 디버그 빌드에서는 수집하지 않습니다. 이벤트에는 계정, 이름, 이메일 또는
+  사용자가 입력한 콘텐츠가 없으며 개발자가 운영하는 사용자 데이터베이스도 없습니다.</p>"""),
+}
+
+
+_POLICY_CHANGE_BODY = {
+    "en": """<p>If the App's data practices change (for example, if new data
+  categories, accounts or online features are added), this page and its
+  effective date will be updated before the change ships. Significant changes
+  will also be noted in the App's store listing.</p>""",
+    "tr": """<p>Uygulamanın veri uygulamaları değişirse (örneğin yeni veri
+  kategorileri, hesaplar veya çevrimiçi özellikler eklenirse), değişiklik
+  yayımlanmadan önce bu sayfa ve yürürlük tarihi güncellenecektir. Önemli
+  değişiklikler Uygulamanın mağaza sayfasında da belirtilecektir.</p>""",
+    "de": """<p>Ändert die App ihre Datenverarbeitung (etwa durch neue
+  Datenkategorien, Konten oder Online-Funktionen), werden diese Seite und ihr
+  Gültigkeitsdatum vor Veröffentlichung der Änderung aktualisiert. Wesentliche
+  Änderungen werden auch im Store-Eintrag der App genannt.</p>""",
+    "es": """<p>Si cambian las prácticas de datos de la App (por ejemplo, al
+  añadir nuevas categorías de datos, cuentas o funciones en línea), esta página
+  y su fecha se actualizarán antes de publicar el cambio. Los cambios importantes
+  también se indicarán en la ficha de la App en la tienda.</p>""",
+    "fr": """<p>Si les pratiques de données de l'App changent (par exemple avec
+  de nouvelles catégories de données, des comptes ou des fonctions en ligne),
+  cette page et sa date seront mises à jour avant leur publication. Les
+  changements importants seront aussi signalés sur la fiche de l'App.</p>""",
+    "it": """<p>Se le pratiche sui dati dell'App cambiano (ad esempio con nuove
+  categorie di dati, account o funzioni online), questa pagina e la data di
+  entrata in vigore saranno aggiornate prima della pubblicazione. Le modifiche
+  importanti saranno indicate anche nella pagina store dell'App.</p>""",
+    "pt": """<p>Se as práticas de dados do App mudarem (por exemplo, com novas
+  categorias de dados, contas ou recursos online), esta página e sua data serão
+  atualizadas antes da publicação da mudança. Alterações importantes também
+  serão informadas na página do App na loja.</p>""",
+    "ru": """<p>Если обработка данных в Приложении изменится (например, появятся
+  новые категории данных, учётные записи или сетевые функции), эта страница и
+  дата вступления в силу будут обновлены до выпуска изменения. Существенные
+  изменения также будут указаны на странице Приложения в магазине.</p>""",
+    "id": """<p>Jika praktik data Aplikasi berubah (misalnya kategori data,
+  akun, atau fitur online baru ditambahkan), halaman dan tanggal berlakunya akan
+  diperbarui sebelum perubahan dirilis. Perubahan penting juga akan disebutkan
+  di halaman toko Aplikasi.</p>""",
+    "ja": """<p>新しいデータ区分、アカウント、オンライン機能の追加などにより本アプリの
+  データ取扱いが変わる場合、変更の公開前に本ページと発効日を更新します。重要な変更は
+  ストア掲載情報にも記載します。</p>""",
+    "ko": """<p>새로운 데이터 범주, 계정 또는 온라인 기능 추가 등으로 앱의 데이터 처리
+  방식이 변경되는 경우, 변경 사항 출시 전에 이 페이지와 발효일을 갱신합니다. 중요한 변경은
+  앱 스토어 등록 정보에도 안내합니다.</p>""",
 }
 
 
@@ -2250,14 +2414,15 @@ for _code, _lang_data in LANGS.items():
     _lang_data["privacy"]["sections"] = [
         (_copy["local_heading"],
          f'{_copy["local_body"]}\n  {_final_iap["local_intent"]}'),
-        (_renumber(_old_privacy[1][0], 2), _old_privacy[1][1]),
+        (_renumber(_old_privacy[1][0], 2),
+         f'{_old_privacy[1][1]}\n  {_AD_RUNTIME_DISCLOSURE[_code]}'),
         (_copy["payment_heading"],
          f'{_copy["payment_body"]}\n  {_final_iap["store_privacy"]}'),
         _TELEMETRY_COPY[_code],
         (_renumber(_old_privacy[3][0], 5), _old_privacy[3][1]),
         (_renumber(_old_privacy[4][0], 6), _old_privacy[4][1]),
         (_copy["security_heading"], _copy["security_body"]),
-        (_renumber(_old_privacy[6][0], 8), _old_privacy[6][1]),
+        (_renumber(_old_privacy[6][0], 8), _POLICY_CHANGE_BODY[_code]),
     ]
 
     _old_terms = _lang_data["terms"]["sections"]

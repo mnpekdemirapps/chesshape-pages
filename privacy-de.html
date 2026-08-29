@@ -20,7 +20,7 @@
 
   <header>
     <h1>Datenschutzerklärung</h1>
-    <p class="meta">Gültig ab: 2026-08-19 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">Gültig ab: 2026-08-29 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><strong class="here">🇩🇪 Deutsch</strong><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
@@ -69,6 +69,13 @@
   <li><strong>Ihre Kontrolle:</strong> Gerätebezogene Werbeeinstellungen finden Sie
   außerdem unter Android <em>Einstellungen → Datenschutz → Werbung</em> und iOS
   <em>Einstellungen → Datenschutz &amp; Sicherheit → Tracking</em>.</li></ul>
+  <p>Unter iOS wird jede Werbeanfrage nicht personalisiert gestellt,
+  Googles Publisher-Erstanbieterkennung wird vor dem Start des Werbe-SDKs
+  deaktiviert und die App fordert keine App-Tracking-Transparency-Berechtigung
+  von Apple an. Unter Android bestimmen die UMP-Einstellungen die zulässige
+  Werbeauslieferung. Auf beiden Plattformen sind der Zugriff von Firebase
+  Analytics auf die iOS-Anbieterkennung bzw. Android-Werbe-ID sowie Signale zur
+  Anzeigenpersonalisierung deaktiviert.</p>
 
   <h2>3. In-App-Käufe und Zahlungsdaten</h2>
   <p>In-App-Käufe werden unter iOS vom <strong>Apple App Store</strong> und
@@ -91,15 +98,19 @@
   rel="noopener">Google-Datenschutzrichtlinie</a>.</p>
 
   <h2>4. Analyse und Absturzdiagnose</h2>
-  <p>Das App-Paket enthält die
-  Bibliotheken <strong>Firebase Analytics</strong> und <strong>Firebase
-  Crashlytics</strong>. In dieser Version ist die Erfassung für beide sowohl in
-  der nativen Plattformkonfiguration als auch beim App-Start ausdrücklich
-  deaktiviert. Spielereignisse nutzen einen inaktiven Logger. Daher sendet die
-  App in dieser Version über diese Bibliotheken keine Analyseereignisse oder
-  Absturzberichte an Firebase oder uns. Es gibt keine Konten, Namens-/E-Mail-
-  Erfassung oder Entwicklerdatenbank mit Ihren Daten. Wird Telemetrie künftig
-  aktiviert, aktualisieren wir Richtlinie und Datum vor der Veröffentlichung.</p>
+  <p>In Produktionsversionen
+  aktiviert die App nach dem Start <strong>Firebase Analytics</strong> und
+  <strong>Firebase Crashlytics</strong>. Analytics verarbeitet Spiel- und
+  Funktionsinteraktionen wie Level-, Puzzle-, Figuren- und Produktkennungen,
+  Züge, Hinweise, Rückgängig/Neustart, Werbe- und Kauf-/Wiederherstellungsergebnisse,
+  Zähler und Zeiten. Firebase kann App-Installations- oder Sitzungskennungen und
+  technischen App-/Gerätekontext hinzufügen. Crashlytics verarbeitet
+  Absturzberichte, Stacktraces und App-/Betriebssystem-/Gerätediagnosen und kann
+  jüngste Analytics-Ereignisse als Fehlersuchhinweise enthalten. Die Daten dienen
+  Analyse und App-Funktion/Zuverlässigkeit, nicht Tracking oder
+  Anzeigenpersonalisierung. In Debug-Versionen bleibt die Erfassung aus. Die
+  Ereignisse enthalten kein Konto, Namen, E-Mail oder eingegebene Inhalte; es
+  gibt keine Entwickler-Benutzerdatenbank.</p>
 
   <h2>5. Kinder</h2>
   <p>Die App ist ein Rätselspiel für ein allgemeines Publikum. Wir erheben nicht
@@ -125,9 +136,10 @@
   vom Entwickler betriebenen Server behalten wir keine Kopie.</p>
 
   <h2>8. Änderungen dieser Richtlinie</h2>
-  <p>Ändern sich die Datenpraktiken der App (etwa durch Analyse- oder
-  Online-Funktionen), wird diese Seite vor der Auslieferung aktualisiert und das
-  Datum angepasst. Wesentliche Änderungen werden auch im Store-Eintrag genannt.</p>
+  <p>Ändert die App ihre Datenverarbeitung (etwa durch neue
+  Datenkategorien, Konten oder Online-Funktionen), werden diese Seite und ihr
+  Gültigkeitsdatum vor Veröffentlichung der Änderung aktualisiert. Wesentliche
+  Änderungen werden auch im Store-Eintrag der App genannt.</p>
 
   <div class="contact-box">
     <strong>Kontakt</strong><br>

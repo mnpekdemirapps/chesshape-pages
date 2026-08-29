@@ -20,7 +20,7 @@
 
   <header>
     <h1>Política de Privacidade</h1>
-    <p class="meta">Data de vigência: 2026-08-19 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">Data de vigência: 2026-08-29 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><strong class="here">🇵🇹 Português</strong><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
@@ -67,6 +67,13 @@
   <li><strong>Seus controles:</strong> os controles publicitários do dispositivo também
   estão disponíveis no Android em <em>Configurações → Privacidade → Anúncios</em> e no iOS
   em <em>Ajustes → Privacidade e Segurança → Rastreamento</em>.</li></ul>
+  <p>No iOS, toda solicitação de anúncio é não personalizada, o
+  identificador próprio do editor Google é desativado antes do SDK de anúncios e
+  o App não solicita a permissão App Tracking Transparency da Apple. No Android,
+  as escolhas do UMP determinam a veiculação permitida. Nas duas plataformas,
+  ficam desativados o acesso do Firebase Analytics ao identificador do fornecedor
+  do iOS ou ao ID de publicidade do Android e os sinais de personalização de
+  anúncios do Analytics.</p>
 
   <h2>3. Compras no App e dados de pagamento</h2>
   <p>Compras são processadas pela <strong>Apple App Store</strong> no iOS e
@@ -88,14 +95,19 @@
   rel="noopener">Política de Privacidade do Google</a>.</p>
 
   <h2>4. Análise e diagnóstico de falhas</h2>
-  <p>O pacote inclui as
-  bibliotecas <strong>Firebase Analytics</strong> e <strong>Firebase
-  Crashlytics</strong>. Nesta versão, a coleta de ambas está expressamente
-  desativada na configuração nativa e novamente ao iniciar o App. Eventos do
-  jogo usam um registrador inativo. Assim, nesta versão essas bibliotecas não
-  enviam eventos analíticos ou relatórios de falha ao Firebase ou a nós. Não há
-  contas, coleta de nome/e-mail nem banco do desenvolvedor com seus dados. Se a
-  telemetria for ativada futuramente, esta política e a data serão atualizadas antes da publicação.</p>
+  <p>Nas versões de produção,
+  o App ativa <strong>Firebase Analytics</strong> e <strong>Firebase
+  Crashlytics</strong> após iniciar. O Analytics processa interações de jogo e
+  recursos: identificadores de nível, quebra-cabeça, peça e produto; movimentos,
+  dicas, desfazer/reiniciar, resultados de anúncios e compras/restaurações,
+  contadores e durações. O Firebase pode anexar identificadores de instalação ou
+  sessão e contexto técnico do App/dispositivo. O Crashlytics processa relatórios
+  de falha, rastros e diagnósticos do App/SO/dispositivo e pode incluir eventos
+  recentes do Analytics para solução de problemas. Os dados servem para análise
+  e funcionalidade/confiabilidade do App, não para rastreamento ou personalização
+  de anúncios. A coleta fica desligada em builds de depuração. Os eventos não
+  contêm conta, nome, e-mail ou conteúdo inserido e não há banco de usuários do
+  desenvolvedor.</p>
 
   <h2>5. Crianças</h2>
   <p>O App é um jogo de quebra-cabeça para público geral. Não coletamos
@@ -119,9 +131,10 @@
   cópia em servidor operado pelo desenvolvedor.</p>
 
   <h2>8. Alterações desta política</h2>
-  <p>Se as práticas de dados do App mudarem (por exemplo, com análise ou
-  recursos on-line), esta página será atualizada e a data revisada antes do
-  lançamento. Mudanças relevantes também serão indicadas na página da loja.</p>
+  <p>Se as práticas de dados do App mudarem (por exemplo, com novas
+  categorias de dados, contas ou recursos online), esta página e sua data serão
+  atualizadas antes da publicação da mudança. Alterações importantes também
+  serão informadas na página do App na loja.</p>
 
   <div class="contact-box">
     <strong>Contato</strong><br>

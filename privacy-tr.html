@@ -20,7 +20,7 @@
 
   <header>
     <h1>Gizlilik Politikası</h1>
-    <p class="meta">Yürürlük tarihi: 2026-08-19 · Uygulama: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">Yürürlük tarihi: 2026-08-29 · Uygulama: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><strong class="here">🇹🇷 Türkçe</strong><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
@@ -69,6 +69,12 @@
     <em>Ayarlar → Gizlilik → Reklamlar</em> ve iOS
     <em>Ayarlar → Gizlilik ve Güvenlik → Takip</em> üzerinden de ulaşabilirsiniz.</li>
   </ul>
+  <p>iOS'ta her reklam isteği kişiselleştirilmemiş olarak yapılır;
+  reklam SDK'sı başlamadan önce Google'ın yayıncı birinci taraf kimliği kapatılır
+  ve Uygulama Apple'ın Uygulama Takibi Şeffaflığı iznini istemez. Android'de izin
+  verilen reklam sunumunu UMP tercihleri belirler. Her iki platformda da Firebase
+  Analytics'in iOS sağlayıcı kimliğine veya Android reklam kimliğine erişimi ve
+  analitik reklam kişiselleştirme sinyalleri kapalıdır.</p>
 
   <h2>3. Uygulama içi satın almalar ve ödeme verileri</h2>
   <p>Uygulama içi satın almalar iOS'ta <strong>Apple App Store</strong>,
@@ -92,15 +98,19 @@
   Politikası</a>.</p>
 
   <h2>4. Analitik ve çökme tanılama</h2>
-  <p>Uygulama paketinde
-  <strong>Firebase Analytics</strong> ve <strong>Firebase Crashlytics</strong>
-  yazılım kütüphaneleri bulunur. Bu sürümde her ikisinin veri toplaması hem yerel
-  platform ayarlarında hem Uygulama başlangıcında açıkça kapatılmıştır. Oyun
-  olayları hiçbir işlem yapmayan bir kaydediciye bağlıdır. Dolayısıyla bu sürümde
-  bu kütüphaneler üzerinden Firebase'e veya bize analitik olayı ya da çökme raporu
-  gönderilmez. Hesap, ad/e-posta toplama veya verilerinizi tutan geliştirici
-  veritabanı yoktur. Telemetri ileride açılırsa bu politika ve yürürlük tarihi
-  sürüm yayımlanmadan önce güncellenecektir.</p>
+  <p>Üretim sürümlerinde Uygulama,
+  başlangıçtan sonra <strong>Firebase Analytics</strong> ve <strong>Firebase
+  Crashlytics</strong>'i etkinleştirir. Analytics; bölüm, bulmaca, taş ve ürün
+  kimlikleri; hamle, ipucu, geri alma/yeniden başlatma, reklam ile satın
+  alma/geri yükleme sonuçları; sayaçlar ve süreler gibi oyun ve özellik
+  etkileşimlerini işler. Firebase uygulama kurulumu veya oturum kimlikleri ile
+  teknik uygulama/cihaz bağlamı ekleyebilir. Crashlytics çökme raporlarını, yığın
+  izlerini, uygulama/işletim sistemi/cihaz tanılarını işler ve sorun giderme için
+  yakın tarihli Analytics olaylarını içerebilir. Veriler analitik ile Uygulama
+  işlevselliği/güvenilirliği için kullanılır; takip veya reklam kişiselleştirme
+  için kullanılmaz. Hata ayıklama sürümlerinde toplama kapalıdır. Olaylarda hesap,
+  ad, e-posta veya oyuncunun girdiği içerik yoktur ve geliştirici kullanıcı
+  veritabanı işletmez.</p>
 
   <h2>5. Çocuklar</h2>
   <p>Uygulama genel izleyici kitlesine yönelik bir bulmaca oyunudur. Bilerek
@@ -127,10 +137,10 @@
   hiçbir kopya tutmayız.</p>
 
   <h2>8. Bu politikadaki değişiklikler</h2>
-  <p>Uygulamanın veri uygulamaları değişirse (örneğin analitik veya çevrimiçi
-  özellikler eklenirse), değişiklik yayına girmeden önce bu sayfa güncellenir
-  ve yürürlük tarihi yenilenir. Önemli değişiklikler mağaza sayfasında da
-  belirtilir.</p>
+  <p>Uygulamanın veri uygulamaları değişirse (örneğin yeni veri
+  kategorileri, hesaplar veya çevrimiçi özellikler eklenirse), değişiklik
+  yayımlanmadan önce bu sayfa ve yürürlük tarihi güncellenecektir. Önemli
+  değişiklikler Uygulamanın mağaza sayfasında da belirtilecektir.</p>
 
   <div class="contact-box">
     <strong>İletişim</strong><br>

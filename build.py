@@ -69,7 +69,7 @@ def render(doc, code):
 
   <header>
     <h1>{page['title']}</h1>
-    <p class="meta">{lang['effective_label']}: {EFFECTIVE} · {lang['app_label']}: <strong>Chesshape</strong> ({PLATFORM})</p>
+    <p class="meta">{lang['effective_label']}: {EFFECTIVE[doc]} · {lang['app_label']}: <strong>Chesshape</strong> ({PLATFORM})</p>
   </header>
 
   {switcher(doc, code)}

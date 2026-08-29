@@ -20,7 +20,7 @@
 
   <header>
     <h1>Privacy Policy</h1>
-    <p class="meta">Effective date: 2026-08-19 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">Effective date: 2026-08-29 · App: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><strong class="here">🇬🇧 English</strong><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
@@ -69,6 +69,12 @@
     available in Android <em>Settings → Privacy → Ads</em> and iOS
     <em>Settings → Privacy &amp; Security → Tracking</em>.</li>
   </ul>
+  <p>On iOS, every ad request is non-personalized, Google's publisher
+  first-party identifier is disabled before the ads SDK starts, and the App does
+  not request Apple's App Tracking Transparency permission. On Android, UMP
+  choices govern the ad serving that is permitted. On both platforms, Firebase
+  Analytics access to the iOS vendor identifier or Android advertising ID, and
+  Analytics ad-personalization signals, are disabled.</p>
 
   <h2>3. In-app purchases and payment data</h2>
   <p>In-app purchases are processed by <strong>Apple App Store</strong> on iOS
@@ -91,15 +97,18 @@
   rel="noopener">Google Privacy Policy</a>.</p>
 
   <h2>4. Analytics and crash diagnostics</h2>
-  <p>The App package includes the
-  <strong>Firebase Analytics</strong> and <strong>Firebase Crashlytics</strong>
-  software libraries. In this release, collection for both is explicitly
-  disabled in the native platform configuration and again at App startup.
-  Gameplay events use a no-operation logger. Accordingly, the App does not send
-  analytics events or crash reports to Firebase or to us through those libraries
-  in this release. There are no accounts, name/e-mail collection, or developer-
-  operated database holding your data. If telemetry is enabled in a future
-  release, this policy and its effective date will be updated before release.</p>
+  <p>In production releases,
+  the App enables <strong>Firebase Analytics</strong> and <strong>Firebase
+  Crashlytics</strong> after startup. Analytics processes gameplay and feature
+  interactions such as level, puzzle, piece and product identifiers; moves,
+  hints, undo/restart, ad and purchase/restore outcomes; counters and durations.
+  Firebase may attach app-install or session identifiers and technical app/device
+  context. Crashlytics processes crash reports, stack traces, app/OS/device
+  diagnostics and may include recent Analytics events as troubleshooting
+  breadcrumbs. This data is used for analytics and App functionality/reliability,
+  not tracking or ad personalization. Collection remains off in debug builds.
+  Events contain no account, name, e-mail or player-entered content, and there is
+  no developer-operated user database.</p>
 
   <h2>5. Children</h2>
   <p>The App is a general-audience puzzle game. We do not knowingly collect
@@ -125,10 +134,10 @@
   backup may restore it later. We retain no copy on a developer-operated server.</p>
 
   <h2>8. Changes to this policy</h2>
-  <p>If the App's data practices change (for example, if analytics or online
-  features are added), this page will be updated and the effective date
-  revised before the change ships. Significant changes will also be noted in
-  the App's store listing.</p>
+  <p>If the App's data practices change (for example, if new data
+  categories, accounts or online features are added), this page and its
+  effective date will be updated before the change ships. Significant changes
+  will also be noted in the App's store listing.</p>
 
   <div class="contact-box">
     <strong>Contact</strong><br>
