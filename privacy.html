@@ -25,27 +25,11 @@
 
   <nav class="langs" aria-label="Language"><strong class="here">🇬🇧 English</strong><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
 
-  <p>This Privacy Policy explains what information is handled when you play
-  <strong>Chesshape</strong> ("the App"), a chess-move painting puzzle game
-  published by its independent developer ("we", "us"). The short version:
-  <strong>we do not ask for your name, e-mail or an account, and we do not run
-  a server that stores your game or purchase records.</strong> Game and purchase-
-  delivery records are handled locally; Google processes advertising data; and
-  Apple App Store or Google Play processes payments, as described below.</p>
+  <p><strong>Chesshape</strong>. You can play without registering or signing in. Android uses an automatically created technical user ID for the purchase checks described below.</p>
 
   <h2>1. Local game and purchase records</h2>
-  <p>The App keeps the following records in its private local storage:</p>
-  <ul><li>level progress, stars, best scores, settings, language and accessibility choices;</li>
-  <li>hint balance and daily-puzzle streak;</li>
-  <li>Premium entitlement and a compact transaction-delivery marker used to prevent duplicate grants.</li></ul>
-  <p>The App does not store a full store receipt, payment-card details or store
-  credentials. These local records are not visible to us. Depending on your OS,
-  account and device settings, Apple or Google backup/device-transfer features
-  may copy or restore them. Uninstalling normally removes the device copy, but
-  does not guarantee deletion of a platform backup that may later restore it.
-  The App does not read contacts, photos, files, precise location or other
-  personal content.</p>
-  <p>If a Premium purchase remains unresolved or is
+  <p>Game progress, settings, hint balance, purchased access and delivery markers are kept on your device. Depending on your device and backup settings, the operating system may retain or restore a copy. The app does not read contacts, photos or precise location. Limited Android purchase details are processed by the verification service described below.</p>
+<p>If a Premium purchase remains unresolved or is
   interrupted, the App also keeps a local purchase-intent marker containing the
   product identifier, an app-generated attempt identifier and the purchase start
   time. It is used only to resume or reconcile that attempt with the store and is
@@ -74,38 +58,13 @@
   Analytics ad-personalization signals, are disabled.</p>
 
   <h2>3. In-app purchases and payment data</h2>
-  <p>In-app purchases are processed by <strong>Apple App Store</strong> on iOS
-  and <strong>Google Play</strong> on Android under their own terms and privacy
-  policies. We do not receive your payment-card details or billing credentials.
-  To deliver a product and restore Premium, the native billing SDK temporarily
-  provides the App with a store receipt or purchase token, product identifier,
-  purchase status, transaction date and reference. These values are not sent to
-  a developer-operated server; the App retains only the compact one-way delivery
-  fingerprint described in Section 1. Refund and revocation requests are handled
-  by the store.
-  This client-only release has no authoritative server-side reconciliation: the
-  App may learn of a change only if the store later reports it and may not detect
-  or revoke local Premium/content promptly or at all. Consumed hints cannot be
-  reliably clawed back. The App stores only the local entitlement/balance and
-  compact delivery marker described in Section 1.</p>
-  <p>Apple and Google process their store and payment
+  <p>Apple and Google process payments; we do not receive your full payment-card details. When Android purchase verification is enabled, Firebase Authentication creates an automatic technical user ID without a registration screen. App Check uses Play Integrity to protect the service. Checks may run at startup, purchase or restore. Google processes authentication IP addresses, technical device information and integrity tokens. The app sends its user ID, Google Play purchase token and product details to our Google Cloud/Firebase verification service over HTTPS. Our purchase ledger stores a one-way hash of the purchase token instead of the raw token. It separately records the technical user ID, product, transaction dates, region, delivery status, purchased rights and refund status. These records validate purchases and prevent fraud or duplicate rewards. External sites have their own privacy policies.</p><p>Apple and Google process their store and payment
   data under their own privacy policies: <a href="https://www.apple.com/legal/privacy/"
   rel="noopener">Apple Privacy Policy</a> and <a href="https://policies.google.com/privacy"
   rel="noopener">Google Privacy Policy</a>.</p>
 
   <h2>4. Analytics and crash diagnostics</h2>
-  <p>In production releases,
-  the App enables <strong>Firebase Analytics</strong> and <strong>Firebase
-  Crashlytics</strong> after startup. Analytics processes gameplay and feature
-  interactions such as level, puzzle, piece and product identifiers; moves,
-  hints, undo/restart, ad and purchase/restore outcomes; counters and durations.
-  Firebase may attach app-install or session identifiers and technical app/device
-  context. Crashlytics processes crash reports, stack traces, app/OS/device
-  diagnostics and may include recent Analytics events as troubleshooting
-  breadcrumbs. This data is used for analytics and App functionality/reliability,
-  not tracking or ad personalization. Collection remains off in debug builds.
-  Events contain no account, name, e-mail or player-entered content, and there is
-  no developer-operated user database.</p>
+  <p>Production releases use Firebase Analytics and Firebase Crashlytics for feature usage and reliability. They process installation or session identifiers, gameplay interactions, purchase and advertising outcomes, technical app/device data and crash diagnostics. Analytics advertising-identifier access and advertising-personalization signals are disabled. Firebase Remote Config uses a Firebase installation identifier and technical information to fetch an optional More Games catalog. These services are distinct from Android purchase authentication and verification.</p>
 
   <h2>5. Children</h2>
   <p>The App is a general-audience puzzle game. We do not knowingly collect
@@ -115,20 +74,10 @@
   address it.</p>
 
   <h2>6. Your rights</h2>
-  <p>Depending on where you live (including the EU/EEA under GDPR, the UK,
-  California under CCPA/CPRA, and Türkiye under KVKK), you may have rights to
-  access, correct or delete personal data. Because we do not hold personal
-  data ourselves, such requests usually concern data processed by Google —
-  see <a href="https://myadcenter.google.com" rel="noopener">Google My Ad Center</a> and
-  the links in Section 2. You can always contact us with any privacy question
-  and we will do our best to help.</p>
+  <p>Purchase verification records are kept to maintain purchased access and prevent repeated rewards. Uninstalling does not delete these server records. Contact the address below to request access or deletion; requests are assessed under applicable privacy rights and necessary record retention. Provider-held data is also subject to the relevant Google, Firebase and store policies.</p>
 
   <h2>7. Security, retention and backup</h2>
-  <p>Local game and purchase-delivery records are protected by the operating
-  system's application sandbox. They normally remain while the App is installed
-  and may also be included in an OS backup or device transfer controlled by you
-  and the platform. Removing the App usually removes its local copy; a platform
-  backup may restore it later. We retain no copy on a developer-operated server.</p>
+  <p>Local data is protected by the operating system. Purchase verification and Firebase requests use HTTPS. Device backups, store records and service-provider data may remain after the app is uninstalled.</p><p>Purchase verification records are kept to maintain purchased access and prevent repeated rewards. Uninstalling does not delete these server records. Contact the address below to request access or deletion; requests are assessed under applicable privacy rights and necessary record retention. Provider-held data is also subject to the relevant Google, Firebase and store policies.</p>
 
   <h2>8. Changes to this policy</h2>
   <p>If the App's data practices change (for example, if new data

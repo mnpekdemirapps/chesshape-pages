@@ -25,24 +25,11 @@
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><a href="privacy-fr.html" lang="fr">🇫🇷 Français</a><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><strong class="here">🇮🇩 Bahasa Indonesia</strong><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
 
-  <p>Kebijakan ini menjelaskan informasi yang ditangani saat memainkan
-  <strong>Chesshape</strong> (“Aplikasi”). <strong>Kami tidak meminta nama,
-  e-mail, atau akun dan tidak mengoperasikan server yang menyimpan data gim atau
-  pembelian.</strong> Catatan gim dan pengiriman diproses lokal; Google memproses
-  data iklan; Apple App Store atau Google Play memproses pembayaran seperti di bawah.</p>
+  <p><strong>Chesshape</strong>. Anda dapat bermain tanpa mendaftar atau masuk. Android menggunakan ID pengguna teknis yang dibuat secara otomatis untuk cek pembelian yang dijelaskan di bawah.</p>
 
   <h2>1. Catatan gim dan pembelian lokal</h2>
-  <p>Aplikasi menyimpan di penyimpanan lokal privat:</p>
-  <ul><li>progres, bintang, skor, pengaturan, bahasa, dan aksesibilitas;</li>
-  <li>saldo petunjuk dan rangkaian teka-teki harian;</li>
-  <li>hak Premium dan penanda transaksi/pengiriman ringkas untuk mencegah pemberian ganda.</li></ul>
-  <p>Aplikasi tidak menyimpan tanda terima toko lengkap, data kartu, atau
-  kredensial toko. Kami tidak dapat melihat catatan lokal ini. Bergantung pada
-  pengaturan sistem, akun, dan perangkat, pencadangan atau transfer Apple/Google
-  dapat menyalin atau memulihkannya. Menghapus instalasi biasanya menghapus
-  salinan perangkat, tetapi tidak menjamin cadangan platform yang dapat dipulihkan
-  ikut terhapus. Aplikasi tidak membaca kontak, foto, berkas, lokasi presisi, atau konten pribadi lain.</p>
-  <p>Jika pembelian Premium belum terselesaikan atau
+  <p>Kemajuan game, pengaturan, saldo petunjuk, akses yang dibeli, dan penanda pengiriman disimpan di perangkat Anda. Tergantung pada perangkat dan pengaturan cadangan Anda, sistem operasi mungkin menyimpan atau memulihkan salinan. Aplikasi ini tidak membaca kontak, foto, atau lokasi persisnya. Detail pembelian Android terbatas diproses oleh layanan verifikasi yang dijelaskan di bawah.</p>
+<p>Jika pembelian Premium belum terselesaikan atau
   terputus, Aplikasi juga menyimpan secara lokal penanda niat pembelian yang
   berisi pengenal produk, pengenal upaya yang dibuat Aplikasi, dan waktu mulai
   pembelian. Penanda ini hanya digunakan untuk melanjutkan atau merekonsiliasi
@@ -71,38 +58,14 @@
   sinyal personalisasi iklan Analytics dinonaktifkan.</p>
 
   <h2>3. Pembelian dalam aplikasi dan data pembayaran</h2>
-  <p>Pembelian diproses oleh <strong>Apple App Store</strong> di iOS dan
-  <strong>Google Play</strong> di Android menurut ketentuan dan kebijakan mereka.
-  Kami tidak menerima data kartu atau kredensial penagihan. Untuk pengiriman dan
-  pemulihan Premium, SDK penagihan native memberikan sementara tanda terima atau
-  token pembelian, ID produk, status, tanggal, dan referensi transaksi kepada
-  Aplikasi. Nilai tersebut tidak dikirim ke server pengembang; hanya sidik jari
-  pengiriman satu arah yang ringkas pada Bagian 1 yang disimpan. Toko menangani
-  pengembalian dana/pencabutan.
-  Versi khusus klien ini tidak memiliki rekonsiliasi server yang berwenang:
-  Aplikasi hanya mengetahui perubahan jika toko melaporkannya kemudian dan
-  mungkin tidak mendeteksi atau mencabut Premium/konten lokal dengan segera atau
-  sama sekali. Petunjuk yang telah dipakai tidak dapat ditarik kembali secara
-  andal. Aplikasi hanya menyimpan hak/saldo dan penanda ringkas pada Bagian 1.</p>
-  <p>Apple dan Google memproses data toko dan pembayaran
+  <p>Apple dan Google memproses pembayaran; kami tidak menerima rincian lengkap kartu pembayaran Anda. Saat verifikasi pembelian Android diaktifkan, Firebase Authentication membuat ID pengguna teknis otomatis tanpa layar registrasi. App Check menggunakan Play Integrity untuk melindungi layanan. Pemeriksaan dapat dijalankan saat permulaan, pembelian, atau pemulihan. Google memproses alamat IP autentikasi, informasi perangkat teknis, dan token integritas. Aplikasi mengirimkan ID penggunanya, token pembelian Google Play, dan detail produk ke layanan verifikasi Google Cloud/Firebase kami melalui HTTPS. Buku besar pembelian kami menyimpan hash satu arah dari token pembelian, bukan token mentah. Ini secara terpisah mencatat ID pengguna teknis, produk, tanggal transaksi, wilayah, status pengiriman, hak pembelian, dan status pengembalian dana. Catatan ini memvalidasi pembelian dan mencegah penipuan atau duplikat hadiah. Situs eksternal memiliki kebijakan privasinya sendiri.</p><p>Apple dan Google memproses data toko dan pembayaran
   mereka menurut kebijakan privasi masing-masing:
   <a href="https://www.apple.com/legal/privacy/" rel="noopener">Kebijakan Privasi
   Apple</a> dan <a href="https://policies.google.com/privacy" rel="noopener">Kebijakan
   Privasi Google</a>.</p>
 
   <h2>4. Analitik dan diagnostik kerusakan</h2>
-  <p>Dalam versi produksi,
-  Aplikasi mengaktifkan <strong>Firebase Analytics</strong> dan <strong>Firebase
-  Crashlytics</strong> setelah mulai. Analytics memproses interaksi gim dan fitur:
-  pengenal level, teka-teki, keping, dan produk; langkah, petunjuk,
-  urungkan/mulai ulang, hasil iklan dan pembelian/pemulihan, hitungan, dan durasi.
-  Firebase dapat menyertakan pengenal pemasangan atau sesi dan konteks teknis
-  Aplikasi/perangkat. Crashlytics memproses laporan kerusakan, stack trace, serta
-  diagnostik Aplikasi/OS/perangkat dan dapat memuat peristiwa Analytics terbaru
-  untuk pemecahan masalah. Data dipakai untuk analitik serta fungsi/keandalan
-  Aplikasi, bukan pelacakan atau personalisasi iklan. Pengumpulan tetap mati pada
-  build debug. Peristiwa tidak memuat akun, nama, e-mail, atau konten masukan
-  pemain, dan tidak ada basis data pengguna milik pengembang.</p>
+  <p>Rilis produksi menggunakan Firebase Analytics dan Firebase Crashlytics untuk penggunaan fitur dan keandalan. Mereka memproses pengidentifikasi instalasi atau sesi, interaksi gameplay, hasil pembelian dan periklanan, data teknis aplikasi/perangkat, dan diagnostik kerusakan. Akses pengidentifikasi iklan Analytics dan sinyal personalisasi iklan dinonaktifkan. Firebase Remote Config menggunakan ID instalasi Firebase dan informasi teknis untuk mengambil katalog Game Lainnya opsional. Layanan ini berbeda dari autentikasi dan verifikasi pembelian Android.</p>
 
   <h2>5. Anak-anak</h2>
   <p>Aplikasi adalah gim teka-teki untuk umum. Kami tidak dengan sengaja
@@ -111,19 +74,10 @@
   memberikan data pribadi, hubungi kami.</p>
 
   <h2>6. Hak Anda</h2>
-  <p>Bergantung pada tempat tinggal Anda (UE/EEA di bawah GDPR, Inggris,
-  California di bawah CCPA/CPRA, Türkiye di bawah KVKK), Anda mungkin memiliki
-  hak akses, perbaikan, atau penghapusan. Karena kami tidak menyimpan data
-  pribadi, permintaan semacam itu umumnya menyangkut data yang diproses Google —
-  lihat <a href="https://myadcenter.google.com" rel="noopener">Google My Ad Center</a> dan
-  tautan di bagian 2.</p>
+  <p>Catatan verifikasi pembelian disimpan untuk mempertahankan akses pembelian dan mencegah hadiah berulang. Menghapus instalasi tidak menghapus catatan server ini. Hubungi alamat di bawah ini untuk meminta akses atau penghapusan; permintaan dinilai berdasarkan hak privasi yang berlaku dan penyimpanan catatan yang diperlukan. Data yang disimpan penyedia juga tunduk pada kebijakan Google, Firebase, dan toko yang relevan.</p>
 
   <h2>7. Keamanan, retensi, dan pencadangan</h2>
-  <p>Sandbox sistem melindungi catatan gim dan pengiriman lokal. Catatan
-  biasanya ada selama Aplikasi terpasang dan dapat masuk ke cadangan atau
-  transfer yang dikontrol Anda dan platform. Menghapus instalasi biasanya
-  menghapus salinan lokal; cadangan platform dapat memulihkannya. Kami tidak
-  menyimpan salinan di server pengembang.</p>
+  <p>Data lokal dilindungi oleh sistem operasi. Verifikasi pembelian dan permintaan Firebase menggunakan HTTPS. Cadangan perangkat, catatan penyimpanan, dan data penyedia layanan mungkin tetap ada setelah aplikasi dicopot pemasangannya.</p><p>Catatan verifikasi pembelian disimpan untuk mempertahankan akses pembelian dan mencegah hadiah berulang. Menghapus instalasi tidak menghapus catatan server ini. Hubungi alamat di bawah ini untuk meminta akses atau penghapusan; permintaan dinilai berdasarkan hak privasi yang berlaku dan penyimpanan catatan yang diperlukan. Data yang disimpan penyedia juga tunduk pada kebijakan Google, Firebase, dan toko yang relevan.</p>
 
   <h2>8. Perubahan kebijakan ini</h2>
   <p>Jika praktik data Aplikasi berubah (misalnya kategori data,

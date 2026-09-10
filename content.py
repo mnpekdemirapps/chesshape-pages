@@ -4,9 +4,11 @@
 The facts here are load-bearing, so they were read off the code rather than
 assumed. As of this writing Chesshape:
 
-  * stores game state and a compact purchase-delivery ledger locally through
-    shared_preferences, may participate in OS backup/device transfer, and runs
-    no developer-operated account or data server;
+  * stores game state and a purchase-delivery ledger locally and may participate
+    in OS backup/device transfer; configured Android purchase verification also
+    uses Firebase Authentication, App Check and a Google Cloud/Firebase ledger;
+  * keeps Android purchase-verification records separately from local progress;
+    the final BACKEND_DISCLOSURE normalization below is the current copy;
   * ships Google AdMob (google_mobile_ads) for advertising in the free version;
   * enables Firebase Analytics and Crashlytics only in production releases for
     gameplay analytics and reliability, while disabling Analytics advertising
@@ -2402,3 +2404,24 @@ for _code, _lang_data in LANGS.items():
         *[(_renumber(heading, index + 1), body)
           for index, (heading, body) in enumerate(_old_terms[2:], start=3)],
     ]
+
+
+# Android server verification supersedes the earlier client-only normalization.
+# The app opens these public documents; do not restore the old server-free copy.
+from backend_disclosure import BACKEND_DISCLOSURE
+
+EFFECTIVE["privacy"] = "2026-09-10"
+EFFECTIVE["terms"] = "2026-09-10"
+for _code, _data in LANGS.items():
+    _backend = BACKEND_DISCLOSURE[_code]
+    _data["privacy"]["intro"] = "<p><strong>Chesshape</strong>. " + _backend["overview"] + "</p>"
+    _sections = list(_data["privacy"]["sections"])
+    _sections[0] = (_sections[0][0], "<p>" + _backend["local"] + "</p>\n" + _IAP_FINAL_DISCLOSURES[_code]["local_intent"])
+    _sections[2] = (_sections[2][0], "<p>" + _backend["purchase"] + "</p>" + _IAP_FINAL_DISCLOSURES[_code]["store_privacy"])
+    _sections[3] = (_sections[3][0], "<p>" + _backend["analytics"] + "</p>")
+    _sections[5] = (_sections[5][0], "<p>" + _backend["retention"] + "</p>")
+    _sections[6] = (_sections[6][0], "<p>" + _backend["security"] + "</p><p>" + _backend["retention"] + "</p>")
+    _data["privacy"]["sections"] = _sections
+    _terms = list(_data["terms"]["sections"])
+    _terms[2] = (_terms[2][0], "<p>" + _backend["chess_terms"] + "</p>\n" + _IAP_FINAL_DISCLOSURES[_code]["pending"] + "\n" + _IAP_FINAL_DISCLOSURES[_code]["cross_platform"] + f'\n<p>{_IAP_SUPPORT[_code]} <a href="mailto:{CONTACT}">{CONTACT}</a>.</p>')
+    _data["terms"]["sections"] = _terms
