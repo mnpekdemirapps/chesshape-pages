@@ -5,10 +5,7 @@ The facts here are load-bearing, so they were read off the code rather than
 assumed. As of this writing Chesshape:
 
   * stores game state and a purchase-delivery ledger locally and may participate
-    in OS backup/device transfer; configured Android purchase verification also
-    uses Firebase Authentication, App Check and a Google Cloud/Firebase ledger;
-  * keeps Android purchase-verification records separately from local progress;
-    the final BACKEND_DISCLOSURE normalization below is the current copy;
+    in OS backup/device transfer; purchases use native store billing;
   * ships Google AdMob (google_mobile_ads) for advertising in the free version;
   * enables Firebase Analytics and Crashlytics only in production releases for
     gameplay analytics and reliability, while disabling Analytics advertising
@@ -2405,23 +2402,11 @@ for _code, _lang_data in LANGS.items():
           for index, (heading, body) in enumerate(_old_terms[2:], start=3)],
     ]
 
-
-# Android server verification supersedes the earlier client-only normalization.
-# The app opens these public documents; do not restore the old server-free copy.
-from backend_disclosure import BACKEND_DISCLOSURE
-
-EFFECTIVE["privacy"] = "2026-09-10"
-EFFECTIVE["terms"] = "2026-09-10"
+# Native Play checkout correlation; no custom purchase server.
+_PLAY_CHECKOUT_DISCLOSURE = {'en': 'For a new Android purchase, the app sends Google Play a one-way hash of a random value created for that checkout. This links the store response to the local pending purchase; it is not an account, advertising or installation identifier. Signed purchase information is checked on the device. No custom purchase verification server is operated.', 'tr': 'Yeni bir Android satın alımında uygulama, o işlem için oluşturulan rastgele bir değerin tek yönlü özetini Google Play’e gönderir. Bu değer mağaza yanıtını cihazdaki bekleyen satın alımla eşleştirir; hesap, reklam veya kurulum kimliği değildir. İmzalı satın alma bilgisi cihazda kontrol edilir. Özel bir satın alma doğrulama sunucusu işletilmez.', 'de': 'Bei einem neuen Android-Kauf sendet die App Google Play den Einweg-Hash eines für diesen Kauf erzeugten Zufallswerts. Damit wird die Store-Antwort dem lokal ausstehenden Kauf zugeordnet; es handelt sich nicht um eine Konto-, Werbe- oder Installationskennung. Signierte Kaufdaten werden auf dem Gerät geprüft. Es wird kein eigener Server zur Kaufprüfung betrieben.', 'es': 'Para una nueva compra en Android, la aplicación envía a Google Play un hash unidireccional de un valor aleatorio creado para esa compra. Esto vincula la respuesta de la tienda con la compra pendiente local; no es un identificador de cuenta, publicidad o instalación. La información de compra firmada se verifica en el dispositivo. No se opera un servidor propio de verificación de compras.', 'fr': 'Pour un nouvel achat Android, l’application envoie à Google Play l’empreinte à sens unique d’une valeur aléatoire créée pour cet achat. Elle relie la réponse du magasin à l’achat local en attente ; ce n’est pas un identifiant de compte, publicitaire ou d’installation. Les informations d’achat signées sont vérifiées sur l’appareil. Aucun serveur dédié de vérification des achats n’est exploité.', 'ja': 'Androidで新しく購入する際、アプリはその購入のために生成したランダム値の一方向ハッシュをGoogle Playに送信します。これはストアの応答を端末上の保留中の購入と照合するためのもので、アカウント、広告、インストールの識別子ではありません。署名付きの購入情報は端末上で検証します。独自の購入検証サーバーは運用しません。', 'it': 'Per un nuovo acquisto Android, l’app invia a Google Play un hash unidirezionale di un valore casuale creato per quell’acquisto. Questo collega la risposta dello store all’acquisto locale in sospeso; non è un identificatore di account, pubblicità o installazione. I dati di acquisto firmati vengono verificati sul dispositivo. Non viene gestito un server proprietario per la verifica degli acquisti.', 'pt': 'Em uma nova compra no Android, o aplicativo envia ao Google Play um hash unidirecional de um valor aleatório criado para essa compra. Isso vincula a resposta da loja à compra local pendente; não é um identificador de conta, publicidade ou instalação. As informações de compra assinadas são verificadas no dispositivo. Não é operado um servidor próprio de verificação de compras.', 'ru': 'При новой покупке на Android приложение отправляет Google Play односторонний хеш случайного значения, созданного для этой покупки. Он связывает ответ магазина с локальной ожидающей покупкой и не является идентификатором аккаунта, рекламы или установки. Подписанные данные о покупке проверяются на устройстве. Собственный сервер проверки покупок не используется.', 'id': 'Untuk pembelian Android baru, aplikasi mengirimkan hash satu arah dari nilai acak yang dibuat untuk pembelian tersebut ke Google Play. Nilai ini menghubungkan respons toko dengan pembelian lokal yang tertunda; bukan pengenal akun, iklan, atau instalasi. Informasi pembelian bertanda tangan diverifikasi di perangkat. Tidak ada server verifikasi pembelian khusus yang dioperasikan.', 'ko': 'Android에서 새로 구매할 때 앱은 해당 구매를 위해 생성한 무작위 값의 단방향 해시를 Google Play에 전송합니다. 이는 스토어 응답을 기기의 대기 중인 구매와 연결하며 계정, 광고 또는 설치 식별자가 아닙니다. 서명된 구매 정보는 기기에서 검증합니다. 자체 구매 검증 서버는 운영하지 않습니다.'}
+EFFECTIVE["privacy"] = "2026-09-11"
 for _code, _data in LANGS.items():
-    _backend = BACKEND_DISCLOSURE[_code]
-    _data["privacy"]["intro"] = "<p><strong>Chesshape</strong>. " + _backend["overview"] + "</p>"
     _sections = list(_data["privacy"]["sections"])
-    _sections[0] = (_sections[0][0], "<p>" + _backend["local"] + "</p>\n" + _IAP_FINAL_DISCLOSURES[_code]["local_intent"])
-    _sections[2] = (_sections[2][0], "<p>" + _backend["purchase"] + "</p>" + _IAP_FINAL_DISCLOSURES[_code]["store_privacy"])
-    _sections[3] = (_sections[3][0], "<p>" + _backend["analytics"] + "</p>")
-    _sections[5] = (_sections[5][0], "<p>" + _backend["retention"] + "</p>")
-    _sections[6] = (_sections[6][0], "<p>" + _backend["security"] + "</p><p>" + _backend["retention"] + "</p>")
+    _heading, _body = _sections[2]
+    _sections[2] = (_heading, _body + "<p>" + _PLAY_CHECKOUT_DISCLOSURE[_code] + "</p>")
     _data["privacy"]["sections"] = _sections
-    _terms = list(_data["terms"]["sections"])
-    _terms[2] = (_terms[2][0], "<p>" + _backend["chess_terms"] + "</p>\n" + _IAP_FINAL_DISCLOSURES[_code]["pending"] + "\n" + _IAP_FINAL_DISCLOSURES[_code]["cross_platform"] + f'\n<p>{_IAP_SUPPORT[_code]} <a href="mailto:{CONTACT}">{CONTACT}</a>.</p>')
-    _data["terms"]["sections"] = _terms

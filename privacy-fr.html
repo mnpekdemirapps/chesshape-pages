@@ -20,16 +20,31 @@
 
   <header>
     <h1>Politique de confidentialité</h1>
-    <p class="meta">Date d'entrée en vigueur: 2026-09-10 · Application: <strong>Chesshape</strong> (Android &amp; iOS)</p>
+    <p class="meta">Date d'entrée en vigueur: 2026-09-11 · Application: <strong>Chesshape</strong> (Android &amp; iOS)</p>
   </header>
 
   <nav class="langs" aria-label="Language"><a href="privacy.html" lang="en">🇬🇧 English</a><a href="privacy-tr.html" lang="tr">🇹🇷 Türkçe</a><a href="privacy-de.html" lang="de">🇩🇪 Deutsch</a><a href="privacy-es.html" lang="es">🇪🇸 Español</a><strong class="here">🇫🇷 Français</strong><a href="privacy-it.html" lang="it">🇮🇹 Italiano</a><a href="privacy-pt.html" lang="pt">🇵🇹 Português</a><a href="privacy-ru.html" lang="ru">🇷🇺 Русский</a><a href="privacy-id.html" lang="id">🇮🇩 Bahasa Indonesia</a><a href="privacy-ja.html" lang="ja">🇯🇵 日本語</a><a href="privacy-ko.html" lang="ko">🇰🇷 한국어</a></nav>
 
-  <p><strong>Chesshape</strong>. Vous pouvez jouer sans vous inscrire ni vous connecter. Les vérifications des achats sur Android utilisent un identifiant technique créé automatiquement, comme expliqué ci-dessous.</p>
+  <p>Cette Politique explique les informations traitées lorsque vous jouez à
+  <strong>Chesshape</strong> (« l'App »). <strong>Nous ne demandons ni nom, ni
+  e-mail, ni compte et n'exploitons aucun serveur stockant les données de jeu
+  ou d'achat.</strong> Les registres de jeu et de livraison sont traités
+  localement ; Google traite les données publicitaires ; Apple App Store ou
+  Google Play traite les paiements comme décrit ci-dessous.</p>
 
   <h2>1. Registres locaux de jeu et d'achat</h2>
-  <p>La progression du jeu, les paramètres, le solde des indices, les accès achetés et les marqueurs de livraison sont conservés sur votre appareil. En fonction de votre appareil et des paramètres de sauvegarde, le système d'exploitation peut conserver ou restaurer une copie. L'application ne lit pas les contacts, les photos ou la localisation précise. Les détails limités des achats Android sont traités par le service de vérification décrit ci-dessous.</p>
-<p>Si un achat Premium reste non résolu ou est
+  <p>L'App conserve dans son stockage local privé :</p>
+  <ul><li>progression, étoiles, scores, réglages, langue et accessibilité ;</li>
+  <li>solde d'indices et série du puzzle quotidien ;</li>
+  <li>droit Premium et marque compacte de transaction/livraison empêchant une double attribution.</li></ul>
+  <p>Elle ne stocke ni reçu complet du store, ni carte de paiement, ni identifiants
+  du store. Nous ne voyons pas ces registres locaux. Selon les réglages du
+  système, du compte et de l'appareil, la sauvegarde ou le transfert Apple/Google
+  peut les copier ou les restaurer. Désinstaller supprime normalement la copie
+  de l'appareil, sans garantir la suppression d'une sauvegarde de plateforme
+  restaurable ultérieurement. L'App ne lit ni contacts, photos, fichiers,
+  position précise ou autre contenu personnel.</p>
+  <p>Si un achat Premium reste non résolu ou est
   interrompu, l'App conserve aussi localement un marqueur d'intention d'achat
   contenant l'identifiant du produit, un identifiant de tentative généré par
   l'App et l'heure de début de l'achat. Il sert uniquement à reprendre ou à
@@ -59,14 +74,40 @@
   que les signaux de personnalisation publicitaire, sont désactivés.</p>
 
   <h2>3. Achats intégrés et données de paiement</h2>
-  <p>Apple et Google traitent les paiements ; nous ne recevons pas les détails complets de votre carte de paiement. Lorsque la vérification des achats Android est activée, Firebase Authentication crée un identifiant d'utilisateur technique automatique sans écran d'inscription. App Check utilise Play Integrity pour protéger le service. Les vérifications peuvent être exécutées au démarrage, à l'achat ou à la restauration. Google traite les adresses IP d'authentification, les informations techniques sur les appareils et les jetons d'intégrité. L'application envoie son identifiant utilisateur, son jeton d'achat Google Play et les détails du produit à notre service de vérification Google Cloud/Firebase via HTTPS. Notre registre d'achat stocke un hachage unidirectionnel du jeton d'achat au lieu du jeton brut. Il enregistre séparément l'ID utilisateur technique, le produit, les dates de transaction, la région, l'état de livraison, les droits achetés et l'état de remboursement. Ces enregistrements valident les achats et évitent la fraude ou les récompenses en double. Les sites externes ont leurs propres politiques de confidentialité.</p><p>Apple et Google traitent leurs données de store et
+  <p>Les achats sont traités par <strong>Apple App Store</strong> sous iOS et
+  <strong>Google Play</strong> sous Android selon leurs propres conditions et
+  politiques. Nous ne recevons ni carte ni identifiants de facturation. Pour la
+  livraison et la restauration de Premium, le SDK de paiement natif fournit
+  temporairement à l'App un reçu ou jeton d'achat, l'identifiant produit, l'état,
+  la date et la référence de transaction. Ces valeurs ne sont pas envoyées à un
+  serveur du développeur ; seule l'empreinte de livraison compacte à sens unique
+  décrite à la section 1 est conservée. Le store traite restitutions et
+  révocations. Cette version uniquement
+  côté client ne dispose d'aucun rapprochement serveur faisant autorité : l'App
+  ne connaît un changement que si le store le signale plus tard et peut ne pas
+  détecter ni retirer Premium/contenu local rapidement, voire jamais. Les indices
+  consommés ne peuvent pas être repris de façon fiable. L'App ne garde que le
+  droit/solde et la marque compacte de la section 1.</p>
+  <p>Apple et Google traitent leurs données de store et
   de paiement selon leurs propres politiques de confidentialité : la
   <a href="https://www.apple.com/legal/privacy/" rel="noopener">Politique de
   confidentialité d'Apple</a> et la <a href="https://policies.google.com/privacy"
-  rel="noopener">Politique de confidentialité de Google</a>.</p>
+  rel="noopener">Politique de confidentialité de Google</a>.</p><p>Pour un nouvel achat Android, l’application envoie à Google Play l’empreinte à sens unique d’une valeur aléatoire créée pour cet achat. Elle relie la réponse du magasin à l’achat local en attente ; ce n’est pas un identifiant de compte, publicitaire ou d’installation. Les informations d’achat signées sont vérifiées sur l’appareil. Aucun serveur dédié de vérification des achats n’est exploité.</p>
 
   <h2>4. Analyse et diagnostic des plantages</h2>
-  <p>Les versions de production utilisent Firebase Analytics et Firebase Crashlytics pour l'utilisation des fonctionnalités et la fiabilité. Ils traitent les identifiants d’installation ou de session, les interactions de jeu, les résultats d’achat et de publicité, les données techniques des applications/appareils et les diagnostics de crash. L’accès aux identifiants publicitaires Analytics et les signaux de personnalisation publicitaire sont désactivés. Firebase Remote Config utilise un identifiant d'installation Firebase et des informations techniques pour récupérer un catalogue Plus de jeux facultatif. Ces services sont distincts de l'authentification et de la vérification des achats Android.</p>
+  <p>Dans les versions de
+  production, l'App active <strong>Firebase Analytics</strong> et <strong>Firebase
+  Crashlytics</strong> après le démarrage. Analytics traite les interactions de
+  jeu et de fonctions : identifiants de niveau, puzzle, pièce et produit,
+  mouvements, indices, annulation/redémarrage, résultats de publicité et
+  d'achat/restauration, compteurs et durées. Firebase peut joindre des identifiants
+  d'installation ou de session et un contexte technique App/appareil. Crashlytics
+  traite les rapports de plantage, traces et diagnostics App/OS/appareil et peut
+  inclure des événements Analytics récents pour le dépannage. Ces données servent
+  à l'analyse et au fonctionnement/à la fiabilité de l'App, pas au suivi ni à la
+  personnalisation publicitaire. La collecte reste désactivée en débogage. Les
+  événements ne contiennent ni compte, nom, e-mail ou contenu saisi, et le
+  développeur n'exploite aucune base d'utilisateurs.</p>
 
   <h2>5. Enfants</h2>
   <p>L'App est un jeu de puzzle tout public. Nous ne collectons pas sciemment de
@@ -75,10 +116,20 @@
   enfant a fourni des données personnelles, écrivez-nous.</p>
 
   <h2>6. Vos droits</h2>
-  <p>Les enregistrements de vérification des achats sont conservés pour conserver l'accès acheté et éviter les récompenses répétées. La désinstallation ne supprime pas ces enregistrements de serveur. Contactez l'adresse ci-dessous pour demander l'accès ou la suppression ; les demandes sont évaluées en fonction des droits à la vie privée applicables et de la conservation nécessaire des dossiers. Les données détenues par le fournisseur sont également soumises aux politiques pertinentes de Google, Firebase et du magasin.</p>
+  <p>Selon votre lieu de résidence (UE/EEE au titre du RGPD, Royaume-Uni,
+  Californie au titre du CCPA/CPRA, Türkiye au titre de la KVKK), vous pouvez
+  disposer de droits d'accès, de rectification ou d'effacement. Comme nous ne
+  détenons pas de données personnelles, ces demandes concernent généralement les
+  données traitées par Google — voir
+  <a href="https://myadcenter.google.com" rel="noopener">Google My Ad Center</a> et les
+  liens de la section 2.</p>
 
   <h2>7. Sécurité, conservation et sauvegarde</h2>
-  <p>Les données locales sont protégées par le système d'exploitation. La vérification des achats et les demandes Firebase utilisent HTTPS. Les sauvegardes de l'appareil, les enregistrements du magasin et les données du fournisseur de services peuvent rester après la désinstallation de l'application.</p><p>Les enregistrements de vérification des achats sont conservés pour conserver l'accès acheté et éviter les récompenses répétées. La désinstallation ne supprime pas ces enregistrements de serveur. Contactez l'adresse ci-dessous pour demander l'accès ou la suppression ; les demandes sont évaluées en fonction des droits à la vie privée applicables et de la conservation nécessaire des dossiers. Les données détenues par le fournisseur sont également soumises aux politiques pertinentes de Google, Firebase et du magasin.</p>
+  <p>Le bac à sable du système protège les registres locaux de jeu et de
+  livraison. Ils demeurent normalement pendant l'installation et peuvent être
+  inclus dans une sauvegarde ou un transfert contrôlé par vous et la plateforme.
+  Désinstaller supprime généralement la copie locale ; une sauvegarde de
+  plateforme peut la restaurer. Aucun exemplaire n'est conservé sur un serveur du développeur.</p>
 
   <h2>8. Modifications de cette politique</h2>
   <p>Si les pratiques de données de l'App changent (par exemple avec
