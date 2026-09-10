@@ -21,7 +21,7 @@ keeping them in one table instead of eleven hand-edited files.
 CONTACT = "mnpekdemir.apps@gmail.com"
 PLATFORM = "Android &amp; iOS"
 EFFECTIVE = {
-    "privacy": "2026-08-29",
+    "privacy": "2026-09-10",
     "terms": "2026-08-19",
 }
 
@@ -2127,74 +2127,39 @@ _IAP_FINAL_DISCLOSURES = {
 
 
 _AD_RUNTIME_DISCLOSURE = {
-    "en": """<p>On iOS, every ad request is non-personalized, Google's publisher
-  first-party identifier is disabled before the ads SDK starts, and the App does
-  not request Apple's App Tracking Transparency permission. On Android, UMP
-  choices govern the ad serving that is permitted. On both platforms, Firebase
+    "en": """<p>On iOS, Google UMP may show a consent message and, when applicable, Apple's App Tracking Transparency (ATT) request. Ad personalization follows your consent and device settings; IDFA is used only with ATT permission. You can keep playing if you decline. Google's publisher first-party identifier remains disabled. Available privacy choices can be reopened in Settings. On both platforms, Firebase
   Analytics access to the iOS vendor identifier or Android advertising ID, and
   Analytics ad-personalization signals, are disabled.</p>""",
-    "tr": """<p>iOS'ta her reklam isteği kişiselleştirilmemiş olarak yapılır;
-  reklam SDK'sı başlamadan önce Google'ın yayıncı birinci taraf kimliği kapatılır
-  ve Uygulama Apple'ın Uygulama Takibi Şeffaflığı iznini istemez. Android'de izin
-  verilen reklam sunumunu UMP tercihleri belirler. Her iki platformda da Firebase
+    "tr": """<p>iOS'ta Google UMP bir rıza mesajı ve uygun durumlarda Apple'ın Uygulama Takibi Şeffaflığı (ATT) izin isteğini gösterebilir. Reklam kişiselleştirme, rıza tercihlerinize ve cihaz ayarlarınıza göre belirlenir; IDFA yalnızca ATT izniyle kullanılır. Reddederseniz oynamaya devam edebilirsiniz. Google'ın yayıncı birinci taraf kimliği kapalı kalır. Kullanılabilir gizlilik tercihlerini Ayarlar'dan yeniden açabilirsiniz. Her iki platformda da Firebase
   Analytics'in iOS sağlayıcı kimliğine veya Android reklam kimliğine erişimi ve
   analitik reklam kişiselleştirme sinyalleri kapalıdır.</p>""",
-    "de": """<p>Unter iOS wird jede Werbeanfrage nicht personalisiert gestellt,
-  Googles Publisher-Erstanbieterkennung wird vor dem Start des Werbe-SDKs
-  deaktiviert und die App fordert keine App-Tracking-Transparency-Berechtigung
-  von Apple an. Unter Android bestimmen die UMP-Einstellungen die zulässige
-  Werbeauslieferung. Auf beiden Plattformen sind der Zugriff von Firebase
+    "de": """<p>Unter iOS kann Google UMP eine Einwilligungsnachricht und gegebenenfalls Apples Berechtigungsanfrage für App Tracking Transparency (ATT) anzeigen. Die Personalisierung von Anzeigen richtet sich nach Ihrer Einwilligung und Ihren Geräteeinstellungen; die IDFA wird nur mit ATT-Berechtigung verwendet. Auch wenn Sie ablehnen, können Sie weiterspielen. Googles Publisher-Erstanbieterkennung bleibt deaktiviert. Verfügbare Datenschutzoptionen können Sie in den Einstellungen erneut öffnen. Auf beiden Plattformen sind der Zugriff von Firebase
   Analytics auf die iOS-Anbieterkennung bzw. Android-Werbe-ID sowie Signale zur
   Anzeigenpersonalisierung deaktiviert.</p>""",
-    "es": """<p>En iOS, todas las solicitudes de anuncios son no personalizadas,
-  el identificador propio del editor de Google se desactiva antes de iniciar el
-  SDK de anuncios y la App no solicita el permiso App Tracking Transparency de
-  Apple. En Android, las opciones de UMP determinan la publicidad permitida. En
+    "es": """<p>En iOS, Google UMP puede mostrar un mensaje de consentimiento y, cuando corresponda, la solicitud de App Tracking Transparency (ATT) de Apple. La personalización de anuncios depende de tu consentimiento y de los ajustes de tu dispositivo; el IDFA solo se utiliza con el permiso ATT. Puedes seguir jugando si rechazas la solicitud. El identificador propio del editor de Google permanece desactivado. Puedes volver a abrir las opciones de privacidad disponibles en Ajustes. En
   ambas plataformas están desactivados el acceso de Firebase Analytics al
   identificador de proveedor de iOS o al identificador publicitario de Android
   y las señales de personalización publicitaria de Analytics.</p>""",
-    "fr": """<p>Sous iOS, chaque demande publicitaire est non personnalisée,
-  l'identifiant propriétaire de l'éditeur Google est désactivé avant le démarrage
-  du SDK publicitaire et l'App ne demande pas l'autorisation App Tracking
-  Transparency d'Apple. Sous Android, les choix UMP déterminent la diffusion
-  autorisée. Sur les deux plateformes, l'accès de Firebase Analytics à
+    "fr": """<p>Sous iOS, Google UMP peut afficher un message de consentement et, le cas échéant, la demande d'autorisation App Tracking Transparency (ATT) d'Apple. La personnalisation des annonces dépend de votre consentement et des réglages de votre appareil ; l'IDFA n'est utilisé qu'avec l'autorisation ATT. Vous pouvez continuer à jouer en cas de refus. L'identifiant propriétaire de l'éditeur Google reste désactivé. Les choix de confidentialité disponibles peuvent être rouverts dans les paramètres. Sur les deux plateformes, l'accès de Firebase Analytics à
   l'identifiant fournisseur iOS ou à l'identifiant publicitaire Android, ainsi
   que les signaux de personnalisation publicitaire, sont désactivés.</p>""",
-    "it": """<p>Su iOS ogni richiesta di annunci è non personalizzata,
-  l'identificativo proprietario dell'editore Google viene disattivato prima
-  dell'avvio dell'SDK pubblicitario e l'App non richiede l'autorizzazione App
-  Tracking Transparency di Apple. Su Android, le scelte UMP determinano la
-  pubblicità consentita. Su entrambe le piattaforme sono disattivati l'accesso di
+    "it": """<p>Su iOS, Google UMP può mostrare un messaggio di consenso e, quando applicabile, la richiesta App Tracking Transparency (ATT) di Apple. La personalizzazione degli annunci dipende dal tuo consenso e dalle impostazioni del dispositivo; l'IDFA viene utilizzato solo con l'autorizzazione ATT. Puoi continuare a giocare anche se rifiuti. L'identificativo proprietario dell'editore Google rimane disattivato. Puoi riaprire le opzioni di privacy disponibili nelle Impostazioni. Su entrambe le piattaforme sono disattivati l'accesso di
   Firebase Analytics all'identificativo fornitore iOS o all'ID pubblicitario
   Android e i segnali di personalizzazione pubblicitaria di Analytics.</p>""",
-    "pt": """<p>No iOS, toda solicitação de anúncio é não personalizada, o
-  identificador próprio do editor Google é desativado antes do SDK de anúncios e
-  o App não solicita a permissão App Tracking Transparency da Apple. No Android,
-  as escolhas do UMP determinam a veiculação permitida. Nas duas plataformas,
+    "pt": """<p>No iOS, o Google UMP pode exibir uma mensagem de consentimento e, quando aplicável, a solicitação de App Tracking Transparency (ATT) da Apple. A personalização de anúncios segue seu consentimento e as configurações do dispositivo; o IDFA só é usado com a permissão ATT. Você pode continuar jogando se recusar. O identificador próprio do editor Google permanece desativado. As opções de privacidade disponíveis podem ser reabertas em Configurações. Nas duas plataformas,
   ficam desativados o acesso do Firebase Analytics ao identificador do fornecedor
   do iOS ou ao ID de publicidade do Android e os sinais de personalização de
   anúncios do Analytics.</p>""",
-    "ru": """<p>В iOS все рекламные запросы неперсонализированные,
-  собственный идентификатор издателя Google отключается до запуска рекламного
-  SDK, а Приложение не запрашивает разрешение Apple App Tracking Transparency.
-  В Android допустимый показ рекламы определяется выбором в UMP. На обеих
+    "ru": """<p>В iOS Google UMP может показать сообщение о согласии и, когда это применимо, запрос разрешения Apple App Tracking Transparency (ATT). Персонализация рекламы зависит от вашего согласия и настроек устройства; IDFA используется только при наличии разрешения ATT. При отказе вы можете продолжать играть. Собственный идентификатор издателя Google остаётся отключённым. Доступные настройки конфиденциальности можно повторно открыть в разделе «Настройки». На обеих
   платформах отключены доступ Firebase Analytics к идентификатору поставщика iOS
   или рекламному идентификатору Android и сигналы персонализации рекламы.</p>""",
-    "id": """<p>Di iOS, setiap permintaan iklan bersifat nonpersonalisasi,
-  pengenal pihak pertama penerbit Google dinonaktifkan sebelum SDK iklan dimulai,
-  dan Aplikasi tidak meminta izin App Tracking Transparency Apple. Di Android,
-  pilihan UMP menentukan penayangan iklan yang diizinkan. Di kedua platform,
+    "id": """<p>Di iOS, Google UMP dapat menampilkan pesan persetujuan dan, jika berlaku, permintaan izin App Tracking Transparency (ATT) Apple. Personalisasi iklan mengikuti persetujuan Anda dan setelan perangkat; IDFA hanya digunakan dengan izin ATT. Anda tetap dapat bermain jika menolak. Pengenal pihak pertama penerbit Google tetap dinonaktifkan. Pilihan privasi yang tersedia dapat dibuka kembali di Setelan. Di kedua platform,
   akses Firebase Analytics ke pengenal vendor iOS atau ID iklan Android serta
   sinyal personalisasi iklan Analytics dinonaktifkan.</p>""",
-    "ja": """<p>iOS では、すべての広告リクエストを非パーソナライズとして行い、広告 SDK
-  の起動前に Google のパブリッシャー ファーストパーティ識別子を無効化します。また、本アプリは
-  Apple の App Tracking Transparency 許可を要求しません。Android では、UMP の選択に基づいて
-  許可された広告を配信します。両プラットフォームで、Firebase Analytics による iOS の
+    "ja": """<p>iOS では、Google UMP が同意メッセージと、該当する場合に Apple の App Tracking Transparency（ATT）の許可リクエストを表示することがあります。広告のパーソナライズは同意内容とデバイスの設定に従い、IDFA は ATT の許可がある場合にのみ使用されます。拒否してもプレイを続けられます。Google のパブリッシャー ファーストパーティ識別子は引き続き無効です。利用可能なプライバシーの選択肢は「設定」から再度開けます。 両プラットフォームで、Firebase Analytics による iOS の
   ベンダー識別子または Android の広告 ID へのアクセス、および広告パーソナライズ信号を
   無効化しています。</p>""",
-    "ko": """<p>iOS에서는 모든 광고 요청을 비개인 맞춤형으로 전송하고 광고 SDK 시작 전에
-  Google의 게시자 자사 식별자를 비활성화하며, 앱은 Apple의 App Tracking Transparency 권한을
-  요청하지 않습니다. Android에서는 UMP 선택에 따라 허용된 광고가 제공됩니다. 두 플랫폼 모두
+    "ko": """<p>iOS에서는 Google UMP가 동의 메시지를 표시하고, 해당되는 경우 Apple의 App Tracking Transparency(ATT) 권한 요청을 표시할 수 있습니다. 광고 개인 최적화는 사용자의 동의와 기기 설정에 따르며, IDFA는 ATT 권한이 있는 경우에만 사용됩니다. 거부해도 계속 플레이할 수 있습니다. Google의 게시자 자사 식별자는 계속 비활성화되어 있습니다. 사용 가능한 개인정보 보호 선택 항목은 설정에서 다시 열 수 있습니다. 두 플랫폼 모두
   Firebase Analytics의 iOS 공급업체 식별자 또는 Android 광고 ID 접근과 광고 개인 최적화 신호를
   비활성화합니다.</p>""",
 }

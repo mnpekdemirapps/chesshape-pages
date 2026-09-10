@@ -27,7 +27,7 @@ a:hover, a:focus-visible { text-decoration: underline; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
 .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px; }
-.doc { max-width: 760px; margin: 0 auto; padding: 0 22px 80px; }
+.doc { max-width: 760px; margin: 0 auto; padding: 0 22px 80px; overflow-wrap: anywhere; }
 
 /* ---------- top nav ---------- */
 nav.site {
@@ -43,6 +43,8 @@ nav.site .brand {
 nav.site .links { margin-left: auto; display: flex; gap: 18px; font-size: 14px; }
 nav.site .links a { color: var(--muted); }
 nav.site .links a:hover { color: var(--text); }
+.doc nav.site { flex-wrap: wrap; }
+.doc nav.site .links { min-width: 0; max-width: 100%; flex-wrap: wrap; }
 
 /* ---------- hero ---------- */
 header.hero { text-align: center; padding: 46px 0 30px; }
